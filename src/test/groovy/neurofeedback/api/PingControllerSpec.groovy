@@ -12,7 +12,9 @@ class PingControllerSpec extends Specification implements ControllerUnitTest<Pin
     }
 
     void "test something"() {
-        expect:"fix me"
-            true == false
+        when:
+            controller.index()
+        then:
+            response.text == "pong"
     }
 }

@@ -11,8 +11,21 @@ class UserSpec extends Specification implements DomainUnitTest<User> {
     def cleanup() {
     }
 
-    void "test something"() {
-        expect:"fix me"
-            true == false
+    void "firstName and lastName cant be larger than 50"() {
+        when:
+            domain.firstName = "this string is going to be larger than 30 which is the max size of it"
+            domain.lastName = "this string is going to be larger than 30 which is the max size of it"
+        then:
+            !domain.validate(['firstName'])
+            !domain.validate(['lastName'])
+    }
+
+    void "email has to have an email semantic"() {
+        when:
+            User userInvalid = new User(email: "holaaaaaaaaaa")
+            domain.email = "hollaaaa@gmail.com"
+        then:
+            !userInvalid.validate(['email'])
+            domain.validate(['email'])
     }
 }

@@ -7,6 +7,7 @@ class TreatmentParameter {
     double minValue
     double maxValue
 
+    static belongsTo = [treatment: Treatment]
     Stimulus stimulus
 
     static constraints = {
@@ -14,5 +15,9 @@ class TreatmentParameter {
         frecuency (blank: false)
         minValue (blank: false)
         maxValue (blank: false)
+    }
+
+    Boolean isValueNormal(double value) {
+        return value <= maxValue && value >= minValue
     }
 }

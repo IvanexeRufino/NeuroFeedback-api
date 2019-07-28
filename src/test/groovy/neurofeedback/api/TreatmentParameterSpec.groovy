@@ -11,8 +11,12 @@ class TreatmentParameterSpec extends Specification implements DomainUnitTest<Tre
     def cleanup() {
     }
 
-    void "test something"() {
-        expect:"fix me"
-            true == false
+    void "test values in range are valid or not"() {
+        when:
+            domain.maxValue = 50
+            domain.minValue = 30
+        then:
+            domain.isValueNormal(45)
+            !domain.isValueNormal(60)
     }
 }
