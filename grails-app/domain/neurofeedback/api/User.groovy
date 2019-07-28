@@ -3,12 +3,18 @@ package neurofeedback.api
 class User {
 
     int id
+
+    //Personal data
     String firstName
     String lastName
     String docType
     String docNumber
-    String email
     Date dateOfBirth
+
+    //Login data
+    String email
+    String password
+
     Role role
 
     static constraints = {
@@ -19,5 +25,6 @@ class User {
         docType (blank: false, maxSize: 5)
         docNumber (blank: false, maxSize: 50)
         email (blank:false, email:true, maxSize: 255)
+        password (blank: false, maxSize: 50)
     }
 }

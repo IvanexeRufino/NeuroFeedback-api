@@ -15,4 +15,8 @@ class TreatmentParameter {
         minValue (blank: false)
         maxValue (blank: false)
     }
+
+    Boolean isValueNormal(double value) {
+        return value <= maxValue && value >= minValue
+    }
 }
