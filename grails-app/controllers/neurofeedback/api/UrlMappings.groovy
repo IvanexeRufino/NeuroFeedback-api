@@ -10,6 +10,7 @@ class UrlMappings {
         }
 
         "/"(view:"/index")
+        "/ping"(controller: PingController)
         "500"(view:'/error')
         "404"(view:'/notFound')
     }
