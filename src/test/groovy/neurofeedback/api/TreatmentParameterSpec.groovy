@@ -3,7 +3,7 @@ package neurofeedback.api
 import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 
-class User_historySpec extends Specification implements DomainUnitTest<User_history> {
+class TreatmentParameterSpec extends Specification implements DomainUnitTest<TreatmentParameter> {
 
     def setup() {
     }

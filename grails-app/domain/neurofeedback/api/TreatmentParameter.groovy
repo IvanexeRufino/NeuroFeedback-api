@@ -1,11 +1,13 @@
 package neurofeedback.api
 
-class Treatment_parameter {
+class TreatmentParameter {
 
     int id
     double frecuency
     double minValue
     double maxValue
+
+    Stimulus stimulus
 
     static constraints = {
         id (unique: true, maxSize: 11)

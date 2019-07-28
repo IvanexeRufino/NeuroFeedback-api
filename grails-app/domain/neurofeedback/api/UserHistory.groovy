@@ -1,10 +1,13 @@
 package neurofeedback.api
 
-class User_history {
+class UserHistory {
 
     int id
     double duration
     double effectiveness
+
+    User user
+    static hastMany = [treatments: Treatment]
 
     static constraints = {
         id (unique: true, maxSize: 11)

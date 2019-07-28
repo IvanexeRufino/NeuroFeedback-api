@@ -9,6 +9,7 @@ class User {
     String docNumber
     String email
     Date dateOfBirth
+    Role role
 
     static constraints = {
         id (unique: true, maxSize: 11)
