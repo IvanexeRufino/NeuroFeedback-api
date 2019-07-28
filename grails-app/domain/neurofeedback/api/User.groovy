@@ -16,6 +16,7 @@ class User {
     String password
 
     Role role
+    static hasMany = [treatments: Treatment]
 
     static constraints = {
         id (unique: true, maxSize: 11)
