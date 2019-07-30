@@ -9,7 +9,7 @@ class Treatment {
     double effectiveness
     Date treatmentTimestamp
 
-    static belongsTo = [user:User]
+    User user
 
     static constraints = {
         id (unique: true, maxSize: 11)

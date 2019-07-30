@@ -7,7 +7,7 @@ class TreatmentParameter {
     double minValue
     double maxValue
 
-    static belongsTo = [treatment: Treatment]
+    Treatment treatment
     Stimulus stimulus
 
     static constraints = {
