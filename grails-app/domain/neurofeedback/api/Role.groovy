@@ -6,8 +6,6 @@ class Role {
     String name
     String description
 
-    static hasMany = [permissions: Permission]
-
     static constraints = {
         id (unique: true, maxSize: 11)
         name (unique: true, blank: false, maxSize: 50)
