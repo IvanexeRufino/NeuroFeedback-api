@@ -10,7 +10,6 @@ class Treatment {
     Date treatmentTimestamp
 
     static belongsTo = [user:User]
-    static hasMany = [treatmentParameters: TreatmentParameter]
 
     static constraints = {
         id (unique: true, maxSize: 11)
