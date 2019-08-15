@@ -93,7 +93,7 @@ environments:
     development:
         dataSource:
             dbCreate: "create-drop"
-            url: "jdbc:mysql://localhost/neurofeedback"
+            url: "jdbc:mysql://localhost/neurofeedbackTest"
             driverClassName: "com.mysql.jdbc.Driver"
             dialect: "org.hibernate.dialect.MySQL5InnoDBDialect"
             username: "root"
