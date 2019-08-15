@@ -97,16 +97,16 @@ environments:
             driverClassName: "com.mysql.jdbc.Driver"
             dialect: "org.hibernate.dialect.MySQL5InnoDBDialect"
             username: "root"
-            password: "root"
+            password: ""
     test:
         dataSource:
-            dbCreate: update
+            dbCreate: create-drop
             url: jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
     production:
         dataSource:
-            dbCreate: none
+            dbCreate: create-drop
             url: "jdbc:mysql://localhost/neurofeedback"
             driverClassName: "com.mysql.jdbc.Driver"
             dialect: "org.hibernate.dialect.MySQL5InnoDBDialect"
             username: "root"
-            password: "root"
+            password: ""

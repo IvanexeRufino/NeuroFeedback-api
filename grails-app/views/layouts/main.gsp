@@ -7,7 +7,7 @@
         <meta charset="utf-8">
         <title><g:layoutTitle default="Grails"/></title>
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
-    <asset:stylesheet src="bootstrap.css"/>
+    <asset:stylesheet src="bootstrap.min.css"/>
     <asset:stylesheet src="plugins.css"/>
     <asset:stylesheet src="main.css"/>
     <asset:stylesheet src="style.css"/>
@@ -67,7 +67,7 @@
                     <ul class="sidebar-nav">
                         <g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
                             <li class="controller">
-                                <g:link controller="${c.logicalPropertyName}">${c.fullName}</g:link>
+                                <g:link controller="${c.logicalPropertyName}">${c.name}</g:link>
                             </li>
                         </g:each>
                     </ul>
