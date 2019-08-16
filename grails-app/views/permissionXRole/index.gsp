@@ -6,23 +6,30 @@
         <title><g:message code="default.list.label" args="[entityName]" /></title>
     </head>
     <body>
-        <a href="#list-permissionXRole" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-        <div class="nav" role="navigation">
-            <ul>
-                <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-                <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+        <div class="content-header" role="navigation">
+            <ul class="nav-horizontal text-center">
+                <li><a class="home" href="${createLink(uri: '/')}"><i class="fa fa-home"></i><g:message code="default.home.label"/></a></li>
+                <li><g:link class="list" action="index"><i class="fa fa-list"></i><g:message code="default.list.label" args="[entityName]" /></g:link></li>
+                <li><g:link class="create" action="create"><i class="fa fa-plus"></i><g:message code="default.new.label" args="[entityName]" /></g:link></li>
             </ul>
         </div>
+        <div class="block">
+            <div class="block-title">
+                <h1><g:message code="default.list.label" args="[entityName]" /></h1>     
+            </div>
+        </div>
         <div id="list-permissionXRole" class="content scaffold-list" role="main">
-            <h1><g:message code="default.list.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <f:table collection="${permissionXRoleList}" />
+            <div class="table-responsive">
+                <f:table collection="${permissionXRoleList}" />
+            </div>
 
             <div class="pagination">
                 <g:paginate total="${permissionXRoleCount ?: 0}" />
             </div>
+            <br>
         </div>
     </body>
 </html>
