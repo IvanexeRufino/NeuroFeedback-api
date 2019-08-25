@@ -43,9 +43,18 @@
         </li>
     </content>
 
-    <div class="svg" role="presentation">
-        <div class="grails-logo-container">
-            <asset:image src="grails-cupsonly-logo-white.svg" class="grails-logo"/>
+    <div class="row">
+        <div class="col-md-12" style="background-image: url('${resource(dir: "images/", file: "grails-cupsonly-logo-white.svg")}');background-size:cover">
+            <section class="row">
+                <h1>NeuroCare</h1>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+            </section>
+            <section class="row">
+                <div id="container" >
+                </div>
+            </section>
         </div>
     </div>
 
@@ -72,6 +81,82 @@
             </div>
         </section>
     </div>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+
+<script type="text/javascript">
+    var chart;
+    var i = 0; 
+    
+Highcharts.chart('container', {
+    chart: {
+        backgroundColor: 'transparent',
+        type: 'spline',
+        animation: Highcharts.svg, // don't animate in old IE
+        marginRight: 10,
+        events: {
+            load: function () {
+
+                // set up the updating of the chart each second
+                var series = this.series[0];
+                setInterval(function () {
+                    var x = (new Date()).getTime(), // current time
+                        y = Math.random();
+                    series.addPoint([x, y], true, true);
+                }, 500);
+            }
+        }
+    },
+    title: {
+        text: 'Live Brain data'
+    },
+    xAxis: {
+        type: 'datetime',
+        tickPixelInterval: 150
+    },
+    yAxis: {
+        title: {
+            text: 'Value'
+        },
+        plotLines: [{
+            value: 0,
+            width: 1,
+            color: '#808080'
+        }]
+    },
+    tooltip: {
+        formatter: function () {
+            return '<b>' + this.series.name + '</b><br/>' +
+                Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' 
++
+                Highcharts.numberFormat(this.y, 2);
+        }
+    },
+    legend: {
+        enabled: false
+    },
+    exporting: {
+        enabled: false
+    },
+    series: [{
+        name: 'Heartbeats data',
+        data: (function () {
+            // generate an array of random data
+            var data = [],
+                time = (new Date()).getTime(),
+                i;
+
+            for (i = -19; i <= 0; i += 1) {
+                data.push({
+                    x: time + i * 1000,
+                    y: Math.random()
+                });
+            }
+            return data;
+        }())
+    }]
+    });
+
+</script>
 
 </body>
 </html>
