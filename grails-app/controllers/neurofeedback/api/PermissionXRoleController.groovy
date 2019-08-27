@@ -2,7 +2,10 @@ package neurofeedback.api
 
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
-
+import grails.plugin.springsecurity.annotation.Secured
+import grails.transaction.Transactional
+@Transactional(readOnly = true)
+@Secured(['ROLE_ADMIN'])
 class PermissionXRoleController {
 
     PermissionXRoleService permissionXRoleService
