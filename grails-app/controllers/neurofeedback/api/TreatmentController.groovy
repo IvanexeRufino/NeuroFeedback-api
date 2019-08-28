@@ -10,6 +10,9 @@ class TreatmentController {
 
     TreatmentService treatmentService
 
+    static Boolean patient = false
+    static Boolean professional = true
+    static Boolean administrator = true
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {

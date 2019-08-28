@@ -66,15 +66,37 @@
                         </div>
                     </div>
                     <ul class="sidebar-nav">
-                        <g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
-                            <li class="controller">
-                                <g:link controller="${c.logicalPropertyName}">${c.name}</g:link>
-                            </li>
-
-                        </g:each>
                         <sec:ifNotLoggedIn>
                             <g:link controller='login' action='auth'>Login</g:link>
                         </sec:ifNotLoggedIn>
+                        <!-- PERDON LA VILLEREADA -->
+                        <sec:ifAllGranted roles="ROLE_ADMIN">
+                            <g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
+                                <g:if test="${c.getStaticPropertyValue('administrator', Boolean)}">
+                                    <li class="controller">
+                                        <g:link controller="${c.logicalPropertyName}">${c.name}</g:link>
+                                    </li>
+                                </g:if>
+                            </g:each>
+                        </sec:ifAllGranted>
+                        <sec:ifAllGranted roles="ROLE_PROFESSIONAL">
+                            <g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
+                                <g:if test="${c.getStaticPropertyValue('professional', Boolean)}">
+                                    <li class="controller">
+                                        <g:link controller="${c.logicalPropertyName}">${c.name}</g:link>
+                                    </li>
+                                </g:if>
+                            </g:each>
+                        </sec:ifAllGranted>
+                        <sec:ifAllGranted roles="ROLE_PATIENT">
+                        <g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
+                            <g:if test="${c.getStaticPropertyValue('patient', Boolean)}">
+                                <li class="controller">
+                                    <g:link controller="${c.logicalPropertyName}">${c.name}</g:link>
+                                </li>
+                            </g:if>
+                        </g:each>
+                        </sec:ifAllGranted>
                         <sec:ifLoggedIn>
                             <li class="controller">
                                 <a href="/logoff">Logout</a>

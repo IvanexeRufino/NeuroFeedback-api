@@ -9,7 +9,10 @@ import grails.transaction.Transactional
 class TreatmentParameterController {
 
     TreatmentParameterService treatmentParameterService
-
+    
+    static Boolean patient = false
+    static Boolean professional = false
+    static Boolean administrator = true
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
