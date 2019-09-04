@@ -15,6 +15,8 @@ class UrlMappings {
         "404"(view:'/notFound')
         "/logout"(controller:"Logout")
         "/error"(view:'/error')
+
+        "/treatmentTrack"(controller: 'data', action: ['POST': 'treatmentSession', 'GET': 'index'])
         
     }
 }
