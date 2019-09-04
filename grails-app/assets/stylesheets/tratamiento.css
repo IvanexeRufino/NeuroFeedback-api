@@ -2,8 +2,35 @@
     font: 20px Montserrat, sans-serif;
     line-height: 1.8;
     color: #f5f6f7;
+    overflow-x: hidden;
   }
   p {font-size: 16px;}
+
+
+#btn_buscar_bt{
+  background-color: #2F667A;
+  border-radius: 45px;
+  padding: 10px;
+  height: 90px;
+  width: 90px;
+  text-align: center;
+  align-content: center;
+}
+.overlay{
+  position: absolute; /* Sit on top of the page content */
+  display: none; /* Hidden by default */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100vh; /* Full height (cover the whole page) */
+  padding: 200px; 
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin-top:80px;
+  text-align: center;
+  align-content: center;
+  align-items: center;
+}
   .margin {margin-bottom: 45px;}
   .bg-1 { 
     background-color: #1abc9c; /* Green */
@@ -26,6 +53,7 @@
     padding-bottom: 70px;
   }
   .navbar {
+    z-index: 4;
     padding-top: 15px;
     padding-bottom: 15px;
     border: 0;

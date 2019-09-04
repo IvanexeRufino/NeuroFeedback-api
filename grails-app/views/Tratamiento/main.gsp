@@ -30,45 +30,48 @@
 	    </div>
 	  </div>
 	</nav>
-	<div class="container-fluid bg-3 text-center t-full-screen" style="min-height: 80vh;" id="div-conexion">    
+	<div class="container-fluid bg-3 text-center t-full-screen" style="min-height: 100vh;" id="div-conexion">
 		<div id="dispositivoNoConectado">
-			<h3 class="margin">Conectar Dispositivo</h3><br>
+			<h2 class="margin">¿Cómo me conecto con el dispositivo?</h2><br>
 	  		<div class="row">
 			    <div class="col-sm-3"> 
-			      	<p>Verifica la conexión Bluetooth</p>
-	      			<img src="https://www.w3schools.com/bootstrap/birds1.jpg" class="img-responsive margin" style="width:100%" alt="Image">
+			      	<p>1-Verifica la conexión Bluetooth en tu dispositivo</p>
+              <g:img dir="images" file="bluetooth-logo.png"  height="225" width="225" class="image-border"/>
 	    		</div>
 			    <div class="col-sm-3">
-				    <p>Tocá el botón Comenzar</p>
-				    <img src="https://www.w3schools.com/bootstrap/birds1.jpg" class="img-responsive margin" style="width:100%" alt="Image">
+				    <p>2-Presioná el botón de abajo</p>
+              <g:img dir="images" file="button-press.jpg" height="225" width="225" class="image-border"/>
 			    </div>
 			    <div class="col-sm-3"> 
-			        <p>Busca nuestro dispositivo</p>
-			        <img src="https://www.w3schools.com/bootstrap/birds1.jpg" class="img-responsive margin" style="width:100%" alt="Image">
+			        <p>3-Busca y selecciona el dispositivo</p>
+              <g:img dir="images" file="list.png" height="225" width="225" class="image-border"/>
 			    </div>
 			    <div class="col-sm-3"> 
-			      	<p>Al confirmar empezás el tratamiento</p>
-	      			<img src="https://www.w3schools.com/bootstrap/birds1.jpg" class="img-responsive margin" style="width:100%" alt="Image">
-	    		</div>
-	    		<div class="col-md-12">
-	    			<button class="btn btn-primary" id="btn_buscar_bt">Comenzar</button>
+			      	<p>4-Al confirmar, se conectará el dispositivo y empezará el tratamiento </p>
+              <g:img dir="images" file="wait.png" height="225" width="225" class="image-border"/>
 	    		</div>
 	  		</div>
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <button class="btn btn-primary" id="btn_buscar_bt"><i class="fa fa-play fa-3x"></i></button>
+          </div> 
+        </div>
 		</div>
-  		<div id="dispositivoConectando" class="cargando" style="display: none;">
-  			<div class="row" >
-  			<h3 class="margin">Conectando Dispositivo</h3>
-			  	<div class="loader" id="loader"></div>
-  			</div>
-  		</div>
-  		<div id="dispositivoConectado" class="cargando" style="display: none;">
-  			<div class="row" >
-  			<h3 class="margin">Dispositivo Conectado</h3>
-			  	<div class="loaded" id="loaded"><i class="fa fa-check-circle fa-5x"></i></div>
-  			</div>
-  		</div>
+		<div id="dispositivoConectando" class="cargando overlay" style="z-index: 2;">
+			<div class="row" >
+			<h3 class="margin">Conectando Dispositivo</h3>
+		  	<div class="loader" id="loader"></div>
+			</div>
+		</div>
+		<div id="dispositivoConectado" class="cargando overlay" style="z-index: 3;">
+			<div class="row" >
+			<h3 class="margin">Dispositivo Conectado</h3>
+		  	<div class="loaded" id="loaded"><i class="fa fa-check-circle fa-5x"></i></div>
+			</div>
+		</div>
 	</div>
-	<div class="container-fluid bg-3 text-center " id="div-tratamiento">
+	<div class="container-fluid bg-3 text-center " id="div-tratamiento" style="background-color: #f8f8f8; height: 100vh">
 		<h3 >Tratamiento en proceso</h3>
 		<div  class="row">
 			<div class="col-md-12">
@@ -134,8 +137,10 @@ document.addEventListener('DOMContentLoaded', function() {
         series: [{
             name: 'Random data',
             data: []
-        }]
-    });   
+        }],
+        animation: Highcharts.svg,
+        backgroundColor: 'red'
+      });   
  }); 
 </script>
 
