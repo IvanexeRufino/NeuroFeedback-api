@@ -44,7 +44,7 @@
     </content>
 
     <div class="row">
-        <div class="col-md-12" style="background-image: url('${resource(dir: "images/", file: "grails-cupsonly-logo-white.svg")}');background-size:cover">
+        <div class="col-md-12">
             <section class="row">
                 <h1>NeuroCare</h1>
                 <p>

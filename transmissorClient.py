@@ -5,11 +5,11 @@ def main(argv):
     try:
         opts, args = getopt.getopt(argv,"hi:",["ifile="])
     except getopt.GetoptError:
-        print 'test.py -i <inputfile>'
+        print 'transmissorClient.py -i <inputfile>'
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print 'test.py -i <inputfile>'
+            print 'transmissorClient.py -i <inputfile>'
             sys.exit()
         elif opt in ("-i", "--ifile"):
             inputfile = arg
@@ -19,7 +19,6 @@ def main(argv):
     url = 'http://localhost:8080/data'
     payload = [1, 2, 3]
 
-    # Adding empty header as parameters are being sent in payload
     headers = {
         "Content-type": "application/json"
     }
