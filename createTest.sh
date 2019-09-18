@@ -13,6 +13,6 @@ done
 
 ARRAY="${ARRAY}]";
 
-echo $ARRAY
+echo ${ARRAY} >> 'test.txt'
 
-curl -XPOST -H 'Content-Type:application/json' localhost:8080/data -d "${ARRAY}"
+python transmissorClient.py -i test.txt
