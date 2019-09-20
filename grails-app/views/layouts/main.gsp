@@ -48,27 +48,34 @@
                     </a>
                     <!-- END Brand -->
 
-                    <!-- User Info -->
                     <div class="sidebar-section sidebar-user clearfix sidebar-nav-mini-hide">
-                        <div class="sidebar-user-avatar">
-                            <a href="page_ready_user_profile.php">
-                                <g:img dir="images" file="avatar.jpg"/>
-                            </a>
-                        </div>
-                        <div class="sidebar-user-name">
-                            Ejemplo Usuario
-                        </div>
                         <div class="sidebar-user-links">
                             <a data-toggle="tooltip" data-placement="bottom" title="Perfil"><i class="gi gi-user"></i></a>
-                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Mensajes"><i class="gi gi-envelope"></i></a> 
+                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Mensajes"><i class="gi gi-envelope"></i></a>
                             <a href="#" class="enable-tooltip" data-placement="bottom" title="Ajustes" onclick="$('#modal-user-settings').modal('show');"><i class="gi gi-cogwheel"></i></a>
                             <a href="#" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión"><i class="gi gi-exit"></i></a>
                         </div>
+                        <sec:ifLoggedIn>
+                            <div class="sidebar-user-avatar">
+                                <a href="page_ready_user_profile.php">
+                                    <g:img dir="images" file="avatar.jpg"/>
+                                </a>
+                            </div>
+                            <div class="sidebar-user-name">
+                                <g:message
+                                message="Bienvenido ${neurofeedback.currentUserProps(username: true)}">
+                                </g:message>
+                            </div>
+                        </sec:ifLoggedIn>
                     </div>
+
+                    <!-- User Info -->
                     <ul class="sidebar-nav">
                         <sec:ifNotLoggedIn>
                             <g:link controller='login' action='auth'>Login</g:link>
                         </sec:ifNotLoggedIn>
+                        <sec:ifLoggedIn>
+                        </sec:ifLoggedIn>
                         <!-- PERDON LA VILLEREADA -->
                         <sec:ifAllGranted roles="ROLE_ADMIN">
                             <g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
@@ -104,27 +111,6 @@
                         </sec:ifLoggedIn>
                     </ul>
                     <!-- END Sidebar Navigation -->
-
-                    <!-- Sidebar Notifications -->
-                    <div class="sidebar-header sidebar-nav-mini-hide">
-                        <span class="sidebar-header-options clearfix">
-                            <a href="javascript:void(0)" data-toggle="tooltip" title="Refresh">
-                                <i class="gi gi-refresh"></i>
-                            </a>
-                        </span>
-                        <span class="sidebar-header-title">Actividad</span>
-                    </div>
-                    <div class="sidebar-section sidebar-nav-mini-hide">
-                        <div class="alert alert-info alert-alt">
-                            <a href="#">
-                                <small>08/07/2019</small><br>
-                                <i class="fa fa-cubes"></i> Ejemplo notificación
-                            </a>
-                        </div>
-
-                    </div>
-                    
-                    <!-- END Sidebar Notifications -->
                 </div>
                 <!-- END Sidebar Content -->
             </div>
