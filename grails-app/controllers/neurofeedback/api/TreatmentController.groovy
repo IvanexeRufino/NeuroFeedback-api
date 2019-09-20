@@ -5,11 +5,12 @@ import static org.springframework.http.HttpStatus.*
 import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 @Transactional(readOnly = true)
-@Secured(['ROLE_ADMIN','ROLE_PROFESSIONAL'])
+@Secured(['ROLE_PROFESSIONAL'])
 class TreatmentController {
 
     TreatmentService treatmentService
 
+    static String friendlyName = "Nuevo Tratamiento"
     static Boolean patient = false
     static Boolean professional = true
     static Boolean administrator = true
