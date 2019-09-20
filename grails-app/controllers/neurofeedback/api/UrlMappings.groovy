@@ -9,7 +9,7 @@ class UrlMappings {
             }
         }
 
-        "/"(view:"/login/auth")
+        "/"(controller: "main")
         "/ping"(controller: PingController)
         "500"(view:'/error')
         "404"(view:'/notFound')
