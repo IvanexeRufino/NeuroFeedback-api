@@ -2,11 +2,17 @@ package neurofeedback.api
 
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
-
+import grails.plugin.springsecurity.annotation.Secured
+import grails.transaction.Transactional
+@Transactional(readOnly = true)
+@Secured(['ROLE_ADMIN','ROLE_PROFESSIONAL'])
 class TreatmentController {
 
     TreatmentService treatmentService
 
+    static Boolean patient = false
+    static Boolean professional = true
+    static Boolean administrator = true
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {

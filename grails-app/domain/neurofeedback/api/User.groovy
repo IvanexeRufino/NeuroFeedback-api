@@ -1,21 +1,36 @@
 package neurofeedback.api
 
-class User {
+import groovy.transform.EqualsAndHashCode
+import groovy.transform.ToString
+import grails.compiler.GrailsCompileStatic
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
+@GrailsCompileStatic
+@EqualsAndHashCode(includes='username')
+@ToString(includes='username', includeNames=true, includePackage=false)
+class User implements Serializable {
+
+    private static final long serialVersionUID = 1
 
     int id
-
-    //Personal data
     String firstName
     String lastName
     String docType
     String docNumber
     Date dateOfBirth
-
-    //Login data
     String email
+    String username
     String password
 
-    Role role
+    boolean enabled = true
+    boolean accountExpired
+    boolean accountLocked
+    boolean passwordExpired
+
+    Set<Role> getAuthorities() {
+        (UserRole.findAllByUser(this) as List<UserRole>)*.role as Set<Role>
+    }
 
     static constraints = {
         id (unique: true, maxSize: 11)
@@ -25,6 +40,11 @@ class User {
         docType (blank: false, maxSize: 5)
         docNumber (blank: false, maxSize: 50)
         email (blank:false, email:true, maxSize: 255)
-        password (blank: false, maxSize: 50)
+        password nullable: false, blank: false, password: true
+        username nullable: false, blank: false, unique: true
+    }
+
+    static mapping = {
+	    password column: '`password`'
     }
 }

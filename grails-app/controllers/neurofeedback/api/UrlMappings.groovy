@@ -9,9 +9,14 @@ class UrlMappings {
             }
         }
 
-        "/"(view:"/index")
+        "/"(controller:"main")
         "/ping"(controller: PingController)
         "500"(view:'/error')
         "404"(view:'/notFound')
+        "/logout"(controller:"Logout")
+        "/error"(view:'/error')
+
+        "/treatmentTrack"(controller: 'data', action: ['POST': 'treatmentSession', 'GET': 'index'])
+        
     }
 }

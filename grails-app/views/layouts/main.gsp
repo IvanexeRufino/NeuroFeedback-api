@@ -7,12 +7,13 @@
         <meta charset="utf-8">
         <title><g:layoutTitle default="Grails"/></title>
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
-    <asset:stylesheet src="bootstrap.css"/>
+    <asset:stylesheet src="bootstrap.min.css"/>
     <asset:stylesheet src="plugins.css"/>
     <asset:stylesheet src="main.css"/>
     <asset:stylesheet src="style.css"/>
     <asset:stylesheet src="themes.css"/>
     <asset:stylesheet src="theme2.css"/>
+    <asset:stylesheet src="custom.css"/>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     </head>
     <body>
@@ -47,52 +48,69 @@
                     </a>
                     <!-- END Brand -->
 
-                    <!-- User Info -->
                     <div class="sidebar-section sidebar-user clearfix sidebar-nav-mini-hide">
-                        <div class="sidebar-user-avatar">
-                            <a href="page_ready_user_profile.php">
-                                <g:img dir="images" file="avatar.jpg"/>
-                            </a>
-                        </div>
-                        <div class="sidebar-user-name">
-                            Ejemplo Usuario
-                        </div>
                         <div class="sidebar-user-links">
                             <a data-toggle="tooltip" data-placement="bottom" title="Perfil"><i class="gi gi-user"></i></a>
-                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Mensajes"><i class="gi gi-envelope"></i></a> 
+                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Mensajes"><i class="gi gi-envelope"></i></a>
                             <a href="#" class="enable-tooltip" data-placement="bottom" title="Ajustes" onclick="$('#modal-user-settings').modal('show');"><i class="gi gi-cogwheel"></i></a>
                             <a href="#" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión"><i class="gi gi-exit"></i></a>
                         </div>
+                        <sec:ifLoggedIn>
+                            <div class="sidebar-user-avatar">
+                                <a href="page_ready_user_profile.php">
+                                    <g:img dir="images" file="avatar.jpg"/>
+                                </a>
+                            </div>
+                            <div class="sidebar-user-name">
+                                <g:message
+                                message="Bienvenido ${neurofeedback.currentUserProps(username: true)}">
+                                </g:message>
+                            </div>
+                        </sec:ifLoggedIn>
                     </div>
+
+                    <!-- User Info -->
                     <ul class="sidebar-nav">
+                        <sec:ifNotLoggedIn>
+                            <g:link controller='login' action='auth'>Login</g:link>
+                        </sec:ifNotLoggedIn>
+                        <sec:ifLoggedIn>
+                        </sec:ifLoggedIn>
+                        <!-- PERDON LA VILLEREADA -->
+                        <sec:ifAllGranted roles="ROLE_ADMIN">
+                            <g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
+                                <g:if test="${c.getStaticPropertyValue('administrator', Boolean)}">
+                                    <li class="controller">
+                                        <g:link controller="${c.logicalPropertyName}">${c.name}</g:link>
+                                    </li>
+                                </g:if>
+                            </g:each>
+                        </sec:ifAllGranted>
+                        <sec:ifAllGranted roles="ROLE_PROFESSIONAL">
+                            <g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
+                                <g:if test="${c.getStaticPropertyValue('professional', Boolean)}">
+                                    <li class="controller">
+                                        <g:link controller="${c.logicalPropertyName}">${c.name}</g:link>
+                                    </li>
+                                </g:if>
+                            </g:each>
+                        </sec:ifAllGranted>
+                        <sec:ifAllGranted roles="ROLE_PATIENT">
                         <g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
-                            <li class="controller">
-                                <g:link controller="${c.logicalPropertyName}">${c.fullName}</g:link>
-                            </li>
+                            <g:if test="${c.getStaticPropertyValue('patient', Boolean)}">
+                                <li class="controller">
+                                    <g:link controller="${c.logicalPropertyName}">${c.name}</g:link>
+                                </li>
+                            </g:if>
                         </g:each>
+                        </sec:ifAllGranted>
+                        <sec:ifLoggedIn>
+                            <li class="controller">
+                                <a href="/logoff">Logout</a>
+                            </li>
+                        </sec:ifLoggedIn>
                     </ul>
                     <!-- END Sidebar Navigation -->
-
-                    <!-- Sidebar Notifications -->
-                    <div class="sidebar-header sidebar-nav-mini-hide">
-                        <span class="sidebar-header-options clearfix">
-                            <a href="javascript:void(0)" data-toggle="tooltip" title="Refresh">
-                                <i class="gi gi-refresh"></i>
-                            </a>
-                        </span>
-                        <span class="sidebar-header-title">Actividad</span>
-                    </div>
-                    <div class="sidebar-section sidebar-nav-mini-hide">
-                        <div class="alert alert-info alert-alt">
-                            <a href="#">
-                                <small>08/07/2019</small><br>
-                                <i class="fa fa-cubes"></i> Ejemplo notificación
-                            </a>
-                        </div>
-
-                    </div>
-                    
-                    <!-- END Sidebar Notifications -->
                 </div>
                 <!-- END Sidebar Content -->
             </div>
@@ -139,7 +157,7 @@
                 <div id="horizontal-menu-collapse" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="#">Inicio</a>
+                            <a href="/">Inicio</a>
                         </li>
                     </ul>
                 </div>
