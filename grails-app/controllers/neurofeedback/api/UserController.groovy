@@ -15,7 +15,8 @@ class UserController {
     static Boolean administrator = true
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    static String friendlyName = "Usuarios del sistema"
+    static String adminFriendlyName = "Usuarios del sistema"
+    static String friendlyName = "Pacientes"
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -39,6 +40,14 @@ class UserController {
         }
 
         try {
+            User userLoggedIn = springSecurityService.getCurrentUser()
+            if(userLoggedIn.role.authority == "ROLE_PROFESSIONAL") {
+                user.assignedDoctor = userLoggedIn
+                user.role = Role.findByAuthority("ROLE_PATIENT")
+            } else {
+                user.role = Role.findByAuthority("ROLE_PROFESSIONAL")
+            }
+
             userService.save(user)
         } catch (ValidationException e) {
             respond user.errors, view:'create'
