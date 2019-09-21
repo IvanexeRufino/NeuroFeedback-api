@@ -39,7 +39,7 @@ class BootStrap {
 		new User(
 				username:'administrador',password:'1',firstName:'Admin',lastName:'istrador',
 				docType: 'DNI',
-				docNumber: '883938',
+				docNumber: '11111111',
 				dateOfBirth: new Date(),
 				email: 'smth@smth.com',
 				role: Role.findByAuthority("ROLE_ADMIN")
@@ -48,7 +48,7 @@ class BootStrap {
 		new User(
 				username:'profesional',password:'1',firstName:'Profe',lastName:'ssional',
 				docType: 'DNI',
-				docNumber: '883938',
+				docNumber: '22222222',
 				dateOfBirth: new Date(),
 				email: 'smth@smth.com',
 				role: Role.findByAuthority("ROLE_PROFESSIONAL")
@@ -57,7 +57,7 @@ class BootStrap {
 		new User(
 				username:'paciente',password:'1',firstName:'Pac',lastName:'iente',
 				docType: 'DNI',
-				docNumber: '883938',
+				docNumber: '33333333',
 				dateOfBirth: new Date(),
 				email: 'smth@smth.com',
 				role: Role.findByAuthority("ROLE_PATIENT")

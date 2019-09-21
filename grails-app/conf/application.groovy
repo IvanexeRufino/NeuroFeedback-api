@@ -5,6 +5,7 @@ grails.plugin.springsecurity.authority.className = 'neurofeedback.api.Role'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/',               		access: ['permitAll']],
 	[pattern: '/ping/**',               access: ['permitAll']],
+	[pattern: '/mobile/**',             access: ['permitAll']],
 	[pattern: '/treatmentTrack/**',     access: ['permitAll']],
 	[pattern: '/error',          		access: ['permitAll']],
 	[pattern: '/index',          		access: ['permitAll']],
@@ -24,6 +25,7 @@ grails.plugin.springsecurity.filterChain.chainMap = [
 	[pattern: '/**/images/**',   	filters: 'none'],
 	[pattern: '/**/favicon.ico', 	filters: 'none'],
 	[pattern: '/ping/**', 			filters: 'none'],
+	[pattern: '/mobile/**', 		filters: 'none'],
 	[pattern: '/treatmentTrack/**', filters: 'none'],
 	[pattern: '/**',             	filters: 'JOINED_FILTERS']
 ]

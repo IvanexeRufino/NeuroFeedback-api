@@ -11,4 +11,7 @@ class Treatment {
         name (unique: true, blank: false, maxSize: 50)
         description (blank: false, maxSize: 255)
     }
+    def toJson(){
+        ["id":id,"name":name,"description":description,"effectiveness":effectiveness,"duration":duration]
+    }
 }
