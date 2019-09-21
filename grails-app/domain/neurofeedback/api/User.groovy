@@ -22,14 +22,15 @@ class User implements Serializable {
     String email
     String username
     String password
+    Role role
 
     boolean enabled = true
     boolean accountExpired
     boolean accountLocked
     boolean passwordExpired
 
-    Set<Role> getAuthorities() {
-        (UserRole.findAllByUser(this) as List<UserRole>)*.role as Set<Role>
+    List<Role> getAuthorities() {
+        [role]
     }
 
     List<UserHistory> getTreatments() {

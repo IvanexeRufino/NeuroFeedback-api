@@ -1,7 +1,6 @@
 
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'neurofeedback.api.User'
-grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'neurofeedback.api.UserRole'
 grails.plugin.springsecurity.authority.className = 'neurofeedback.api.Role'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/',               		access: ['permitAll']],

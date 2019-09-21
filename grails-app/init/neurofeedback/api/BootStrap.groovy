@@ -4,7 +4,8 @@ class BootStrap {
 
     def init = { servletContext ->
 
-		initializeUsersAndRoles()
+		initializeRoles()
+		initializeUsers()
 		initializeTreatments()
     }
 
@@ -20,50 +21,57 @@ class BootStrap {
 		)
 
 		User patient = User.findByUsername('paciente')
+		User particular = User.findByUsername('irufino')
 
 		UserHistory.create(patient, stress,36000, 95, true)
 		UserHistory.create(patient, concentration,36000, 86, true)
+
+		UserHistory.create(particular, concentration,360, 100, true)
 	}
 
-	static def initializeUsersAndRoles() {
-		Role adminRole = Role.findOrSaveWhere(authority: 'ROLE_ADMIN', description: 'Role that can administrate doctors')
-		Role professionalRole = Role.findOrSaveWhere(authority: 'ROLE_PROFESSIONAL',
-				description: 'Role that can create treatments and users')
-		Role patientRole = Role.findOrSaveWhere(authority: 'ROLE_PATIENT', description: 'Role that can take treatments')
-
-		User admin = User.findOrSaveWhere(
-				username:'administrador',password:'123456',firstName:'Admin',lastName:'istrador',
-				docType: 'DNI',
-				docNumber: '883938',
-				dateOfBirth: new Date(),
-				email: 'smth@smth.com'
-		)
-		User professional = User.findOrSaveWhere(
-				username:'profesional',password:'123456',firstName:'Profe',lastName:'ssional',
-				docType: 'DNI',
-				docNumber: '883938',
-				dateOfBirth: new Date(),
-				email: 'smth@smth.com'
-		)
-		User patient = User.findOrSaveWhere(
-				username:'paciente',password:'123456',firstName:'Pac',lastName:'iente',
-				docType: 'DNI',
-				docNumber: '883938',
-				dateOfBirth: new Date(),
-				email: 'smth@smth.com'
-		)
-
-		if(!admin.authorities.contains(adminRole)){
-			UserRole.create(admin,adminRole,true)
-		}
-		if(!professional.authorities.contains(professionalRole)){
-			UserRole.create(professional,professionalRole,true)
-		}
-		if(!patient.authorities.contains(patientRole)){
-			UserRole.create(patient,patientRole,true)
-		}
+	static def initializeRoles() {
+		new Role(authority: 'ROLE_ADMIN', description: 'Role that can administrate doctors').save(flush: true)
+		new Role(authority: 'ROLE_PROFESSIONAL', description: 'Role that can create treatments and users').save(flush: true)
+		new Role(authority: 'ROLE_PATIENT', description: 'Role that can take treatments').save(flush: true)
 	}
 
+	static def initializeUsers() {
+		new User(
+				username:'administrador',password:'1',firstName:'Admin',lastName:'istrador',
+				docType: 'DNI',
+				docNumber: '883938',
+				dateOfBirth: new Date(),
+				email: 'smth@smth.com',
+				role: Role.findByAuthority("ROLE_ADMIN")
+		).save(flush: true)
+
+		new User(
+				username:'profesional',password:'1',firstName:'Profe',lastName:'ssional',
+				docType: 'DNI',
+				docNumber: '883938',
+				dateOfBirth: new Date(),
+				email: 'smth@smth.com',
+				role: Role.findByAuthority("ROLE_PROFESSIONAL")
+		).save(flush: true)
+
+		new User(
+				username:'paciente',password:'1',firstName:'Pac',lastName:'iente',
+				docType: 'DNI',
+				docNumber: '883938',
+				dateOfBirth: new Date(),
+				email: 'smth@smth.com',
+				role: Role.findByAuthority("ROLE_PATIENT")
+		).save(flush: true)
+
+		new User(
+				username:'irufino',password:'1',firstName:'ivan',lastName:'rufino',
+				docType: 'DNI',
+				docNumber: '883938',
+				dateOfBirth: new Date(),
+				email: 'smth@smth.com',
+				role: Role.findByAuthority("ROLE_PATIENT")
+		).save(flush: true)
+	}
 
     def destroy = {
     }
