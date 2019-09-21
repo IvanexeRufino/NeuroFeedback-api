@@ -3,12 +3,12 @@ package neurofeedback.api
 import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 @Transactional(readOnly = true)
-@Secured(['ROLE_ADMIN','ROLE_PROFESSIONAL','ROLE_PATIENT'])
-class TratamientoController {
+@Secured(['ROLE_PROFESSIONAL'])
+class LiveTreatmentController {
 
-    static Boolean patient = true
+    static Boolean patient = false
     static Boolean professional = true
-    static Boolean administrator = true
+    static Boolean administrator = false
     def index() {
     	 render(view: "main")
     }
