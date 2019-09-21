@@ -99,7 +99,9 @@
                         <g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
                             <g:if test="${c.getStaticPropertyValue('patient', Boolean)}">
                                 <li class="controller">
-                                    <g:link controller="${c.logicalPropertyName}">${c.name}</g:link>
+                                    <g:link controller="${c.logicalPropertyName}">
+                                        ${c.getStaticPropertyValue('friendlyName', String)}
+                                    </g:link>
                                 </li>
                             </g:if>
                         </g:each>

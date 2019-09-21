@@ -8,6 +8,7 @@ import grails.transaction.Transactional
 @Secured(['ROLE_PROFESSIONAL', 'ROLE_PATIENT'])
 class UserHistoryController {
 
+    static String friendlyName = "Historial de tratamientos"
     UserHistoryService userHistoryService
     static Boolean patient = true
     static Boolean professional = true
