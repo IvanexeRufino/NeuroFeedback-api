@@ -1,9 +1,12 @@
 package neurofeedback.api
 
-import grails.validation.ValidationException
+import grails.plugin.springsecurity.annotation.Secured
+import neurofeedback.api.Treatment
+import neurofeedback.api.User
+import neurofeedback.api.UserTreatment
+import neurofeedback.api.UserTreatmentService
 
 import static org.springframework.http.HttpStatus.*
-import grails.plugin.springsecurity.annotation.Secured
 
 @Secured(['ROLE_PROFESSIONAL', 'ROLE_PATIENT'])
 class UserTreatmentController {
@@ -20,14 +23,14 @@ class UserTreatmentController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        List history = getApplicableHistory()
+        List<UserTreatment> history = getApplicableHistory()
 
         List pending = history.stream().filter() { userT ->
-            !userT.finished
+            userT.status == "Pending"
         }.collect()
 
         List finished = history.stream().filter() { userT ->
-            userT.finished
+            userT.status == "Finished"
         }.collect()
 
         respond history, model:[userTreatmentPending: pending, userTreatmentPendingCount: pending.size(),
@@ -52,7 +55,7 @@ class UserTreatmentController {
         }
     }
 
-    private List getApplicableHistory() {
+    private List<UserTreatment> getApplicableHistory() {
         User user = springSecurityService.getCurrentUser()
 
         if(user.role.authority == "ROLE_PROFESSIONAL") {

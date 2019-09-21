@@ -1,8 +1,11 @@
 package neurofeedback.api
 
-import grails.validation.ValidationException
-import static org.springframework.http.HttpStatus.*
 import grails.plugin.springsecurity.annotation.Secured
+import grails.validation.ValidationException
+import neurofeedback.api.Treatment
+import neurofeedback.api.TreatmentService
+
+import static org.springframework.http.HttpStatus.*
 
 @Secured(['ROLE_PROFESSIONAL'])
 class TreatmentController {

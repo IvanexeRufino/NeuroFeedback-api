@@ -1,8 +1,12 @@
 package neurofeedback.api
 
-import grails.validation.ValidationException
-import static org.springframework.http.HttpStatus.*
 import grails.plugin.springsecurity.annotation.Secured
+import grails.validation.ValidationException
+import neurofeedback.api.Role
+import neurofeedback.api.User
+import neurofeedback.api.UserService
+
+import static org.springframework.http.HttpStatus.*
 
 @Secured(['ROLE_ADMIN','ROLE_PROFESSIONAL'])
 class UserController {
