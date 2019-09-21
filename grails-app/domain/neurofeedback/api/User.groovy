@@ -22,10 +22,10 @@ class User implements Serializable {
     String password
     Role role
 
-    boolean enabled = true
-    boolean accountExpired
-    boolean accountLocked
-    boolean passwordExpired
+    private boolean enabled = true
+    private boolean accountExpired
+    private boolean accountLocked
+    private boolean passwordExpired
 
     List<Role> getAuthorities() {
         [role]

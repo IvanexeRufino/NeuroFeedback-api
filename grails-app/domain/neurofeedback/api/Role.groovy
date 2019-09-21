@@ -23,4 +23,8 @@ class Role implements Serializable {
 	static mapping = {
 		cache true
 	}
+
+	String toString() {
+		return authority
+	}
 }
