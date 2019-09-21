@@ -23,7 +23,16 @@ class UserTreatmentController {
         params.max = Math.min(max ?: 10, 100)
         List history = getApplicableHistory()
 
-        respond history, model:[userTreatmentCount: history.size()]
+        List pending = history.stream().filter() { userT ->
+            !userT.finished
+        }.collect()
+
+        List finished = history.stream().filter() { userT ->
+            userT.finished
+        }.collect()
+
+        respond history, model:[userTreatmentPending: pending, userTreatmentPendingCount: pending.size(),
+                       userTreatmentFinished: finished, userTreatmentFinishedCount: finished.size()]
     }
 
     def show(Long id) {
