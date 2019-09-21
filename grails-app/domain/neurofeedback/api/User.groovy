@@ -47,4 +47,8 @@ class User implements Serializable {
     static mapping = {
 	    password column: '`password`'
     }
+
+    def toJson(){
+        ["userName": username, "firstName": firstName, "lastName": lastName, "email": email]
+    }
 }

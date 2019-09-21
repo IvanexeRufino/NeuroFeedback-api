@@ -7,4 +7,8 @@ class UserXTreatment {
 
     static constraints = {
     }
+
+    def toJson(){
+    	
+    }
 }

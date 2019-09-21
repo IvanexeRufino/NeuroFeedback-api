@@ -1,7 +1,6 @@
 package neurofeedback.api
 
 import grails.gorm.services.Service
-
 @Service(User)
 interface UserService {
 
@@ -14,5 +13,4 @@ interface UserService {
     void delete(Serializable id)
 
     User save(User user)
-
 }

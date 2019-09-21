@@ -19,4 +19,7 @@ class Treatment {
         duration (blank: false, minValue: 0)
         effectiveness (blank: false, range: 0..100)
     }
+    def toJson(){
+        ["id":id,"name":name,"description":description,"effectiveness":effectiveness,"duration":duration]
+    }
 }
