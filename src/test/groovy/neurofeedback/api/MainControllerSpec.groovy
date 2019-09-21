@@ -1,9 +1,9 @@
 package neurofeedback.api
 
-import grails.testing.gorm.DomainUnitTest
+import grails.testing.web.controllers.ControllerUnitTest
 import spock.lang.Specification
 
-class PermissionXRoleSpec extends Specification implements DomainUnitTest<PermissionXRole> {
+class MainControllerSpec extends Specification implements ControllerUnitTest<MainController> {
 
     def setup() {
     }

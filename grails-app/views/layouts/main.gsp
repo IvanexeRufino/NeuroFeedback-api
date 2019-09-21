@@ -157,7 +157,7 @@
                 <div id="horizontal-menu-collapse" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="#">Inicio</a>
+                            <a href="/">Inicio</a>
                         </li>
                     </ul>
                 </div>
