@@ -40,4 +40,8 @@ class UserTreatment {
         return value <= maxValue && value >= minValue
     }
 
+    def toJson() {
+        [treatment: treatment.toJson(),duration: duration,frecuency: frecuency, minValue: minValue, maxValue: maxValue]
+    }
+
 }

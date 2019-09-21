@@ -12,6 +12,6 @@ class Treatment {
         description (blank: false, maxSize: 255)
     }
     def toJson(){
-        ["id":id,"name":name,"description":description,"effectiveness":effectiveness,"duration":duration]
+        ["name":name,"description":description]
     }
 }

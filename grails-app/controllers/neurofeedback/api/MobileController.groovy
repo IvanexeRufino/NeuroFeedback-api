@@ -34,9 +34,9 @@ class MobileController{
         def map
         def userId = params.userId
         def userTreatment = UserTreatment.findAllByUser(User.findById(userId)).stream().filter { userT ->
-            !userT.finished
+            userT.status == "Pending"
         }.map {
-            ut -> ut.treatment.toJson()
+            ut -> ut.toJson()
         }.collect()
         map = [status: 200, message: ["response":"Ok","treatments":userTreatment]]
         respond map, formats: ['json']
