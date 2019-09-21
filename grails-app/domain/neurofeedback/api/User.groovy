@@ -26,6 +26,7 @@ class User implements Serializable {
     private boolean accountExpired
     private boolean accountLocked
     private boolean passwordExpired
+    User assignedDoctor
 
     List<Role> getAuthorities() {
         [role]
@@ -45,6 +46,7 @@ class User implements Serializable {
         email (blank:false, email:true, maxSize: 255)
         password nullable: false, blank: false, password: true
         username nullable: false, blank: false, unique: true
+        assignedDoctor nullable: true, blank: true
     }
 
     static mapping = {

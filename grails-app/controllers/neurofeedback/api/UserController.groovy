@@ -8,6 +8,7 @@ import grails.plugin.springsecurity.annotation.Secured
 class UserController {
 
     UserService userService
+    def springSecurityService
 
     static Boolean patient = false
     static Boolean professional = true
@@ -18,7 +19,9 @@ class UserController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond userService.list(params), model:[userCount: userService.count()]
+
+        List<User> applicableUsers = getApplicableUsers(params)
+        respond applicableUsers, model:[userCount: applicableUsers.size()]
     }
 
     def show(Long id) {
@@ -102,5 +105,16 @@ class UserController {
             }
             '*'{ render status: NOT_FOUND }
         }
+    }
+
+    private List<User> getApplicableUsers(Map params) {
+        User currentUser = springSecurityService.getCurrentUser()
+
+        if(currentUser.role.authority == "ROLE_PROFESSIONAL") {
+            return User.findAllByAssignedDoctor(currentUser) as List<User>
+        } else {
+            return userService.list(params)
+        }
+
     }
 }

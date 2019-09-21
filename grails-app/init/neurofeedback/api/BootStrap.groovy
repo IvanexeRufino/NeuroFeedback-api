@@ -45,14 +45,25 @@ class BootStrap {
 				role: Role.findByAuthority("ROLE_ADMIN")
 		).save(flush: true)
 
-		new User(
+		User doctor = new User(
 				username:'profesional',password:'1',firstName:'Profe',lastName:'ssional',
 				docType: 'DNI',
 				docNumber: '22222222',
 				dateOfBirth: new Date(),
 				email: 'smth@smth.com',
 				role: Role.findByAuthority("ROLE_PROFESSIONAL")
-		).save(flush: true)
+		)
+		doctor.save(flush: true)
+
+		User doctor2 = new User(
+				username:'profe',password:'1',firstName:'Profe',lastName:'ssional',
+				docType: 'DNI',
+				docNumber: '22222222',
+				dateOfBirth: new Date(),
+				email: 'smth@smth.com',
+				role: Role.findByAuthority("ROLE_PROFESSIONAL")
+		)
+		doctor2.save(flush: true)
 
 		new User(
 				username:'paciente',password:'1',firstName:'Pac',lastName:'iente',
@@ -60,7 +71,8 @@ class BootStrap {
 				docNumber: '33333333',
 				dateOfBirth: new Date(),
 				email: 'smth@smth.com',
-				role: Role.findByAuthority("ROLE_PATIENT")
+				role: Role.findByAuthority("ROLE_PATIENT"),
+				assignedDoctor: doctor
 		).save(flush: true)
 
 		new User(
@@ -69,7 +81,8 @@ class BootStrap {
 				docNumber: '883938',
 				dateOfBirth: new Date(),
 				email: 'smth@smth.com',
-				role: Role.findByAuthority("ROLE_PATIENT")
+				role: Role.findByAuthority("ROLE_PATIENT"),
+				assignedDoctor: doctor2
 		).save(flush: true)
 	}
 
