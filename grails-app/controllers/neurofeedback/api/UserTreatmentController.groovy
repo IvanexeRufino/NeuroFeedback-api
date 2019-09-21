@@ -56,7 +56,7 @@ class UserTreatmentController {
         User user = springSecurityService.getCurrentUser()
 
         if(user.role.authority == "ROLE_PROFESSIONAL") {
-
+            return (User.findAllByAssignedDoctor(user) as List<User>)*.treatments.flatten() as List<Treatment>
         }
 
         return user.treatments
