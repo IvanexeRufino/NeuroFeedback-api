@@ -1,6 +1,7 @@
 package neurofeedback.api
 
 import grails.validation.ValidationException
+
 import static org.springframework.http.HttpStatus.*
 import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
@@ -8,16 +9,21 @@ import grails.transaction.Transactional
 @Secured(['ROLE_PROFESSIONAL', 'ROLE_PATIENT'])
 class UserHistoryController {
 
-    static String friendlyName = "Historial de tratamientos"
-    UserHistoryService userHistoryService
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+
     static Boolean patient = true
     static Boolean professional = true
     static Boolean administrator = false
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+
+    static String friendlyName = "Historial de tratamientos"
+    UserHistoryService userHistoryService
+    def springSecurityService
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond userHistoryService.list(params), model:[userHistoryCount: userHistoryService.count()]
+        List history = getApplicableHistory()
+
+        respond history, model:[userHistoryCount: history.size()]
     }
 
     def show(Long id) {
@@ -36,5 +42,17 @@ class UserHistoryController {
             }
             '*'{ render status: NOT_FOUND }
         }
+    }
+
+    private List getApplicableHistory() {
+        String username = springSecurityService.getCurrentUser().username
+        User user = User.findByUsername(username)
+        Set<Role> roles = user.authorities
+
+        if(roles.contains("ROLE_PROFESSIONAL")) {
+
+        }
+
+        return user.treatments
     }
 }

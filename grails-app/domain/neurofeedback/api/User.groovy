@@ -32,12 +32,8 @@ class User implements Serializable {
         (UserRole.findAllByUser(this) as List<UserRole>)*.role as Set<Role>
     }
 
-    Set<Treatment> getTreatments() {
-        (Treatment.findAllByUser(this) as Set<Treatment>)
-    }
-
-    String toString() {
-        return username
+    List<UserHistory> getTreatments() {
+        (UserHistory.findAllByUser(this) as List<UserHistory>)
     }
 
     static constraints = {

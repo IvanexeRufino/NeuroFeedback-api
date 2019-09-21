@@ -11,8 +11,4 @@ class Treatment {
         name (unique: true, blank: false, maxSize: 50)
         description (blank: false, maxSize: 255)
     }
-
-    String toString() {
-        return name
-    }
 }
