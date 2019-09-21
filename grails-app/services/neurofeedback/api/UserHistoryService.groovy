@@ -2,17 +2,17 @@ package neurofeedback.api
 
 import grails.gorm.services.Service
 
-@Service(UserHistory)
-interface UserHistoryService {
+@Service(UserTreatment)
+interface UserTreatmentService {
 
-    UserHistory get(Serializable id)
+    UserTreatment get(Serializable id)
 
-    List<UserHistory> list(Map args)
+    List<UserTreatment> list(Map args)
 
     Long count()
 
     void delete(Serializable id)
 
-    UserHistory save(UserHistory userHistory)
+    UserTreatment save(UserTreatment userTreatment)
 
 }

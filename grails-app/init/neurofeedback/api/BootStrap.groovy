@@ -23,10 +23,10 @@ class BootStrap {
 		User patient = User.findByUsername('paciente')
 		User particular = User.findByUsername('irufino')
 
-		UserHistory.create(patient, stress,36000, 95, true)
-		UserHistory.create(patient, concentration,36000, 86, true)
+		UserTreatment.create(patient, stress,36000, 95, true,true)
+		UserTreatment.create(patient, concentration,36000, 86, false, true)
 
-		UserHistory.create(particular, concentration,360, 100, true)
+		UserTreatment.create(particular, concentration,360, 100, true, true)
 	}
 
 	static def initializeRoles() {

@@ -7,37 +7,37 @@ import org.hibernate.SessionFactory
 
 @Integration
 @Rollback
-class UserHistoryServiceSpec extends Specification {
+class UserTreatmentServiceSpec extends Specification {
 
-    UserHistoryService userHistoryService
+    UserTreatmentService userTreatmentService
     SessionFactory sessionFactory
 
     private Long setupData() {
         // TODO: Populate valid domain instances and return a valid ID
-        //new UserHistory(...).save(flush: true, failOnError: true)
-        //new UserHistory(...).save(flush: true, failOnError: true)
-        //UserHistory userHistory = new UserHistory(...).save(flush: true, failOnError: true)
-        //new UserHistory(...).save(flush: true, failOnError: true)
-        //new UserHistory(...).save(flush: true, failOnError: true)
+        //new UserTreatment(...).save(flush: true, failOnError: true)
+        //new UserTreatment(...).save(flush: true, failOnError: true)
+        //UserTreatment userTreatment = new UserTreatment(...).save(flush: true, failOnError: true)
+        //new UserTreatment(...).save(flush: true, failOnError: true)
+        //new UserTreatment(...).save(flush: true, failOnError: true)
         assert false, "TODO: Provide a setupData() implementation for this generated test suite"
-        //userHistory.id
+        //userTreatment.id
     }
 
     void "test get"() {
         setupData()
 
         expect:
-        userHistoryService.get(1) != null
+        userTreatmentService.get(1) != null
     }
 
     void "test list"() {
         setupData()
 
         when:
-        List<UserHistory> userHistoryList = userHistoryService.list(max: 2, offset: 2)
+        List<UserTreatment> userTreatmentList = userTreatmentService.list(max: 2, offset: 2)
 
         then:
-        userHistoryList.size() == 2
+        userTreatmentList.size() == 2
         assert false, "TODO: Verify the correct instances are returned"
     }
 
@@ -45,30 +45,30 @@ class UserHistoryServiceSpec extends Specification {
         setupData()
 
         expect:
-        userHistoryService.count() == 5
+        userTreatmentService.count() == 5
     }
 
     void "test delete"() {
-        Long userHistoryId = setupData()
+        Long userTreatmentId = setupData()
 
         expect:
-        userHistoryService.count() == 5
+        userTreatmentService.count() == 5
 
         when:
-        userHistoryService.delete(userHistoryId)
+        userTreatmentService.delete(userTreatmentId)
         sessionFactory.currentSession.flush()
 
         then:
-        userHistoryService.count() == 4
+        userTreatmentService.count() == 4
     }
 
     void "test save"() {
         when:
         assert false, "TODO: Provide a valid instance to save"
-        UserHistory userHistory = new UserHistory()
-        userHistoryService.save(userHistory)
+        UserTreatment userTreatment = new UserTreatment()
+        userTreatmentService.save(userTreatment)
 
         then:
-        userHistory.id != null
+        userTreatment.id != null
     }
 }

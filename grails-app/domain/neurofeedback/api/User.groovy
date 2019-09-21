@@ -3,8 +3,6 @@ package neurofeedback.api
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 import grails.compiler.GrailsCompileStatic
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 @GrailsCompileStatic
 @EqualsAndHashCode(includes='username')
@@ -33,8 +31,8 @@ class User implements Serializable {
         [role]
     }
 
-    List<UserHistory> getTreatments() {
-        (UserHistory.findAllByUser(this) as List<UserHistory>)
+    List<UserTreatment> getTreatments() {
+        (UserTreatment.findAllByUser(this) as List<UserTreatment>)
     }
 
     static constraints = {

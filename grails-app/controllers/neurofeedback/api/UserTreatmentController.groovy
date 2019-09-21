@@ -7,7 +7,7 @@ import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 @Transactional(readOnly = true)
 @Secured(['ROLE_PROFESSIONAL', 'ROLE_PATIENT'])
-class UserHistoryController {
+class UserTreatmentController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -16,28 +16,28 @@ class UserHistoryController {
     static Boolean administrator = false
 
     static String friendlyName = "Historial de tratamientos"
-    UserHistoryService userHistoryService
+    UserTreatmentService userTreatmentService
     def springSecurityService
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         List history = getApplicableHistory()
 
-        respond history, model:[userHistoryCount: history.size()]
+        respond history, model:[userTreatmentCount: history.size()]
     }
 
     def show(Long id) {
-        respond userHistoryService.get(id)
+        respond userTreatmentService.get(id)
     }
 
     def edit(Long id) {
-        respond userHistoryService.get(id)
+        respond userTreatmentService.get(id)
     }
 
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'userHistory.label', default: 'UserHistory'), params.id])
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'userTreatment.label', default: 'UserTreatment'), params.id])
                 redirect action: "index", method: "GET"
             }
             '*'{ render status: NOT_FOUND }

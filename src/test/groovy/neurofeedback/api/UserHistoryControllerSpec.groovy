@@ -5,7 +5,7 @@ import grails.testing.web.controllers.ControllerUnitTest
 import grails.validation.ValidationException
 import spock.lang.*
 
-class UserHistoryControllerSpec extends Specification implements ControllerUnitTest<UserHistoryController>, DomainUnitTest<UserHistory> {
+class UserTreatmentControllerSpec extends Specification implements ControllerUnitTest<UserTreatmentController>, DomainUnitTest<UserTreatment> {
 
     def populateValidParams(params) {
         assert params != null
@@ -17,7 +17,7 @@ class UserHistoryControllerSpec extends Specification implements ControllerUnitT
 
     void "Test the index action returns the correct model"() {
         given:
-        controller.userHistoryService = Mock(UserHistoryService) {
+        controller.userTreatmentService = Mock(UserTreatmentService) {
             1 * list(_) >> []
             1 * count() >> 0
         }
@@ -26,8 +26,8 @@ class UserHistoryControllerSpec extends Specification implements ControllerUnitT
         controller.index()
 
         then:"The model is correct"
-        !model.userHistoryList
-        model.userHistoryCount == 0
+        !model.userTreatmentList
+        model.userTreatmentCount == 0
     }
 
     void "Test the create action returns the correct model"() {
@@ -35,7 +35,7 @@ class UserHistoryControllerSpec extends Specification implements ControllerUnitT
         controller.create()
 
         then:"The model is correctly created"
-        model.userHistory!= null
+        model.userTreatment!= null
     }
 
     void "Test the save action with a null instance"() {
@@ -45,14 +45,14 @@ class UserHistoryControllerSpec extends Specification implements ControllerUnitT
         controller.save(null)
 
         then:"A 404 error is returned"
-        response.redirectedUrl == '/userHistory/index'
+        response.redirectedUrl == '/userTreatment/index'
         flash.message != null
     }
 
     void "Test the save action correctly persists"() {
         given:
-        controller.userHistoryService = Mock(UserHistoryService) {
-            1 * save(_ as UserHistory)
+        controller.userTreatmentService = Mock(UserTreatmentService) {
+            1 * save(_ as UserTreatment)
         }
 
         when:"The save action is executed with a valid instance"
@@ -60,38 +60,38 @@ class UserHistoryControllerSpec extends Specification implements ControllerUnitT
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'POST'
         populateValidParams(params)
-        def userHistory = new UserHistory(params)
-        userHistory.id = 1
+        def userTreatment = new UserTreatment(params)
+        userTreatment.id = 1
 
-        controller.save(userHistory)
+        controller.save(userTreatment)
 
         then:"A redirect is issued to the show action"
-        response.redirectedUrl == '/userHistory/show/1'
+        response.redirectedUrl == '/userTreatment/show/1'
         controller.flash.message != null
     }
 
     void "Test the save action with an invalid instance"() {
         given:
-        controller.userHistoryService = Mock(UserHistoryService) {
-            1 * save(_ as UserHistory) >> { UserHistory userHistory ->
-                throw new ValidationException("Invalid instance", userHistory.errors)
+        controller.userTreatmentService = Mock(UserTreatmentService) {
+            1 * save(_ as UserTreatment) >> { UserTreatment userTreatment ->
+                throw new ValidationException("Invalid instance", userTreatment.errors)
             }
         }
 
         when:"The save action is executed with an invalid instance"
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'POST'
-        def userHistory = new UserHistory()
-        controller.save(userHistory)
+        def userTreatment = new UserTreatment()
+        controller.save(userTreatment)
 
         then:"The create view is rendered again with the correct model"
-        model.userHistory != null
+        model.userTreatment != null
         view == 'create'
     }
 
     void "Test the show action with a null id"() {
         given:
-        controller.userHistoryService = Mock(UserHistoryService) {
+        controller.userTreatmentService = Mock(UserTreatmentService) {
             1 * get(null) >> null
         }
 
@@ -104,20 +104,20 @@ class UserHistoryControllerSpec extends Specification implements ControllerUnitT
 
     void "Test the show action with a valid id"() {
         given:
-        controller.userHistoryService = Mock(UserHistoryService) {
-            1 * get(2) >> new UserHistory()
+        controller.userTreatmentService = Mock(UserTreatmentService) {
+            1 * get(2) >> new UserTreatment()
         }
 
         when:"A domain instance is passed to the show action"
         controller.show(2)
 
         then:"A model is populated containing the domain instance"
-        model.userHistory instanceof UserHistory
+        model.userTreatment instanceof UserTreatment
     }
 
     void "Test the edit action with a null id"() {
         given:
-        controller.userHistoryService = Mock(UserHistoryService) {
+        controller.userTreatmentService = Mock(UserTreatmentService) {
             1 * get(null) >> null
         }
 
@@ -130,15 +130,15 @@ class UserHistoryControllerSpec extends Specification implements ControllerUnitT
 
     void "Test the edit action with a valid id"() {
         given:
-        controller.userHistoryService = Mock(UserHistoryService) {
-            1 * get(2) >> new UserHistory()
+        controller.userTreatmentService = Mock(UserTreatmentService) {
+            1 * get(2) >> new UserTreatment()
         }
 
         when:"A domain instance is passed to the show action"
         controller.edit(2)
 
         then:"A model is populated containing the domain instance"
-        model.userHistory instanceof UserHistory
+        model.userTreatment instanceof UserTreatment
     }
 
 
@@ -149,14 +149,14 @@ class UserHistoryControllerSpec extends Specification implements ControllerUnitT
         controller.update(null)
 
         then:"A 404 error is returned"
-        response.redirectedUrl == '/userHistory/index'
+        response.redirectedUrl == '/userTreatment/index'
         flash.message != null
     }
 
     void "Test the update action correctly persists"() {
         given:
-        controller.userHistoryService = Mock(UserHistoryService) {
-            1 * save(_ as UserHistory)
+        controller.userTreatmentService = Mock(UserTreatmentService) {
+            1 * save(_ as UserTreatment)
         }
 
         when:"The save action is executed with a valid instance"
@@ -164,31 +164,31 @@ class UserHistoryControllerSpec extends Specification implements ControllerUnitT
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'PUT'
         populateValidParams(params)
-        def userHistory = new UserHistory(params)
-        userHistory.id = 1
+        def userTreatment = new UserTreatment(params)
+        userTreatment.id = 1
 
-        controller.update(userHistory)
+        controller.update(userTreatment)
 
         then:"A redirect is issued to the show action"
-        response.redirectedUrl == '/userHistory/show/1'
+        response.redirectedUrl == '/userTreatment/show/1'
         controller.flash.message != null
     }
 
     void "Test the update action with an invalid instance"() {
         given:
-        controller.userHistoryService = Mock(UserHistoryService) {
-            1 * save(_ as UserHistory) >> { UserHistory userHistory ->
-                throw new ValidationException("Invalid instance", userHistory.errors)
+        controller.userTreatmentService = Mock(UserTreatmentService) {
+            1 * save(_ as UserTreatment) >> { UserTreatment userTreatment ->
+                throw new ValidationException("Invalid instance", userTreatment.errors)
             }
         }
 
         when:"The save action is executed with an invalid instance"
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'PUT'
-        controller.update(new UserHistory())
+        controller.update(new UserTreatment())
 
         then:"The edit view is rendered again with the correct model"
-        model.userHistory != null
+        model.userTreatment != null
         view == 'edit'
     }
 
@@ -199,13 +199,13 @@ class UserHistoryControllerSpec extends Specification implements ControllerUnitT
         controller.delete(null)
 
         then:"A 404 is returned"
-        response.redirectedUrl == '/userHistory/index'
+        response.redirectedUrl == '/userTreatment/index'
         flash.message != null
     }
 
     void "Test the delete action with an instance"() {
         given:
-        controller.userHistoryService = Mock(UserHistoryService) {
+        controller.userTreatmentService = Mock(UserTreatmentService) {
             1 * delete(2)
         }
 
@@ -215,7 +215,7 @@ class UserHistoryControllerSpec extends Specification implements ControllerUnitT
         controller.delete(2)
 
         then:"The user is redirected to index"
-        response.redirectedUrl == '/userHistory/index'
+        response.redirectedUrl == '/userTreatment/index'
         flash.message != null
     }
 }

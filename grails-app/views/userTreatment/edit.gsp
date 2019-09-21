@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'userHistory.label', default: 'userHistory')}" />
+        <g:set var="entityName" value="${message(code: 'userTreatment.label', default: 'userTreatment')}" />
         <title><g:message code="default.edit.label" args="[entityName]" /></title>
     </head>
     <body>
@@ -20,17 +20,17 @@
             <g:if test="${flash.message}">
             <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <g:hasErrors bean="${this.userHistory}">
+            <g:hasErrors bean="${this.userTreatment}">
             <ul class="errors" role="alert">
-                <g:eachError bean="${this.userHistory}" var="error">
+                <g:eachError bean="${this.userTreatment}" var="error">
                 <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
                 </g:eachError>
             </ul>
             </g:hasErrors>
-            <g:form resource="${this.userHistory}" method="PUT">
-                <g:hiddenField name="version" value="${this.userHistory?.version}" />
+            <g:form resource="${this.userTreatment}" method="PUT">
+                <g:hiddenField name="version" value="${this.userTreatment?.version}" />
                 <fieldset class="form">
-                    <f:all bean="userHistory"/>
+                    <f:all bean="userTreatment"/>
                 </fieldset>
                 <br>
                 <fieldset class="buttons">

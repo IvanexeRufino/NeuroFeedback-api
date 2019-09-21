@@ -1,6 +1,5 @@
 package neurofeedback.api
-import grails.validation.ValidationException
-import org.springframework.security.crypto.password.PasswordEncoder
+
 class MobileController{
     def passwordEncoder
 
@@ -33,10 +32,12 @@ class MobileController{
 
     def getTreatment(){
         def map
-        //def userTreatments = UserXTreatment.findByUser(user)
         def userId = params.userId
-        //def userId = "1"
-        def userTreatment = UserXTreatment.findAllByUser(User.load(userId)).stream().map({ut -> ut.treatment.toJson()}).collect()
+        def userTreatment = UserTreatment.findAllByUser(User.findById(userId)).stream().filter { userT ->
+            !userT.finished
+        }.map {
+            ut -> ut.treatment.toJson()
+        }.collect()
         map = [status: 200, message: ["response":"Ok","treatments":userTreatment]]
         respond map, formats: ['json']
     }

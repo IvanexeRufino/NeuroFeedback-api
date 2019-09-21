@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'userHistory.label', default: 'userHistory')}" />
+        <g:set var="entityName" value="${message(code: 'userTreatment.label', default: 'userTreatment')}" />
         <title><g:message code="default.show.label" args="[entityName]" /></title>
     </head>
     <body>
@@ -21,10 +21,10 @@
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
             
-            <f:display bean="userHistory" />
-            <g:form resource="${this.userHistory}" method="DELETE">
+            <f:display bean="userTreatment" />
+            <g:form resource="${this.userTreatment}" method="DELETE">
                 <fieldset class="buttons">
-                    <g:link class="edit" action="edit" resource="${this.userHistory}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
+                    <g:link class="edit" action="edit" resource="${this.userTreatment}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
                     <input class="delete" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
                 </fieldset>
             </g:form>
