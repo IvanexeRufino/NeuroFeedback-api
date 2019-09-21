@@ -45,8 +45,7 @@ class UserHistoryController {
     }
 
     private List getApplicableHistory() {
-        String username = springSecurityService.getCurrentUser().username
-        User user = User.findByUsername(username)
+        User user = springSecurityService.getCurrentUser()
 
         if(user.role.authority == "ROLE_PROFESSIONAL") {
 

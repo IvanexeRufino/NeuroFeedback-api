@@ -16,6 +16,8 @@ class UserController {
     static Boolean administrator = true
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    static String friendlyName = "Usuarios del sistema"
+
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond userService.list(params), model:[userCount: userService.count()]
