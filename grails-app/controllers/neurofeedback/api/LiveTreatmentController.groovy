@@ -6,6 +6,8 @@ import grails.transaction.Transactional
 @Secured(['ROLE_PROFESSIONAL'])
 class LiveTreatmentController {
 
+    static String friendlyName = "Ver tratamientos en vivo"
+
     static Boolean patient = false
     static Boolean professional = true
     static Boolean administrator = false
