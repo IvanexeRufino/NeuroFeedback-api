@@ -32,6 +32,14 @@ class User implements Serializable {
         (UserRole.findAllByUser(this) as List<UserRole>)*.role as Set<Role>
     }
 
+    Set<Treatment> getTreatments() {
+        (Treatment.findAllByUser(this) as Set<Treatment>)
+    }
+
+    String toString() {
+        return username
+    }
+
     static constraints = {
         id (unique: true, maxSize: 11)
         firstName (blank: false, maxSize: 50)
