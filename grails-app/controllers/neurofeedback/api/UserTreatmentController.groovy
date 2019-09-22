@@ -39,13 +39,11 @@ class UserTreatmentController {
     }
 
     def create() {
-        log.info("AT LEAST IM GETTING HERE CREATE")
         List<User> patientUsers = getApplicableUsers(params)
         respond new UserTreatment(params), model:[patientUsers: patientUsers]
     }
 
     def save(UserTreatment userTreatment) {
-        log.info("AT LEAST IM GETTING HERE")
         if (userTreatment == null) {
             notFound()
             return

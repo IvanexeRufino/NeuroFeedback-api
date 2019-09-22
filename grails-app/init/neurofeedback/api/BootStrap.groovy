@@ -26,6 +26,7 @@ class BootStrap {
 		UserTreatment.create(patient, stress, "Finished", 36000, 250,12, 13, 95, true)
 		UserTreatment.create(patient, concentration, "Pending", 36000, 250,12, 13, 86, true)
 		UserTreatment.create(particular, stress, "Finished", 360, 250,12, 13, 100, true)
+		UserTreatment.create(particular, stress, "Live", 360, 250,12, 13, 100, true)
 	}
 
 	static def initializeRoles() {
