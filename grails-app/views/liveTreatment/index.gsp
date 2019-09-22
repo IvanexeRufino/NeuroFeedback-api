@@ -31,7 +31,7 @@
                         ${userTreatment.treatment.name}
                     </td>
                     <td>
-                        <g:actionSubmit value="Watch Live" action="live" />
+                        <g:link class="save" action="live" id="${userTreatment.id}"><g:message code="WATCH LIVE" /></g:link>
                     </td>
                 </tr>
             </g:each>
@@ -44,7 +44,6 @@
             <g:paginate total="${userTreatmentLiveCount ?: 0}" />
         </div>
     </div>
-    <g:actionSubmit value="Watch Live" action="live"/>
 </div>
 </body>
 </html>

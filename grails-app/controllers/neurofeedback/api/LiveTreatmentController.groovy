@@ -26,7 +26,7 @@ class LiveTreatmentController {
     }
 
     def live() {
-        log.info("IM BEING CALLED")
+        log.info("IM BEING CALLED " + params.id)
         render(view: "main.gsp")
     }
 

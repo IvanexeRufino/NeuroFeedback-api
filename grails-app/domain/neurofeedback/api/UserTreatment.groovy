@@ -2,6 +2,7 @@ package neurofeedback.api
 
 class UserTreatment {
 
+    int id
     User user
     Treatment treatment
 
