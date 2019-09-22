@@ -1,25 +1,22 @@
 package neurofeedback.api
 
 import grails.plugin.springsecurity.annotation.Secured
-import neurofeedback.api.Treatment
-import neurofeedback.api.User
-import neurofeedback.api.UserTreatment
-import neurofeedback.api.UserTreatmentService
-
+import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
 @Secured(['ROLE_PROFESSIONAL', 'ROLE_PATIENT'])
 class UserTreatmentController {
-
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     static Boolean patient = true
     static Boolean professional = true
     static Boolean administrator = false
 
     static String friendlyName = "Historial de tratamientos"
-    UserTreatmentService userTreatmentService
     def springSecurityService
+
+    UserTreatmentService userTreatmentService
+
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -34,15 +31,84 @@ class UserTreatmentController {
         }.collect()
 
         respond history, model:[userTreatmentPending: pending, userTreatmentPendingCount: pending.size(),
-                       userTreatmentFinished: finished, userTreatmentFinishedCount: finished.size()]
+                                userTreatmentFinished: finished, userTreatmentFinishedCount: finished.size()]
     }
 
     def show(Long id) {
         respond userTreatmentService.get(id)
     }
 
+    def create() {
+        log.info("AT LEAST IM GETTING HERE CREATE")
+        List<User> patientUsers = getApplicableUsers(params)
+        respond new UserTreatment(params), model:[patientUsers: patientUsers]
+    }
+
+    def save(UserTreatment userTreatment) {
+        log.info("AT LEAST IM GETTING HERE")
+        if (userTreatment == null) {
+            notFound()
+            return
+        }
+
+        try {
+            userTreatment.status = "Pending"
+            userTreatmentService.save(userTreatment)
+        } catch (ValidationException e) {
+            respond userTreatment.errors, view:'create'
+            return
+        }
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.created.message', args: [message(code: 'userTreatment.label', default: 'UserTreatment'), userTreatment.id])
+                redirect userTreatment
+            }
+            '*' { respond userTreatment, [status: CREATED] }
+        }
+    }
+
     def edit(Long id) {
         respond userTreatmentService.get(id)
+    }
+
+    def update(UserTreatment userTreatment) {
+        if (userTreatment == null) {
+            notFound()
+            return
+        }
+
+        try {
+            userTreatmentService.save(userTreatment)
+        } catch (ValidationException e) {
+            respond userTreatment.errors, view:'edit'
+            return
+        }
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'userTreatment.label', default: 'UserTreatment'), userTreatment.id])
+                redirect userTreatment
+            }
+            '*'{ respond userTreatment, [status: OK] }
+        }
+    }
+
+    def delete(Long id) {
+        if (id == null) {
+            notFound()
+            return
+        }
+
+        userTreatmentService.delete(id)
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'userTreatment.label', default: 'UserTreatment'), id])
+                redirect action:"index", method:"GET"
+            }
+            '*'{ render status: NO_CONTENT }
+        }
     }
 
     protected void notFound() {
@@ -63,5 +129,11 @@ class UserTreatmentController {
         }
 
         return user.treatments
+    }
+
+    private List<User> getApplicableUsers(Map params) {
+        User profesional = springSecurityService.getCurrentUser()
+        Role patient = Role.findByAuthority("ROLE_PATIENT")
+        return  User.findAllByRoleAndAssignedDoctor(patient, profesional)
     }
 }

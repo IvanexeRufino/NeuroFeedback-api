@@ -20,10 +20,10 @@ class UserTreatment {
         frecuency (blank: false)
         minValue (blank: false)
         maxValue (blank: false)
-        treatmentDate (blank: false)
-        duration (blank: false, minValue: 0)
-        effectiveness (blank: false, range: 0..100)
-        status(inList: ["Finished", "Pending", "Live"], blank: false)
+        treatmentDate(nullable: true)
+        duration (nullable: true, minValue: 0)
+        effectiveness (blank: true, range: 0..100)
+        status(inList: ["Finished", "Pending", "Live"], nullable: true)
     }
 
     static UserTreatment create(User user, Treatment treatment, String status, double duration, double frecuency,
