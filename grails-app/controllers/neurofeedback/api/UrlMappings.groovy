@@ -18,6 +18,5 @@ class UrlMappings {
         "/mobile/auth"(controller: 'mobile', action: ['POST': 'authMobile', 'GET': 'authMobile'])
         "/mobile/treatments"(controller: 'mobile', action: ['POST': 'getTreatment', 'GET': 'getTreatment'])
         "/treatmentTrack"(controller: 'data', action: ['POST': 'treatmentSession', 'GET': 'index'])
-        "/liveTreatment/live?id=$id"
     }
 }

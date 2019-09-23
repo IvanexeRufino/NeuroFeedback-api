@@ -1,289 +1,773 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-	<title>Iniciar Tratamiento</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <asset:stylesheet src="bootstrap.min.css"/>
-    <asset:stylesheet src="tratamiento.css"/>
-    <asset:javascript src="jquery-2.2.0.min.js"/>
-    <asset:javascript src="bootstrap.js"/>
-    <script src="https://use.fontawesome.com/fa5ce205b9.js"></script>
+	<meta name="layout" content="main"/>
 </head>
 <body>
-	<nav class="navbar navbar-default">
-	  <div class="container">
-	    <div class="navbar-header">
-	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>                        
-	      </button>
-	      <a class="navbar-brand" href="#">NeuroCare</a>
-	    </div>
-	    <div class="collapse navbar-collapse" id="myNavbar">
-	      <ul class="nav navbar-nav navbar-right">
-	        <li><a href="#">Conectar Dispositivo</a></li>
-	        <li><a href="#">Tratamiento</a></li>
-	        <li><a href="#">Resultados</a></li>
-	      </ul>
-	    </div>
-	  </div>
-	</nav>
-	<div class="container-fluid bg-3 text-center t-full-screen" style="min-height: 100vh;" id="div-conexion">
-		<div id="dispositivoNoConectado">
-			<h2 class="margin">¿Cómo me conecto con el dispositivo?</h2><br>
-	  		<div class="row">
-			    <div class="col-sm-3"> 
-			      	<p>1-Verifica la conexión Bluetooth en tu dispositivo</p>
-              <g:img dir="images" file="bluetooth-logo.png"  height="225" width="225" class="image-border"/>
-	    		</div>
-			    <div class="col-sm-3">
-				    <p>2-Presioná el botón de abajo</p>
-              <g:img dir="images" file="button-press.jpg" height="225" width="225" class="image-border"/>
-			    </div>
-			    <div class="col-sm-3"> 
-			        <p>3-Busca y selecciona el dispositivo</p>
-              <g:img dir="images" file="list.png" height="225" width="225" class="image-border"/>
-			    </div>
-			    <div class="col-sm-3"> 
-			      	<p>4-Al confirmar, se conectará el dispositivo y empezará el tratamiento </p>
-              <g:img dir="images" file="wait.png" height="225" width="225" class="image-border"/>
-	    		</div>
-	  		</div>
-        <br>
-        <div class="row">
-          <div class="col-md-12">
-            <button class="btn btn-primary" id="btn_buscar_bt"><i class="fa fa-play fa-3x"></i></button>
-          </div> 
-        </div>
+<content tag="nav">
+	<li class="dropdown">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Application Status <span class="caret"></span></a>
+		<ul class="dropdown-menu">
+			<li><a href="#">Environment: ${grails.util.Environment.current.name}</a></li>
+			<li><a href="#">App profile: ${grailsApplication.config.grails?.profile}</a></li>
+			<li><a href="#">App version:
+				<g:meta name="info.app.version"/></a>
+			</li>
+			<li role="separator" class="divider"></li>
+			<li><a href="#">Grails version:
+				<g:meta name="info.app.grailsVersion"/></a>
+			</li>
+			<li><a href="#">Groovy version: ${GroovySystem.getVersion()}</a></li>
+			<li><a href="#">JVM version: ${System.getProperty('java.version')}</a></li>
+			<li role="separator" class="divider"></li>
+			<li><a href="#">Reloading active: ${grails.util.Environment.reloadingAgentEnabled}</a></li>
+		</ul>
+	</li>
+	<li class="dropdown">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Artefacts <span class="caret"></span></a>
+		<ul class="dropdown-menu">
+			<li><a href="#">Controllers: ${grailsApplication.controllerClasses.size()}</a></li>
+			<li><a href="#">Domains: ${grailsApplication.domainClasses.size()}</a></li>
+			<li><a href="#">Services: ${grailsApplication.serviceClasses.size()}</a></li>
+			<li><a href="#">Tag Libraries: ${grailsApplication.tagLibClasses.size()}</a></li>
+		</ul>
+	</li>
+	<li class="dropdown">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Installed Plugins <span class="caret"></span></a>
+		<ul class="dropdown-menu">
+			<g:each var="plugin" in="${applicationContext.getBean('pluginManager').allPlugins}">
+				<li><a href="#">${plugin.name} - ${plugin.version}</a></li>
+			</g:each>
+		</ul>
+	</li>
+</content>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="row">
+			<h1>NeuroCare</h1>
+			<p>
+				Bienvenido a la plataforma de aministración del sistema de neurocare
+			</p>
 		</div>
-		<div id="dispositivoConectando" class="cargando overlay" style="z-index: 2;">
-			<div class="row" >
-			<h3 class="margin">Conectando Dispositivo</h3>
-		  	<div class="loader" id="loader"></div>
+		<div class="row">
+            <div id="containerMain" style="height: 350px"></div>
+			<div class="column">
+				<div id="container1" style="height: 250px; width: 550px; display: inline-block"></div>
+				<div id="container2" style="height: 250px; width: 550px; display: inline-block"></div>
 			</div>
-		</div>
-		<div id="dispositivoConectado" class="cargando overlay" style="z-index: 3;">
-			<div class="row" >
-			<h3 class="margin">Dispositivo Conectado</h3>
-		  	<div class="loaded" id="loaded"><i class="fa fa-check-circle fa-5x"></i></div>
+			<div class="column">
+				<div id="container3" style="height: 250px; width: 550px; display: inline-block"></div>
+				<div id="container4" style="height: 250px; width: 550px; display: inline-block"></div>
 			</div>
-		</div>
-	</div>
-	<div class="container-fluid bg-3 text-center " id="div-tratamiento" style="background-color: #f8f8f8; height: 100vh">
-		<h3 >Tratamiento en proceso</h3>
-		<div  class="row">
-			<div class="col-md-12">
-				<div id="container"></div>
+			<div class="column">
+				<div id="container5" style="height: 250px; width: 550px; display: inline-block"></div>
+				<div id="container6" style="height: 250px; width: 550px; display: inline-block"></div>
 			</div>
-			<br>
-			<div class="col-md-12">
-				<div>
-					<button class="btn btn-primary" type="button" id="accuracy_bar"></button>
-				</div>
+			<div class="column">
+				<div id="container7" style="height: 250px; width: 550px; display: inline-block"></div>
+				<div id="container8" style="height: 250px; width: 550px; display: inline-block"></div>
 			</div>
 		</div>
 	</div>
-	<div class="container-fluid bg-1 text-center resultados" id="div-resultados">    
-  		<h3 class="margin">Resultados del entrenamiento</h3><br>
-  		<div class="row">
-		    <div class="col-sm-4">
-			    <p>Resultado Anterior</p>
-			    <ul>
-			    	<li>1</li>
-			    	<li>2</li>
-			    	<li>3</li>
-			    </ul>
-		    </div>
-		    <div class="col-sm-4"> 
-		        <p>Resultado Tratamiento</p>
-			    <ul>
-			    	<li>1</li>
-			    	<li>2</li>
-			    	<li>3</li>
-			    </ul>
-		    </div>
-		    <div class="col-sm-4"> 
-		      	<p>Resultado Promedio</p>
-			    <ul>
-			    	<li>1</li>
-			    	<li>2</li>
-			    	<li>3</li>
-			    </ul>
-    		</div>
-  		</div>
-	</div>
-	<footer class="container-fluid bg-4 text-center reducido">
-	  	<p> <a href="https://google.com.ar">NeuroCare</a> Todos los derechos reservados</p> 
-	</footer>
-</body>
-</html>
+</div>
 <script src="https://code.highcharts.com/highcharts.js"></script>
+
 <script type="text/javascript">
-document.addEventListener('DOMContentLoaded', function() {
-  x = 0;
- chart = Highcharts.chart('container', {
+    var chart;
+    var i = 0;
+
+    Highcharts.chart('containerMain', {
         chart: {
-            type: 'spline'
+            backgroundColor: 'transparent',
+            type: 'spline',
+            animation: Highcharts.svg, // don't animate in old IE
+            marginRight: 10,
+            events: {
+                load: function () {
+
+                    // set up the updating of the chart each second
+                    var series = this.series;
+                    setInterval(function () {
+                        $.ajax({
+                            url: '/liveTreatment/data/${params.id}',
+                            type: 'get',
+                            success: function (jsonArray) {
+                                var x = (new Date()).getTime();
+                                series[0].addPoint([x, jsonArray.analysis], true, true);
+                            }
+                        });
+                    }, 2000);
+                }
+            }
         },
         title: {
-            text: 'Live random data'
+            text: 'Analyzed Data'
         },
         xAxis: {
+            type: 'datetime',
+            tickPixelInterval: 150
         },
         yAxis: {
+            title: {
+                text: 'Hz'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            formatter: function () {
+                return '<b>' + this.series.name + '</b><br/>' +
+                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>'
+                    +
+                    Highcharts.numberFormat(this.y, 2);
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        exporting: {
+            enabled: false
         },
         series: [{
-            name: 'Random data',
-            data: []
-        }],
-        animation: Highcharts.svg,
-        backgroundColor: 'red'
-      });   
- }); 
+            name: 'Analyzed Data',
+            data: (function () {
+                // generate an array of random data
+                var data = [],
+                    time = (new Date()).getTime(),
+                    i;
+
+                for (i = -19; i <= 0; i += 1) {
+                    data.push({
+                        x: time + i * 1000,
+                        y: 0
+                    });
+                }
+                return data;
+            }())
+        }]
+    });
 </script>
 
 <script type="text/javascript">
-    var bluetoothDevice;
-    var batteryLevelCharacteristic;
+    var chart;
+    var i = 0;
 
-function hideExcept(show){
-	$("#dispositivoNoConectado").fadeOut("slow");
-	$("#dispositivoConectado").fadeOut("slow");
-	$("#dispositivoConectando").fadeOut("slow");
-	scroll(show);
-	$("#"+show).show();
-}
-jQuery.fn.extend(
-{
-  scrollTo : function(speed, easing)
-  {
-    return this.each(function()
-    {
-      var targetOffset = $(this).offset().top;
-      $('html,body').animate({scrollTop: targetOffset}, speed, easing);
+    Highcharts.chart('container1', {
+        chart: {
+            backgroundColor: 'transparent',
+            type: 'spline',
+            animation: Highcharts.svg, // don't animate in old IE
+            marginRight: 10,
+            events: {
+                load: function () {
+
+                    // set up the updating of the chart each second
+                    var series = this.series;
+                    setInterval(function () {
+                        $.ajax({
+                            url: '/liveTreatment/data/${params.id}',
+                            type: 'get',
+                            success: function (jsonArray) {
+                                var x = (new Date()).getTime();
+                                series[0].addPoint([x, jsonArray.ch1], true, true);
+                            }
+                        });
+                    }, 2000);
+                }
+            }
+        },
+        title: {
+            text: 'Channel 1'
+        },
+        xAxis: {
+            type: 'datetime',
+            tickPixelInterval: 150
+        },
+        yAxis: {
+            title: {
+                text: 'Hz'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            formatter: function () {
+                return '<b>' + this.series.name + '</b><br/>' +
+                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>'
+                    +
+                    Highcharts.numberFormat(this.y, 2);
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        exporting: {
+            enabled: false
+        },
+        series: [{
+            name: 'channel 1',
+            data: (function () {
+                // generate an array of random data
+                var data = [],
+                    time = (new Date()).getTime(),
+                    i;
+
+                for (i = -19; i <= 0; i += 1) {
+                    data.push({
+                        x: time + i * 1000,
+                        y: 0
+                    });
+                }
+                return data;
+            }())
+        }]
     });
-  }
-});
-
-function scroll(div){
-	$("#"+div).scrollTo(500);
-}
-$("#btn_buscar_bt").click(function() {
-    onReadBatteryLevelButtonClick();
-    hideExcept("dispositivoConectando");
-});
-async function onReadBatteryLevelButtonClick() {
-  try {
-    if (!bluetoothDevice) {
-      await requestDevice();
-    }
-    console.log('Leyendo Nivel de Batería...');
-    await connectDeviceAndCacheCharacteristics();
-
-    console.log('Leyendo Nivel de Batería...');
-    await batteryLevelCharacteristic.readValue();
-
-    onStartNotificationsButtonClick();
-    hideExcept("dispositivoConectado");
-    scroll("div-tratamiento");
-  } catch(error) {
-  	hideExcept("dispositivoNoConectado");
-    console.log('Argh! ' + error);
-  }
-}
-
-async function requestDevice() {
-  console.log('Buscando dispositivos Bluetooth...');
-  bluetoothDevice = await navigator.bluetooth.requestDevice({
-   // filters: [...] <- Prefer filters to save energy & show relevant devices.
-      acceptAllDevices: true,
-      optionalServices: ['battery_service']});
-  bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
-}
-
-async function connectDeviceAndCacheCharacteristics() {
-  if (bluetoothDevice.gatt.connected && batteryLevelCharacteristic) {
-    return;
-  }
-
-  console.log('Conectando a Servidor GATT ...');
-  const server = await bluetoothDevice.gatt.connect();
-
-  console.log('Obteniendo nivel de Bateria...');
-  const service = await server.getPrimaryService('battery_service');
-
-  console.log('Obteniendo caracteristica del nivel de bateria...');
-  batteryLevelCharacteristic = await service.getCharacteristic('battery_level');
-
-  batteryLevelCharacteristic.addEventListener('characteristicvaluechanged',
-      handleBatteryLevelChanged);
-}
-
-/* This function will be called when `readValue` resolves and
- * characteristic value changes since `characteristicvaluechanged` event
- * listener has been added. */
-function handleBatteryLevelChanged(event) {
-  let batteryLevel = event.target.value.getUint8(0);
-  console.log('> Battery Level is ' + batteryLevel + '%');  
-  var series = chart.series[0];
-  var shift = series.data.length > 20;
-  chart.series[0].addPoint([x,batteryLevel], true, shift);
-  x++;
-  adjustAccuracy(batteryLevel);
-}
-
-function adjustAccuracy(value){
-	if(value > 50){
-		$("#accuracy_bar").css('background-color','rgb(255,0,0)');
-	}else if( value < 50){
-		$("#accuracy_bar").css('background-color','rgb(0,0,255)');
-	}else{		
-		$("#accuracy_bar").css('background-color','rgb(255,100,255)');
-
-	}
-		$("#accuracy_bar").animate({width:value*5},1000);
-}
-async function onStartNotificationsButtonClick() {
-  try {
-    console.log('Starting Battery Level Notifications...');
-    await batteryLevelCharacteristic.startNotifications();
-
-    console.log('> Notifications started');
-  } catch(error) {
-    console.log('Argh! ' + error);
-  }
-}
-
-async function onStopNotificationsButtonClick() {
-  try {
-    console.log('Stopping Battery Level Notifications...');
-    await batteryLevelCharacteristic.stopNotifications();
-
-    console.log('> Notifications stopped');
-  } catch(error) {
-    console.log('Argh! ' + error);
-  }
-}
-
-function onResetButtonClick() {
-  if (batteryLevelCharacteristic) {
-    batteryLevelCharacteristic.removeEventListener('characteristicvaluechanged',
-        handleBatteryLevelChanged);
-    batteryLevelCharacteristic = null;
-  }
-  // Note that it doesn't disconnect device.
-  bluetoothDevice = null;
-  console.log('> Bluetooth Device reset');
-}
-
-async function onDisconnected() {
-  console.log('> Bluetooth Device disconnected');
-  try {
-    await connectDeviceAndCacheCharacteristics()
-  } catch(error) {
-    console.log('Argh! ' + error);
-  }
-}
 </script>
+<script type="text/javascript">
+    var chart;
+    var i = 0;
+
+    Highcharts.chart('container2', {
+        chart: {
+            backgroundColor: 'transparent',
+            type: 'spline',
+            animation: Highcharts.svg, // don't animate in old IE
+            marginRight: 10,
+            events: {
+                load: function () {
+                    // set up the updating of the chart each second
+                    var series = this.series;
+                    setInterval(function () {
+                        $.ajax({
+                            url: '/liveTreatment/data/${params.id}',
+                            type: 'get',
+                            success: function (jsonArray) {
+                                var x = (new Date()).getTime();
+                                series[0].addPoint([x, jsonArray.ch2], true, true);
+                            }
+                        });
+                    }, 2000);
+                }
+            }
+        },
+        title: {
+            text: 'Channel 2'
+        },
+        xAxis: {
+            type: 'datetime',
+            tickPixelInterval: 150
+        },
+        yAxis: {
+            title: {
+                text: 'Hz'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            formatter: function () {
+                return '<b>' + this.series.name + '</b><br/>' +
+                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>'
+                    +
+                    Highcharts.numberFormat(this.y, 2);
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        exporting: {
+            enabled: false
+        },
+        series: [{
+            name: 'channel 2',
+            data: (function () {
+                // generate an array of random data
+                var data = [],
+                    time = (new Date()).getTime(),
+                    i;
+
+                for (i = -19; i <= 0; i += 1) {
+                    data.push({
+                        x: time + i * 1000,
+                        y: 0
+                    });
+                }
+                return data;
+            }())
+        }]
+    });
+</script>
+<script type="text/javascript">
+    var chart;
+    var i = 0;
+
+    Highcharts.chart('container3', {
+        chart: {
+            backgroundColor: 'transparent',
+            type: 'spline',
+            animation: Highcharts.svg, // don't animate in old IE
+            marginRight: 10,
+            events: {
+                load: function () {
+                    // set up the updating of the chart each second
+                    var series = this.series;
+                    setInterval(function () {
+                        $.ajax({
+                            url: '/liveTreatment/data/${params.id}',
+                            type: 'get',
+                            success: function (jsonArray) {
+                                var x = (new Date()).getTime();
+                                series[0].addPoint([x, jsonArray.ch3], true, true);
+                            }
+                        });
+                    }, 2000);
+                }
+            }
+        },
+        title: {
+            text: 'Channel 3'
+        },
+        xAxis: {
+            type: 'datetime',
+            tickPixelInterval: 150
+        },
+        yAxis: {
+            title: {
+                text: 'Hz'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            formatter: function () {
+                return '<b>' + this.series.name + '</b><br/>' +
+                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>'
+                    +
+                    Highcharts.numberFormat(this.y, 2);
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        exporting: {
+            enabled: false
+        },
+        series: [{
+            name: 'channel 3',
+            data: (function () {
+                // generate an array of random data
+                var data = [],
+                    time = (new Date()).getTime(),
+                    i;
+
+                for (i = -19; i <= 0; i += 1) {
+                    data.push({
+                        x: time + i * 1000,
+                        y: 0
+                    });
+                }
+                return data;
+            }())
+        }]
+    });
+</script>
+<script type="text/javascript">
+    var chart;
+    var i = 0;
+
+    Highcharts.chart('container4', {
+        chart: {
+            backgroundColor: 'transparent',
+            type: 'spline',
+            animation: Highcharts.svg, // don't animate in old IE
+            marginRight: 10,
+            events: {
+                load: function () {
+                    // set up the updating of the chart each second
+                    var series = this.series;
+                    setInterval(function () {
+                        $.ajax({
+                            url: '/liveTreatment/data/${params.id}',
+                            type: 'get',
+                            success: function (jsonArray) {
+                                var x = (new Date()).getTime();
+                                series[0].addPoint([x, jsonArray.ch4], true, true);
+                            }
+                        });
+                    }, 2000);
+                }
+            }
+        },
+        title: {
+            text: 'Channel 4'
+        },
+        xAxis: {
+            type: 'datetime',
+            tickPixelInterval: 150
+        },
+        yAxis: {
+            title: {
+                text: 'Hz'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            formatter: function () {
+                return '<b>' + this.series.name + '</b><br/>' +
+                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>'
+                    +
+                    Highcharts.numberFormat(this.y, 2);
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        exporting: {
+            enabled: false
+        },
+        series: [{
+            name: 'channel 4',
+            data: (function () {
+                // generate an array of random data
+                var data = [],
+                    time = (new Date()).getTime(),
+                    i;
+
+                for (i = -19; i <= 0; i += 1) {
+                    data.push({
+                        x: time + i * 1000,
+                        y: 0
+                    });
+                }
+                return data;
+            }())
+        }]
+    });
+</script>
+<script type="text/javascript">
+    var chart;
+    var i = 0;
+
+    Highcharts.chart('container5', {
+        chart: {
+            backgroundColor: 'transparent',
+            type: 'spline',
+            animation: Highcharts.svg, // don't animate in old IE
+            marginRight: 10,
+            events: {
+                load: function () {
+                    // set up the updating of the chart each second
+                    var series = this.series;
+                    setInterval(function () {
+                        $.ajax({
+                            url: '/liveTreatment/data/${params.id}',
+                            type: 'get',
+                            success: function (jsonArray) {
+                                var x = (new Date()).getTime();
+                                series[0].addPoint([x, jsonArray.ch5], true, true);
+                            }
+                        });
+                    }, 2000);
+                }
+            }
+        },
+        title: {
+            text: 'Channel 5'
+        },
+        xAxis: {
+            type: 'datetime',
+            tickPixelInterval: 150
+        },
+        yAxis: {
+            title: {
+                text: 'Hz'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            formatter: function () {
+                return '<b>' + this.series.name + '</b><br/>' +
+                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>'
+                    +
+                    Highcharts.numberFormat(this.y, 2);
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        exporting: {
+            enabled: false
+        },
+        series: [{
+            name: 'channel 5',
+            data: (function () {
+                // generate an array of random data
+                var data = [],
+                    time = (new Date()).getTime(),
+                    i;
+
+                for (i = -19; i <= 0; i += 1) {
+                    data.push({
+                        x: time + i * 1000,
+                        y: 0
+                    });
+                }
+                return data;
+            }())
+        }]
+    });
+</script>
+<script type="text/javascript">
+    var chart;
+    var i = 0;
+
+    Highcharts.chart('container6', {
+        chart: {
+            backgroundColor: 'transparent',
+            type: 'spline',
+            animation: Highcharts.svg, // don't animate in old IE
+            marginRight: 10,
+            events: {
+                load: function () {
+                    // set up the updating of the chart each second
+                    var series = this.series;
+                    setInterval(function () {
+                        $.ajax({
+                            url: '/liveTreatment/data/${params.id}',
+                            type: 'get',
+                            success: function (jsonArray) {
+                                var x = (new Date()).getTime();
+                                series[0].addPoint([x, jsonArray.ch6], true, true);
+                            }
+                        });
+                    }, 2000);
+                }
+            }
+        },
+        title: {
+            text: 'Channel 6'
+        },
+        xAxis: {
+            type: 'datetime',
+            tickPixelInterval: 150
+        },
+        yAxis: {
+            title: {
+                text: 'Hz'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            formatter: function () {
+                return '<b>' + this.series.name + '</b><br/>' +
+                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>'
+                    +
+                    Highcharts.numberFormat(this.y, 2);
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        exporting: {
+            enabled: false
+        },
+        series: [{
+            name: 'channel 6',
+            data: (function () {
+                // generate an array of random data
+                var data = [],
+                    time = (new Date()).getTime(),
+                    i;
+
+                for (i = -19; i <= 0; i += 1) {
+                    data.push({
+                        x: time + i * 1000,
+                        y: 0
+                    });
+                }
+                return data;
+            }())
+        }]
+    });
+</script>
+<script type="text/javascript">
+    var chart;
+    var i = 0;
+
+    Highcharts.chart('container7', {
+        chart: {
+            backgroundColor: 'transparent',
+            type: 'spline',
+            animation: Highcharts.svg, // don't animate in old IE
+            marginRight: 10,
+            events: {
+                load: function () {
+                    // set up the updating of the chart each second
+                    var series = this.series;
+                    setInterval(function () {
+                        $.ajax({
+                            url: '/liveTreatment/data/${params.id}',
+                            type: 'get',
+                            success: function (jsonArray) {
+                                var x = (new Date()).getTime();
+                                series[0].addPoint([x, jsonArray.ch7], true, true);
+                            }
+                        });
+                    }, 2000);
+                }
+            }
+        },
+        title: {
+            text: 'Channel 7'
+        },
+        xAxis: {
+            type: 'datetime',
+            tickPixelInterval: 150
+        },
+        yAxis: {
+            title: {
+                text: 'Hz'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            formatter: function () {
+                return '<b>' + this.series.name + '</b><br/>' +
+                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>'
+                    +
+                    Highcharts.numberFormat(this.y, 2);
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        exporting: {
+            enabled: false
+        },
+        series: [{
+            name: 'channel 7',
+            data: (function () {
+                // generate an array of random data
+                var data = [],
+                    time = (new Date()).getTime(),
+                    i;
+
+                for (i = -19; i <= 0; i += 1) {
+                    data.push({
+                        x: time + i * 1000,
+                        y: 0
+                    });
+                }
+                return data;
+            }())
+        }]
+    });
+</script>
+<script type="text/javascript">
+    var chart;
+    var i = 0;
+
+    Highcharts.chart('container8', {
+        chart: {
+            backgroundColor: 'transparent',
+            type: 'spline',
+            animation: Highcharts.svg, // don't animate in old IE
+            marginRight: 10,
+            events: {
+                load: function () {
+                    // set up the updating of the chart each second
+                    var series = this.series;
+                    setInterval(function () {
+                        $.ajax({
+                            url: '/liveTreatment/data/${params.id}',
+                            type: 'get',
+                            success: function (jsonArray) {
+                                var x = (new Date()).getTime();
+                                series[0].addPoint([x, jsonArray.ch8], true, true);
+                            }
+                        });
+                    }, 2000);
+                }
+            }
+        },
+        title: {
+            text: 'Channel 8'
+        },
+        xAxis: {
+            type: 'datetime',
+            tickPixelInterval: 150
+        },
+        yAxis: {
+            title: {
+                text: 'Hz'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            formatter: function () {
+                return '<b>' + this.series.name + '</b><br/>' +
+                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>'
+                    +
+                    Highcharts.numberFormat(this.y, 2);
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        exporting: {
+            enabled: false
+        },
+        series: [{
+            name: 'channel 8',
+            data: (function () {
+                // generate an array of random data
+                var data = [],
+                    time = (new Date()).getTime(),
+                    i;
+
+                for (i = -19; i <= 0; i += 1) {
+                    data.push({
+                        x: time + i * 1000,
+                        y: 0
+                    });
+                }
+                return data;
+            }())
+        }]
+    });
+</script>
+</body>
+</html>

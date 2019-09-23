@@ -26,8 +26,24 @@ class LiveTreatmentController {
     }
 
     def live() {
-        log.info("IM BEING CALLED " + params.id)
-        render(view: "main.gsp")
+        UserTreatment userT = UserTreatment.findById(params.id)
+        log.info("IM BEING CALLED " + userT.status)
+
+        render(view: "main.gsp", model: [userTreatmentLive: userT])
+    }
+
+    def data() {
+        render(status: 200, contentType: 'application/json') {
+            analysis 14
+            ch1 1
+            ch2 2
+            ch3 3
+            ch4 4
+            ch5 5
+            ch6 6
+            ch7 7
+            ch8 8
+        }
     }
 
     private List<UserTreatment> getApplicableHistory() {
