@@ -97,7 +97,7 @@
                                 series[0].addPoint([x, jsonArray.analysis], true, true);
                             }
                         });
-                    }, 2000);
+                    }, 500);
                 }
             }
         },
@@ -176,7 +176,7 @@
                                 series[0].addPoint([x, jsonArray.ch1], true, true);
                             }
                         });
-                    }, 2000);
+                    }, 500);
                 }
             }
         },
@@ -253,7 +253,7 @@
                                 series[0].addPoint([x, jsonArray.ch2], true, true);
                             }
                         });
-                    }, 2000);
+                    }, 500);
                 }
             }
         },
@@ -330,7 +330,7 @@
                                 series[0].addPoint([x, jsonArray.ch3], true, true);
                             }
                         });
-                    }, 2000);
+                    }, 500);
                 }
             }
         },
@@ -407,7 +407,7 @@
                                 series[0].addPoint([x, jsonArray.ch4], true, true);
                             }
                         });
-                    }, 2000);
+                    }, 500);
                 }
             }
         },
@@ -484,7 +484,7 @@
                                 series[0].addPoint([x, jsonArray.ch5], true, true);
                             }
                         });
-                    }, 2000);
+                    }, 500);
                 }
             }
         },
@@ -561,7 +561,7 @@
                                 series[0].addPoint([x, jsonArray.ch6], true, true);
                             }
                         });
-                    }, 2000);
+                    }, 500);
                 }
             }
         },
@@ -638,7 +638,7 @@
                                 series[0].addPoint([x, jsonArray.ch7], true, true);
                             }
                         });
-                    }, 2000);
+                    }, 500);
                 }
             }
         },
@@ -715,7 +715,7 @@
                                 series[0].addPoint([x, jsonArray.ch8], true, true);
                             }
                         });
-                    }, 2000);
+                    }, 500);
                 }
             }
         },

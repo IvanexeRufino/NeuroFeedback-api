@@ -17,7 +17,14 @@ def main(argv):
     print 'Input file is ', inputfile
 
     url = 'http://localhost:8080/treatmentTrack'
-    payload = [1, 2, 3]
+
+    payload = []
+
+    with open(inputfile) as fp:
+        line = fp.readline()
+        while line:
+            payload.append([0,0,line.rstrip('\n'),0,0,0,0,0])
+            line = fp.readline()
 
     headers = {
         "Content-type": "application/json"
