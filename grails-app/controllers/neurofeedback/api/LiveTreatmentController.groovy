@@ -9,6 +9,7 @@ class LiveTreatmentController {
     static String friendlyName = "Ver tratamientos en vivo"
 
     def springSecurityService
+    def treatmentStorageService
 
     static Boolean patient = false
     static Boolean professional = true
@@ -33,16 +34,13 @@ class LiveTreatmentController {
     }
 
     def data() {
+        def data = treatmentStorageService.getDataForTreatment(params.id, params.channel)
+
+        println data
+
         render(status: 200, contentType: 'application/json') {
             analysis 14
-            ch1 1
-            ch2 2
-            ch3 3
-            ch4 4
-            ch5 5
-            ch6 6
-            ch7 7
-            ch8 8
+            value (data as Double)
         }
     }
 

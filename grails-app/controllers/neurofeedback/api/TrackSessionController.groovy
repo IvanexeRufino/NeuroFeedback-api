@@ -2,6 +2,8 @@ package neurofeedback.api
 
 class TrackSessionController {
 
+    def treatmentStorageService
+
     static allowedMethods = [treatmentSession:'POST']
 
     def index() {
@@ -9,10 +11,8 @@ class TrackSessionController {
     }
 
     def treatmentSession() {
-        def smth = request.JSON
-
-        print smth
-        print params.id
+        def dataArray = request.JSON
+        treatmentStorageService.storeDataForTreatment(params.id, dataArray)
 
         render "pong"
     }

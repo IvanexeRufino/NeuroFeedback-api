@@ -74,14 +74,10 @@
 <script src="https://code.highcharts.com/highcharts.js"></script>
 
 <script type="text/javascript">
-    var chart;
-    var i = 0;
-
     Highcharts.chart('containerMain', {
         chart: {
             backgroundColor: 'transparent',
-            type: 'spline',
-            animation: Highcharts.svg, // don't animate in old IE
+            animation: false,
             marginRight: 10,
             events: {
                 load: function () {
@@ -90,14 +86,14 @@
                     var series = this.series;
                     setInterval(function () {
                         $.ajax({
-                            url: '/liveTreatment/data/${params.id}',
+                            url: '/liveTreatment/data/${params.id}?channel=3',
                             type: 'get',
-                            success: function (jsonArray) {
+                            success: function (json) {
                                 var x = (new Date()).getTime();
-                                series[0].addPoint([x, jsonArray.analysis], true, true);
+                                series[0].addPoint([x, json['value']], true, true);
                             }
                         });
-                    }, 500);
+                    }, 10);
                 }
             }
         },
@@ -109,8 +105,10 @@
             tickPixelInterval: 150
         },
         yAxis: {
+            max: 50,
+            min: -50,
             title: {
-                text: 'Hz'
+                text: 'Voltage'
             },
             plotLines: [{
                 value: 0,
@@ -140,7 +138,7 @@
                     time = (new Date()).getTime(),
                     i;
 
-                for (i = -19; i <= 0; i += 1) {
+                for (i = -999; i <= 0; i += 1) {
                     data.push({
                         x: time + i * 1000,
                         y: 0
@@ -150,624 +148,92 @@
             }())
         }]
     });
-</script>
 
-<script type="text/javascript">
-    var chart;
-    var i = 0;
+    Highcharts.chart('container1', createHighChart(1));
+    Highcharts.chart('container2', createHighChart(2));
+    Highcharts.chart('container3', createHighChart(3));
+    Highcharts.chart('container4', createHighChart(4));
+    Highcharts.chart('container5', createHighChart(5));
+    Highcharts.chart('container6', createHighChart(6));
+    Highcharts.chart('container7', createHighChart(7));
+    Highcharts.chart('container8', createHighChart(8));
 
-    Highcharts.chart('container1', {
-        chart: {
-            backgroundColor: 'transparent',
-            type: 'spline',
-            animation: Highcharts.svg, // don't animate in old IE
-            marginRight: 10,
-            events: {
-                load: function () {
-
-                    // set up the updating of the chart each second
-                    var series = this.series;
-                    setInterval(function () {
-                        $.ajax({
-                            url: '/liveTreatment/data/${params.id}',
-                            type: 'get',
-                            success: function (jsonArray) {
-                                var x = (new Date()).getTime();
-                                series[0].addPoint([x, jsonArray.ch1], true, true);
-                            }
-                        });
-                    }, 500);
+    function createHighChart(channel_number) {
+        return {
+            chart: {
+                backgroundColor: 'transparent',
+                type: 'spline',
+                animation: Highcharts.svg, // don't animate in old IE
+                marginRight: 10,
+                events: {
+                    load: function () {
+                        // set up the updating of the chart each second
+                        var series = this.series;
+                        setInterval(function () {
+                            $.ajax({
+                                url: '/liveTreatment/data/${params.id}?channel='+channel_number,
+                                type: 'get',
+                                success: function (json) {
+                                    var x = (new Date()).getTime();
+                                    series[0].addPoint([x, json['value']], true, true);
+                                }
+                            });
+                        }, 5000);
+                    }
                 }
-            }
-        },
-        title: {
-            text: 'Channel 1'
-        },
-        xAxis: {
-            type: 'datetime',
-            tickPixelInterval: 150
-        },
-        yAxis: {
-            title: {
-                text: 'Hz'
             },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }]
-        },
-        tooltip: {
-            formatter: function () {
-                return '<b>' + this.series.name + '</b><br/>' +
-                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>'
-                    +
-                    Highcharts.numberFormat(this.y, 2);
-            }
-        },
-        legend: {
-            enabled: false
-        },
-        exporting: {
-            enabled: false
-        },
-        series: [{
-            name: 'channel 1',
-            data: (function () {
-                // generate an array of random data
-                var data = [],
-                    time = (new Date()).getTime(),
-                    i;
-
-                for (i = -19; i <= 0; i += 1) {
-                    data.push({
-                        x: time + i * 1000,
-                        y: 0
-                    });
-                }
-                return data;
-            }())
-        }]
-    });
-</script>
-<script type="text/javascript">
-    var chart;
-    var i = 0;
-
-    Highcharts.chart('container2', {
-        chart: {
-            backgroundColor: 'transparent',
-            type: 'spline',
-            animation: Highcharts.svg, // don't animate in old IE
-            marginRight: 10,
-            events: {
-                load: function () {
-                    // set up the updating of the chart each second
-                    var series = this.series;
-                    setInterval(function () {
-                        $.ajax({
-                            url: '/liveTreatment/data/${params.id}',
-                            type: 'get',
-                            success: function (jsonArray) {
-                                var x = (new Date()).getTime();
-                                series[0].addPoint([x, jsonArray.ch2], true, true);
-                            }
-                        });
-                    }, 500);
-                }
-            }
-        },
-        title: {
-            text: 'Channel 2'
-        },
-        xAxis: {
-            type: 'datetime',
-            tickPixelInterval: 150
-        },
-        yAxis: {
             title: {
-                text: 'Hz'
+                text: 'Channel ' + channel_number
             },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }]
-        },
-        tooltip: {
-            formatter: function () {
-                return '<b>' + this.series.name + '</b><br/>' +
-                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>'
-                    +
-                    Highcharts.numberFormat(this.y, 2);
-            }
-        },
-        legend: {
-            enabled: false
-        },
-        exporting: {
-            enabled: false
-        },
-        series: [{
-            name: 'channel 2',
-            data: (function () {
-                // generate an array of random data
-                var data = [],
-                    time = (new Date()).getTime(),
-                    i;
-
-                for (i = -19; i <= 0; i += 1) {
-                    data.push({
-                        x: time + i * 1000,
-                        y: 0
-                    });
+            xAxis: {
+                tickAmount: 100,
+                type: 'datetime'
+            },
+            yAxis: {
+                max: 50,
+                title: {
+                    text: 'Hz'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.series.name + '</b><br/>' +
+                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>'
+                        +
+                        Highcharts.numberFormat(this.y, 2);
                 }
-                return data;
-            }())
-        }]
-    });
-</script>
-<script type="text/javascript">
-    var chart;
-    var i = 0;
+            },
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            series: [{
+                name: 'channel ' +  channel_number,
+                data: (function () {
+                    // generate an array of random data
+                    var data = [],
+                        time = (new Date()).getTime(),
+                        i;
 
-    Highcharts.chart('container3', {
-        chart: {
-            backgroundColor: 'transparent',
-            type: 'spline',
-            animation: Highcharts.svg, // don't animate in old IE
-            marginRight: 10,
-            events: {
-                load: function () {
-                    // set up the updating of the chart each second
-                    var series = this.series;
-                    setInterval(function () {
-                        $.ajax({
-                            url: '/liveTreatment/data/${params.id}',
-                            type: 'get',
-                            success: function (jsonArray) {
-                                var x = (new Date()).getTime();
-                                series[0].addPoint([x, jsonArray.ch3], true, true);
-                            }
+                    for (i = -499; i <= 0; i += 1) {
+                        data.push({
+                            x: time + i * 1000,
+                            y: 0
                         });
-                    }, 500);
-                }
-            }
-        },
-        title: {
-            text: 'Channel 3'
-        },
-        xAxis: {
-            type: 'datetime',
-            tickPixelInterval: 150
-        },
-        yAxis: {
-            title: {
-                text: 'Hz'
-            },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
+                    }
+                    return data;
+                }())
             }]
-        },
-        tooltip: {
-            formatter: function () {
-                return '<b>' + this.series.name + '</b><br/>' +
-                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>'
-                    +
-                    Highcharts.numberFormat(this.y, 2);
-            }
-        },
-        legend: {
-            enabled: false
-        },
-        exporting: {
-            enabled: false
-        },
-        series: [{
-            name: 'channel 3',
-            data: (function () {
-                // generate an array of random data
-                var data = [],
-                    time = (new Date()).getTime(),
-                    i;
+        }
+    }
 
-                for (i = -19; i <= 0; i += 1) {
-                    data.push({
-                        x: time + i * 1000,
-                        y: 0
-                    });
-                }
-                return data;
-            }())
-        }]
-    });
-</script>
-<script type="text/javascript">
-    var chart;
-    var i = 0;
-
-    Highcharts.chart('container4', {
-        chart: {
-            backgroundColor: 'transparent',
-            type: 'spline',
-            animation: Highcharts.svg, // don't animate in old IE
-            marginRight: 10,
-            events: {
-                load: function () {
-                    // set up the updating of the chart each second
-                    var series = this.series;
-                    setInterval(function () {
-                        $.ajax({
-                            url: '/liveTreatment/data/${params.id}',
-                            type: 'get',
-                            success: function (jsonArray) {
-                                var x = (new Date()).getTime();
-                                series[0].addPoint([x, jsonArray.ch4], true, true);
-                            }
-                        });
-                    }, 500);
-                }
-            }
-        },
-        title: {
-            text: 'Channel 4'
-        },
-        xAxis: {
-            type: 'datetime',
-            tickPixelInterval: 150
-        },
-        yAxis: {
-            title: {
-                text: 'Hz'
-            },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }]
-        },
-        tooltip: {
-            formatter: function () {
-                return '<b>' + this.series.name + '</b><br/>' +
-                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>'
-                    +
-                    Highcharts.numberFormat(this.y, 2);
-            }
-        },
-        legend: {
-            enabled: false
-        },
-        exporting: {
-            enabled: false
-        },
-        series: [{
-            name: 'channel 4',
-            data: (function () {
-                // generate an array of random data
-                var data = [],
-                    time = (new Date()).getTime(),
-                    i;
-
-                for (i = -19; i <= 0; i += 1) {
-                    data.push({
-                        x: time + i * 1000,
-                        y: 0
-                    });
-                }
-                return data;
-            }())
-        }]
-    });
-</script>
-<script type="text/javascript">
-    var chart;
-    var i = 0;
-
-    Highcharts.chart('container5', {
-        chart: {
-            backgroundColor: 'transparent',
-            type: 'spline',
-            animation: Highcharts.svg, // don't animate in old IE
-            marginRight: 10,
-            events: {
-                load: function () {
-                    // set up the updating of the chart each second
-                    var series = this.series;
-                    setInterval(function () {
-                        $.ajax({
-                            url: '/liveTreatment/data/${params.id}',
-                            type: 'get',
-                            success: function (jsonArray) {
-                                var x = (new Date()).getTime();
-                                series[0].addPoint([x, jsonArray.ch5], true, true);
-                            }
-                        });
-                    }, 500);
-                }
-            }
-        },
-        title: {
-            text: 'Channel 5'
-        },
-        xAxis: {
-            type: 'datetime',
-            tickPixelInterval: 150
-        },
-        yAxis: {
-            title: {
-                text: 'Hz'
-            },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }]
-        },
-        tooltip: {
-            formatter: function () {
-                return '<b>' + this.series.name + '</b><br/>' +
-                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>'
-                    +
-                    Highcharts.numberFormat(this.y, 2);
-            }
-        },
-        legend: {
-            enabled: false
-        },
-        exporting: {
-            enabled: false
-        },
-        series: [{
-            name: 'channel 5',
-            data: (function () {
-                // generate an array of random data
-                var data = [],
-                    time = (new Date()).getTime(),
-                    i;
-
-                for (i = -19; i <= 0; i += 1) {
-                    data.push({
-                        x: time + i * 1000,
-                        y: 0
-                    });
-                }
-                return data;
-            }())
-        }]
-    });
-</script>
-<script type="text/javascript">
-    var chart;
-    var i = 0;
-
-    Highcharts.chart('container6', {
-        chart: {
-            backgroundColor: 'transparent',
-            type: 'spline',
-            animation: Highcharts.svg, // don't animate in old IE
-            marginRight: 10,
-            events: {
-                load: function () {
-                    // set up the updating of the chart each second
-                    var series = this.series;
-                    setInterval(function () {
-                        $.ajax({
-                            url: '/liveTreatment/data/${params.id}',
-                            type: 'get',
-                            success: function (jsonArray) {
-                                var x = (new Date()).getTime();
-                                series[0].addPoint([x, jsonArray.ch6], true, true);
-                            }
-                        });
-                    }, 500);
-                }
-            }
-        },
-        title: {
-            text: 'Channel 6'
-        },
-        xAxis: {
-            type: 'datetime',
-            tickPixelInterval: 150
-        },
-        yAxis: {
-            title: {
-                text: 'Hz'
-            },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }]
-        },
-        tooltip: {
-            formatter: function () {
-                return '<b>' + this.series.name + '</b><br/>' +
-                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>'
-                    +
-                    Highcharts.numberFormat(this.y, 2);
-            }
-        },
-        legend: {
-            enabled: false
-        },
-        exporting: {
-            enabled: false
-        },
-        series: [{
-            name: 'channel 6',
-            data: (function () {
-                // generate an array of random data
-                var data = [],
-                    time = (new Date()).getTime(),
-                    i;
-
-                for (i = -19; i <= 0; i += 1) {
-                    data.push({
-                        x: time + i * 1000,
-                        y: 0
-                    });
-                }
-                return data;
-            }())
-        }]
-    });
-</script>
-<script type="text/javascript">
-    var chart;
-    var i = 0;
-
-    Highcharts.chart('container7', {
-        chart: {
-            backgroundColor: 'transparent',
-            type: 'spline',
-            animation: Highcharts.svg, // don't animate in old IE
-            marginRight: 10,
-            events: {
-                load: function () {
-                    // set up the updating of the chart each second
-                    var series = this.series;
-                    setInterval(function () {
-                        $.ajax({
-                            url: '/liveTreatment/data/${params.id}',
-                            type: 'get',
-                            success: function (jsonArray) {
-                                var x = (new Date()).getTime();
-                                series[0].addPoint([x, jsonArray.ch7], true, true);
-                            }
-                        });
-                    }, 500);
-                }
-            }
-        },
-        title: {
-            text: 'Channel 7'
-        },
-        xAxis: {
-            type: 'datetime',
-            tickPixelInterval: 150
-        },
-        yAxis: {
-            title: {
-                text: 'Hz'
-            },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }]
-        },
-        tooltip: {
-            formatter: function () {
-                return '<b>' + this.series.name + '</b><br/>' +
-                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>'
-                    +
-                    Highcharts.numberFormat(this.y, 2);
-            }
-        },
-        legend: {
-            enabled: false
-        },
-        exporting: {
-            enabled: false
-        },
-        series: [{
-            name: 'channel 7',
-            data: (function () {
-                // generate an array of random data
-                var data = [],
-                    time = (new Date()).getTime(),
-                    i;
-
-                for (i = -19; i <= 0; i += 1) {
-                    data.push({
-                        x: time + i * 1000,
-                        y: 0
-                    });
-                }
-                return data;
-            }())
-        }]
-    });
-</script>
-<script type="text/javascript">
-    var chart;
-    var i = 0;
-
-    Highcharts.chart('container8', {
-        chart: {
-            backgroundColor: 'transparent',
-            type: 'spline',
-            animation: Highcharts.svg, // don't animate in old IE
-            marginRight: 10,
-            events: {
-                load: function () {
-                    // set up the updating of the chart each second
-                    var series = this.series;
-                    setInterval(function () {
-                        $.ajax({
-                            url: '/liveTreatment/data/${params.id}',
-                            type: 'get',
-                            success: function (jsonArray) {
-                                var x = (new Date()).getTime();
-                                series[0].addPoint([x, jsonArray.ch8], true, true);
-                            }
-                        });
-                    }, 500);
-                }
-            }
-        },
-        title: {
-            text: 'Channel 8'
-        },
-        xAxis: {
-            type: 'datetime',
-            tickPixelInterval: 150
-        },
-        yAxis: {
-            title: {
-                text: 'Hz'
-            },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }]
-        },
-        tooltip: {
-            formatter: function () {
-                return '<b>' + this.series.name + '</b><br/>' +
-                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>'
-                    +
-                    Highcharts.numberFormat(this.y, 2);
-            }
-        },
-        legend: {
-            enabled: false
-        },
-        exporting: {
-            enabled: false
-        },
-        series: [{
-            name: 'channel 8',
-            data: (function () {
-                // generate an array of random data
-                var data = [],
-                    time = (new Date()).getTime(),
-                    i;
-
-                for (i = -19; i <= 0; i += 1) {
-                    data.push({
-                        x: time + i * 1000,
-                        y: 0
-                    });
-                }
-                return data;
-            }())
-        }]
-    });
 </script>
 </body>
 </html>
