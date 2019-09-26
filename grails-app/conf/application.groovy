@@ -6,6 +6,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/',               		access: ['permitAll']],
 	[pattern: '/ping/**',               access: ['permitAll']],
 	[pattern: '/mobile/**',             access: ['permitAll']],
+	[pattern: '/trackSession/**',		access: ['permitAll']],
 	[pattern: '/treatmentTrack/**',     access: ['permitAll']],
 	[pattern: '/error',          		access: ['permitAll']],
 	[pattern: '/index',          		access: ['permitAll']],
@@ -26,6 +27,7 @@ grails.plugin.springsecurity.filterChain.chainMap = [
 	[pattern: '/**/favicon.ico', 	filters: 'none'],
 	[pattern: '/ping/**', 			filters: 'none'],
 	[pattern: '/mobile/**', 		filters: 'none'],
-	[pattern: '/treatmentTrack/**', filters: 'none'],
+	[pattern: '/trackSession/**', 	filters: 'none'],
+	[pattern: '/ping/**', 			filters: 'none'],
 	[pattern: '/**',             	filters: 'JOINED_FILTERS']
 ]

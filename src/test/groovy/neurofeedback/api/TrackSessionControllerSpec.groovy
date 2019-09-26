@@ -3,7 +3,7 @@ package neurofeedback.api
 import grails.testing.web.controllers.ControllerUnitTest
 import spock.lang.Specification
 
-class DataControllerSpec extends Specification implements ControllerUnitTest<DataController> {
+class TrackSessionControllerSpec extends Specification implements ControllerUnitTest<TrackSessionController> {
 
     def setup() {
     }

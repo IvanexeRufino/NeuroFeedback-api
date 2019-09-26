@@ -1,6 +1,8 @@
 package neurofeedback.api
 
-class DataController {
+class TrackSessionController {
+
+    static allowedMethods = [treatmentSession:'POST']
 
     def index() {
         render "You should not be doing this"
@@ -10,6 +12,7 @@ class DataController {
         def smth = request.JSON
 
         print smth
+        print params.id
 
         render "pong"
     }
