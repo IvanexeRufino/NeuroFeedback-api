@@ -1,4 +1,4 @@
-import requests, json, sys, getopt
+import requests, json, sys, getopt, time
 
 def main(argv):
     inputfile = ''
@@ -19,16 +19,20 @@ def main(argv):
     url = 'http://localhost:8080/treatmentTrack'
 
     payload = []
+    headers = {
+        "Content-type": "application/json"
+    }
 
     with open(inputfile) as fp:
         line = fp.readline()
         while line:
             payload.append([0,0,line.rstrip('\n'),0,0,0,0,0])
             line = fp.readline()
+            r = requests.post(url, data=json.dumps(payload), headers=headers)
+            print(r.content)
+            payload = []
+            time.sleep(1)
 
-    headers = {
-        "Content-type": "application/json"
-    }
 
     r = requests.post(url, data=json.dumps(payload), headers=headers)
     print(r.content)
