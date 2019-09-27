@@ -2,8 +2,6 @@ package neurofeedback.api
 
 import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
-import org.apache.commons.math3.complex.Complex
-import org.apache.commons.math3.transform.*
 
 @Transactional(readOnly = true)
 @Secured(['ROLE_PROFESSIONAL'])
@@ -44,17 +42,11 @@ class LiveTreatmentController {
     }
 
     def data() {
-        def data = treatmentStorageService.getDataForTreatment(params.id, params.channel)
+        def data = treatmentStorageService.getDataForTreatment(params.id, '3')
+        AnalyzedData ad = analysisService.getDataAnalyzed(data)
+        println 'im being called with power ' + ad.powerBand.totalPower
 
-        Map response = [
-                freqs: 5,
-                psd: 16
-        ]
-
-        render(status: 200, contentType: 'application/json') {
-            freqs 5
-            psd 17
-        }
+        respond ad, formats: ['json']
     }
 
     private List<UserTreatment> getApplicableHistory() {

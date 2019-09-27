@@ -46,13 +46,6 @@
 	<div class="col-md-12">
 		<div class="row">
 			<h1>NeuroCare</h1>
-            <p>
-                Total power:${(analyzedData.powerBand.totalPower) as Integer}<br>
-                Delta power:${((analyzedData.powerBand.deltaPower / analyzedData.powerBand.totalPower)*100).round(2)}%<br>
-                Theta power:${((analyzedData.powerBand.thetaPower / analyzedData.powerBand.totalPower)*100).round(2)}%<br>
-                Alpha power:${((analyzedData.powerBand.alphaPower / analyzedData.powerBand.totalPower)*100).round(2)}%<br>
-                Beta power:${((analyzedData.powerBand.betaPower / analyzedData.powerBand.totalPower)*100).round(2)}%<br>
-            </p>
 		</div>
 		<div class="row">
             <div id="containerMain" style="height: 350px"></div>
@@ -80,14 +73,54 @@
 <script type="text/javascript">
     var frequencies = ${analyzedData.frequencies};
     var spd = ${analyzedData.spd};
+    var legend = getLegend(${analyzedData.powerBand.totalPower}, ${analyzedData.powerBand.alphaPower},
+        ${analyzedData.powerBand.betaPower}, ${analyzedData.powerBand.deltaPower}, ${analyzedData.powerBand.thetaPower});
 
     Highcharts.chart('containerMain', {
         chart: {
+            type: 'line',
             backgroundColor: 'transparent',
             animation: false,
-            marginRight: 10,
             events: {
                 load: function () {
+                    // set up the updating of the chart each second
+                    var chart = this;
+                    setInterval(function () {
+                        $.ajax({
+                            url: '/liveTreatment/data/${params.id}?channel=3',
+                            type: 'get',
+                            success: function (json) {
+
+                                var powerBand = json.powerBand;
+
+                                chart.legend.update({
+                                    layout: 'vertical',
+                                        backgroundColor: '#FFFFFF',
+                                        floating: true,
+                                        align: 'right',
+                                        verticalAlign: 'top',
+                                        x: 0,
+                                        y: 0,
+                                        labelFormatter: function () {
+                                        return getLegend(powerBand.totalPower, powerBand.alphaPower, powerBand.betaPower,
+                                                            powerBand.deltaPower, powerBand.thetaPower);
+                                    }
+                                });
+
+                                chart.series[0].update({
+                                    data: (function () {
+                                        var data = [], i;
+                                        for (i = 0; i < spd.length; i += 1) {
+                                            data.push({
+                                                x: json.frequencies[i],
+                                                y: json.spd[i]
+                                            });
+                                        }
+                                        return data;
+                                    }())}, true, true);
+                            }
+                        });
+                    }, 5000);
                 }
             }
         },
@@ -113,16 +146,17 @@
                 color: '#808080'
             }]
         },
-        tooltip: {
-            formatter: function () {
-                return '<b>' + this.series.name + '</b><br/>' +
-                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>'
-                    +
-                    Highcharts.numberFormat(this.y, 2);
-            }
-        },
         legend: {
-            enabled: false
+            layout: 'vertical',
+            backgroundColor: '#FFFFFF',
+            floating: true,
+            align: 'right',
+            verticalAlign: 'top',
+            x: 0,
+            y: 0,
+            labelFormatter: function () {
+                return legend;
+            }
         },
         exporting: {
             enabled: false
@@ -183,14 +217,6 @@
                         // set up the updating of the chart each second
                         var series = this.series;
                         setInterval(function () {
-                            $.ajax({
-                                url: '/liveTreatment/data/${params.id}?channel='+channel_number,
-                                type: 'get',
-                                success: function (json) {
-                                    var x = (new Date()).getTime();
-                                    series[0].addPoint([x, json['value']], true, true);
-                                }
-                            });
                         }, 5000);
                     }
                 }
@@ -245,6 +271,14 @@
                 }())
             }]
         })
+    }
+
+    function getLegend(totalPower, alpha, beta, delta, theta) {
+        return "Total power:" + (totalPower.toFixed(0)) + "<br>\n" +
+        "                    Delta power:" + ((delta / totalPower)*100).toFixed(2) + "%<br>\n" +
+        "                    Theta power:" + ((theta / totalPower)*100).toFixed(2) + "%<br>\n" +
+        "                    Alpha power:" + ((alpha / totalPower)*100).toFixed(2) + "%<br>\n" +
+        "                    Beta power:" + ((theta / totalPower)*100).toFixed(2) + "%<br>";
     }
 
 </script>
