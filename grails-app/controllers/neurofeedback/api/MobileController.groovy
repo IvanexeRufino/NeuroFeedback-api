@@ -32,13 +32,13 @@ class MobileController{
 
     def getTreatment(){
         def map
-        def userId = params.userId
+        def userId = 4// params.userId
         def userTreatment = UserTreatment.findAllByUser(User.findById(userId)).stream().filter { userT ->
             userT.status == "Pending"
         }.map {
             ut -> ut.toJson()
         }.collect()
-        map = [status: 200, message: ["response":"Ok","treatments":userTreatment]]
+        map = [status: 200, message: userTreatment]
         respond map, formats: ['json']
     }
 }
