@@ -93,7 +93,7 @@
         },
         xAxis: {
             title: {
-                text: 'Frequencies'
+                text: 'Frequency [Hz]'
             },
             max: "${freqs}".max,
             min: 0
@@ -102,7 +102,7 @@
             max: "${dataToload}".max,
             min: 0,
             title: {
-                text: 'Power Spectral Density'
+                text: 'Power Spectral Density [μV²/HZ]'
             },
             plotLines: [{
                 value: 0,
