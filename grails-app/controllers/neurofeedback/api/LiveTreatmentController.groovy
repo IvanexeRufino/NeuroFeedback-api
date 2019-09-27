@@ -29,18 +29,22 @@ class LiveTreatmentController {
     def live() {
         UserTreatment userT = UserTreatment.findById(params.id)
         log.info("IM BEING CALLED " + userT.status)
+        def data = treatmentStorageService.getDataForTreatment(params.id, '3')
 
-        render(view: "main.gsp", model: [userTreatmentLive: userT])
+        render(view: "main.gsp", model: [userTreatmentLive: userT, dataToload: data])
     }
 
     def data() {
         def data = treatmentStorageService.getDataForTreatment(params.id, params.channel)
 
-        println data
+        Map response = [
+                freqs: 5,
+                psd: 16
+        ]
 
         render(status: 200, contentType: 'application/json') {
-            analysis 14
-            value (data as Double)
+            freqs 5
+            psd 17
         }
     }
 

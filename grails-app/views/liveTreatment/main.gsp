@@ -81,19 +81,6 @@
             marginRight: 10,
             events: {
                 load: function () {
-
-                    // set up the updating of the chart each second
-                    var series = this.series;
-                    setInterval(function () {
-                        $.ajax({
-                            url: '/liveTreatment/data/${params.id}?channel=3',
-                            type: 'get',
-                            success: function (json) {
-                                var x = (new Date()).getTime();
-                                series[0].addPoint([x, json['value']], true, true);
-                            }
-                        });
-                    }, 10);
                 }
             }
         },
@@ -101,12 +88,15 @@
             text: 'Analyzed Data'
         },
         xAxis: {
-            type: 'datetime',
-            tickPixelInterval: 150
+            title: {
+                text: 'Seconds'
+            },
+            max: 30,
+            min: 0
         },
         yAxis: {
-            max: 50,
-            min: -50,
+            max: 60,
+            min: -60,
             title: {
                 text: 'Voltage'
             },
@@ -131,35 +121,39 @@
             enabled: false
         },
         series: [{
-            name: 'Analyzed Data',
+            name: 'Analyzed data',
+            turboThreshold: 3000,
             data: (function () {
                 // generate an array of random data
                 var data = [],
-                    time = (new Date()).getTime(),
+                    seconds = 0,
                     i;
 
-                for (i = -999; i <= 0; i += 1) {
+                var analysisData = ${dataToload};
+
+                for (i = 0; i < analysisData.length; i += 1) {
                     data.push({
-                        x: time + i * 1000,
-                        y: 0
+                        x: seconds,
+                        y: analysisData[i]
                     });
+                    seconds += (0.01)
                 }
                 return data;
             }())
         }]
     });
 
-    Highcharts.chart('container1', createHighChart(1));
-    Highcharts.chart('container2', createHighChart(2));
-    Highcharts.chart('container3', createHighChart(3));
-    Highcharts.chart('container4', createHighChart(4));
-    Highcharts.chart('container5', createHighChart(5));
-    Highcharts.chart('container6', createHighChart(6));
-    Highcharts.chart('container7', createHighChart(7));
-    Highcharts.chart('container8', createHighChart(8));
+    createHighChart('container1', 1);
+    createHighChart('container2', 2);
+    createHighChart('container3', 3);
+    createHighChart('container4', 4);
+    createHighChart('container5', 5);
+    createHighChart('container6', 6);
+    createHighChart('container7', 7);
+    createHighChart('container8', 8);
 
-    function createHighChart(channel_number) {
-        return {
+    function createHighChart(container, channel_number) {
+        Highcharts.chart(container, {
             chart: {
                 backgroundColor: 'transparent',
                 type: 'spline',
@@ -231,7 +225,7 @@
                     return data;
                 }())
             }]
-        }
+        })
     }
 
 </script>

@@ -31,7 +31,6 @@ def main(argv):
             r = requests.post(url, data=json.dumps(payload), headers=headers)
             print(r.content)
             payload = []
-            time.sleep(0.01)
 
 
     r = requests.post(url, data=json.dumps(payload), headers=headers)
