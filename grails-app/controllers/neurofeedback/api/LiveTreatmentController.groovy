@@ -2,6 +2,9 @@ package neurofeedback.api
 
 import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
+import org.apache.commons.math3.complex.Complex
+import org.apache.commons.math3.transform.*
+
 @Transactional(readOnly = true)
 @Secured(['ROLE_PROFESSIONAL'])
 class LiveTreatmentController {
@@ -28,10 +31,53 @@ class LiveTreatmentController {
 
     def live() {
         UserTreatment userT = UserTreatment.findById(params.id)
-        log.info("IM BEING CALLED " + userT.status)
-        def data = treatmentStorageService.getDataForTreatment(params.id, '3')
+        def start = new Date().getTime()
+        def sampleSize = 2048
+        def fs = 100
 
-        render(view: "main.gsp", model: [userTreatmentLive: userT, dataToload: data])
+        log.info("im starting at " + start)
+        def data = treatmentStorageService.getDataForTreatment(params.id, '3').take(sampleSize)
+        def transformer = new FastFourierTransformer(DftNormalization.STANDARD)
+        def dataTransformed = transformer.transform((data as double[]), TransformType.FORWARD)
+        def sampledData = (dataTransformed as List).take((dataTransformed.size()/2) as int)
+        def spd = []
+        def frequencies = []
+
+        double spectralPower
+        float frecuency
+        Map<String, List<Double>> powerBands = [:]
+        powerBands['Total'] = []
+        powerBands['Beta'] = []
+        powerBands['Alpha'] = []
+        powerBands['Theta'] = []
+        powerBands['Delta'] = []
+
+        sampledData.eachWithIndex { Complex entry, int i ->
+            spectralPower = ((entry.abs() * entry.abs()) / 100000)
+            frecuency = i * ((fs/2)/(sampleSize/2))
+
+            spd.add(spectralPower)
+            frequencies.add(frecuency)
+
+            powerBands['Total'] += [spectralPower]
+
+            if(frecuency >= 0.5 && frecuency < 4) {
+                powerBands['Delta'] += [spectralPower]
+            } else if(frecuency >= 4 && frecuency < 8) {
+                powerBands['Theta'] += [spectralPower]
+            } else if(frecuency >= 8 && frecuency < 12) {
+                powerBands['Alpha'] += [spectralPower]
+            } else if(frecuency >= 12 && frecuency < 30) {
+                powerBands['Beta'] += [spectralPower]
+            }
+        } as List
+
+        def end = new Date().getTime()
+
+        log.info("im plotting at " + end)
+        log.info("took me " + (end - start))
+
+        render(view: "main.gsp", model: [userTreatmentLive: userT, dataToload: spd, freqs: frequencies, pb: powerBands])
     }
 
     def data() {

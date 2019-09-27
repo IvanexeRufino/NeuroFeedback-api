@@ -46,9 +46,13 @@
 	<div class="col-md-12">
 		<div class="row">
 			<h1>NeuroCare</h1>
-			<p>
-				Bienvenido a la plataforma de aministración del sistema de neurocare
-			</p>
+            <p>
+                Total power:${(pb['Total'].sum()) as Integer}<br>
+                Delta power:${((pb['Delta'].sum() / pb['Total'].sum())*100).round(2)}%<br>
+                Theta power:${((pb['Theta'].sum() / pb['Total'].sum())*100).round(2)}%<br>
+                Alpha power:${((pb['Alpha'].sum() / pb['Total'].sum())*100).round(2)}%<br>
+                Beta power:${((pb['Beta'].sum() / pb['Total'].sum())*100).round(2)}%<br>
+            </p>
 		</div>
 		<div class="row">
             <div id="containerMain" style="height: 350px"></div>
@@ -89,16 +93,16 @@
         },
         xAxis: {
             title: {
-                text: 'Seconds'
+                text: 'Frequencies'
             },
-            max: 30,
+            max: "${freqs}".max,
             min: 0
         },
         yAxis: {
-            max: 60,
-            min: -60,
+            max: "${dataToload}".max,
+            min: 0,
             title: {
-                text: 'Voltage'
+                text: 'Power Spectral Density'
             },
             plotLines: [{
                 value: 0,
@@ -126,20 +130,35 @@
             data: (function () {
                 // generate an array of random data
                 var data = [],
-                    seconds = 0,
                     i;
 
+                var frequencies = ${freqs};
                 var analysisData = ${dataToload};
 
                 for (i = 0; i < analysisData.length; i += 1) {
                     data.push({
-                        x: seconds,
+                        x: frequencies[i],
                         y: analysisData[i]
                     });
-                    seconds += (0.01)
                 }
                 return data;
             }())
+        }],
+        annotations: [{
+            labelOptions: {
+                backgroundColor: 'rgba(255,255,255,0.5)',
+                verticalAlign: 'top',
+                y: 15
+            },
+            labels: [{
+                point: {
+                    xAxis: 0,
+                    yAxis: 0,
+                    x: 27.98,
+                    y: 255
+                },
+                text: 'Arbois'
+            }]
         }]
     });
 
