@@ -47,11 +47,11 @@
 		<div class="row">
 			<h1>NeuroCare</h1>
             <p>
-                Total power:${(pb['Total'].sum()) as Integer}<br>
-                Delta power:${((pb['Delta'].sum() / pb['Total'].sum())*100).round(2)}%<br>
-                Theta power:${((pb['Theta'].sum() / pb['Total'].sum())*100).round(2)}%<br>
-                Alpha power:${((pb['Alpha'].sum() / pb['Total'].sum())*100).round(2)}%<br>
-                Beta power:${((pb['Beta'].sum() / pb['Total'].sum())*100).round(2)}%<br>
+                Total power:${(analyzedData.powerBand.totalPower) as Integer}<br>
+                Delta power:${((analyzedData.powerBand.deltaPower / analyzedData.powerBand.totalPower)*100).round(2)}%<br>
+                Theta power:${((analyzedData.powerBand.thetaPower / analyzedData.powerBand.totalPower)*100).round(2)}%<br>
+                Alpha power:${((analyzedData.powerBand.alphaPower / analyzedData.powerBand.totalPower)*100).round(2)}%<br>
+                Beta power:${((analyzedData.powerBand.betaPower / analyzedData.powerBand.totalPower)*100).round(2)}%<br>
             </p>
 		</div>
 		<div class="row">
@@ -78,6 +78,9 @@
 <script src="https://code.highcharts.com/highcharts.js"></script>
 
 <script type="text/javascript">
+    var frequencies = ${analyzedData.frequencies};
+    var spd = ${analyzedData.spd};
+
     Highcharts.chart('containerMain', {
         chart: {
             backgroundColor: 'transparent',
@@ -95,11 +98,11 @@
             title: {
                 text: 'Frequency [Hz]'
             },
-            max: "${freqs}".max,
+            max: frequencies.max,
             min: 0
         },
         yAxis: {
-            max: "${dataToload}".max,
+            max: spd.max,
             min: 0,
             title: {
                 text: 'Power Spectral Density [μV²/HZ]'
@@ -126,19 +129,16 @@
         },
         series: [{
             name: 'Analyzed data',
-            turboThreshold: 3000,
+            turboThreshold: spd.max,
             data: (function () {
                 // generate an array of random data
                 var data = [],
                     i;
 
-                var frequencies = ${freqs};
-                var analysisData = ${dataToload};
-
-                for (i = 0; i < analysisData.length; i += 1) {
+                for (i = 0; i < spd.length; i += 1) {
                     data.push({
                         x: frequencies[i],
-                        y: analysisData[i]
+                        y: spd[i]
                     });
                 }
                 return data;
