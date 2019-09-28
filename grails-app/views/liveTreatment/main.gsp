@@ -73,8 +73,25 @@
 <script type="text/javascript">
     var frequencies = ${analyzedData.frequencies};
     var spd = ${analyzedData.spd};
-    var legend = getLegend(${analyzedData.powerBand.totalPower}, ${analyzedData.powerBand.alphaPower},
-        ${analyzedData.powerBand.betaPower}, ${analyzedData.powerBand.deltaPower}, ${analyzedData.powerBand.thetaPower});
+
+    function getLegend(totalPower, alpha, beta, delta, theta) {
+        return {
+            layout: 'vertical',
+            backgroundColor: '#FFFFFF',
+            floating: true,
+            align: 'right',
+            verticalAlign: 'top',
+            x: 0,
+            y: 0,
+            labelFormatter: function () {
+                return "Total power:" + (totalPower.toFixed(0)) + "<br>\n" +
+                    "                    Delta power:" + ((delta / totalPower) * 100).toFixed(2) + "%<br>\n" +
+                    "                    Theta power:" + ((theta / totalPower) * 100).toFixed(2) + "%<br>\n" +
+                    "                    Alpha power:" + ((alpha / totalPower) * 100).toFixed(2) + "%<br>\n" +
+                    "                    Beta power:" + ((theta / totalPower) * 100).toFixed(2) + "%<br>";
+            }
+        };
+    }
 
     Highcharts.chart('containerMain', {
         chart: {
@@ -93,19 +110,8 @@
 
                                 var powerBand = json.powerBand;
 
-                                chart.legend.update({
-                                    layout: 'vertical',
-                                        backgroundColor: '#FFFFFF',
-                                        floating: true,
-                                        align: 'right',
-                                        verticalAlign: 'top',
-                                        x: 0,
-                                        y: 0,
-                                        labelFormatter: function () {
-                                        return getLegend(powerBand.totalPower, powerBand.alphaPower, powerBand.betaPower,
-                                                            powerBand.deltaPower, powerBand.thetaPower);
-                                    }
-                                });
+                                chart.legend.update(getLegend(powerBand.totalPower, powerBand.alphaPower,
+                                    powerBand.betaPower, powerBand.deltaPower, powerBand.thetaPower));
 
                                 chart.series[0].update({
                                     data: (function () {
@@ -146,21 +152,8 @@
                 color: '#808080'
             }]
         },
-        legend: {
-            layout: 'vertical',
-            backgroundColor: '#FFFFFF',
-            floating: true,
-            align: 'right',
-            verticalAlign: 'top',
-            x: 0,
-            y: 0,
-            labelFormatter: function () {
-                return legend;
-            }
-        },
-        exporting: {
-            enabled: false
-        },
+        legend: getLegend(${analyzedData.powerBand.totalPower}, ${analyzedData.powerBand.alphaPower},
+            ${analyzedData.powerBand.betaPower}, ${analyzedData.powerBand.deltaPower}, ${analyzedData.powerBand.thetaPower}),
         series: [{
             name: 'Analyzed data',
             turboThreshold: spd.max,
@@ -178,22 +171,6 @@
                 return data;
             }())
         }],
-        annotations: [{
-            labelOptions: {
-                backgroundColor: 'rgba(255,255,255,0.5)',
-                verticalAlign: 'top',
-                y: 15
-            },
-            labels: [{
-                point: {
-                    xAxis: 0,
-                    yAxis: 0,
-                    x: 27.98,
-                    y: 255
-                },
-                text: 'Arbois'
-            }]
-        }]
     });
 
     createHighChart('container1', 1);
@@ -271,14 +248,6 @@
                 }())
             }]
         })
-    }
-
-    function getLegend(totalPower, alpha, beta, delta, theta) {
-        return "Total power:" + (totalPower.toFixed(0)) + "<br>\n" +
-        "                    Delta power:" + ((delta / totalPower)*100).toFixed(2) + "%<br>\n" +
-        "                    Theta power:" + ((theta / totalPower)*100).toFixed(2) + "%<br>\n" +
-        "                    Alpha power:" + ((alpha / totalPower)*100).toFixed(2) + "%<br>\n" +
-        "                    Beta power:" + ((theta / totalPower)*100).toFixed(2) + "%<br>";
     }
 
 </script>

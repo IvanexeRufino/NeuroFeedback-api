@@ -11,7 +11,6 @@ class LiveTreatmentController {
 
     def springSecurityService
     def treatmentStorageService
-    def analysisService
 
     static Boolean patient = false
     static Boolean professional = true
@@ -29,15 +28,12 @@ class LiveTreatmentController {
     }
 
     def live() {
-        UserTreatment userT = UserTreatment.findById(params.id)
-        def ad = treatmentStorageService.getDataForTreatment(params.id, '3')
-        render(view: "main.gsp", model: [userTreatmentLive: userT, analyzedData: ad])
+        AnalyzedData ad = treatmentStorageService.getDataForTreatment(params.id, '3')
+        render(view: "main.gsp", model: [analyzedData: ad])
     }
 
     def data() {
         AnalyzedData ad = treatmentStorageService.getDataForTreatment(params.id, '3')
-        println 'im being called with power ' + ad.powerBand.totalPower
-
         respond ad, formats: ['json']
     }
 
