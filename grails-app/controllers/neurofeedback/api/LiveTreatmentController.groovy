@@ -30,20 +30,12 @@ class LiveTreatmentController {
 
     def live() {
         UserTreatment userT = UserTreatment.findById(params.id)
-        def start = new Date().getTime()
-
-        def data = treatmentStorageService.getDataForTreatment(params.id, '3')
-        AnalyzedData ad = analysisService.getDataAnalyzed(data)
-
-        def end = new Date().getTime()
-        log.info("took me " + (end - start))
-
+        def ad = treatmentStorageService.getDataForTreatment(params.id, '3')
         render(view: "main.gsp", model: [userTreatmentLive: userT, analyzedData: ad])
     }
 
     def data() {
-        def data = treatmentStorageService.getDataForTreatment(params.id, '3')
-        AnalyzedData ad = analysisService.getDataAnalyzed(data)
+        AnalyzedData ad = treatmentStorageService.getDataForTreatment(params.id, '3')
         println 'im being called with power ' + ad.powerBand.totalPower
 
         respond ad, formats: ['json']

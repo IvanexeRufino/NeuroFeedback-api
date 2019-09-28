@@ -17,14 +17,14 @@ class TrackSessionController {
         def start = new Date().getTime()
 
         def cb = prepareArraysForChannels(dataArray)
-        AnalyzedData ad = analysisService.getDataAnalyzed(cb.buffer[2])
+        AnalyzedData analysis = analysisService.getDataAnalyzed(cb.buffer[2])
+        treatmentStorageService.storeDataForTreatment(params.id, analysis)
 
         def end = new Date().getTime()
 
         println("This just took me " + (end - start))
-        println(ad.powerBand.alphaPower)
 
-        if(ad.powerBand.alphaPower > 1) {
+        if(analysis.powerBand.alphaPower > 1) {
             render "FEEDBACK POSITIVO"
         } else {
             render "FEEDBACK NEGATIVO"
