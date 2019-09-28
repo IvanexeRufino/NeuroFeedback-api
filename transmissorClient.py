@@ -30,7 +30,7 @@ def main(argv):
         while line:
             payload.append([float(line.rstrip('\n')) -5 ,float(line.rstrip('\n')) + 5,line.rstrip('\n'),
                             float(line.rstrip('\n')) + 23, float(line.rstrip('\n')) + 2,float(line.rstrip('\n')) - 18,
-                            float(line.rstrip('\n')) -2, float(line.rstrip('\n')) + -50])
+                            float(line.rstrip('\n')) -2, float(line.rstrip('\n')) + + 50])
             acumulated_data += 1
 
             if acumulated_data == 128:
@@ -38,7 +38,7 @@ def main(argv):
                 print(r.content)
                 payload = []
                 acumulated_data = 0
-                time.sleep(1)
+                time.sleep(0.9)
 
             line = fp.readline()
 

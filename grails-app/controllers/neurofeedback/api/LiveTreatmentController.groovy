@@ -28,8 +28,7 @@ class LiveTreatmentController {
     }
 
     def live() {
-        List<AnalyzedData> ad = treatmentStorageService.getDataForTreatment(params.id)
-        render(view: "main.gsp", model: [analyzedDatas: ad])
+        render(view: "main.gsp")
     }
 
     def data() {

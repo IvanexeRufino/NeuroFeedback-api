@@ -8,11 +8,13 @@ class AnalyzedData {
     def spd
     def frequencies
     PowerBand powerBand
+    List sourceData
 
-    AnalyzedData() {
+    AnalyzedData(originalData) {
         spd = []
         frequencies = []
         powerBand = new PowerBand()
+        this.sourceData = originalData
     }
 
     def addComplex(Complex complex, frequencyIndex, nysquiSize) {

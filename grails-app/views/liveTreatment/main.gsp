@@ -138,9 +138,6 @@
         }]
     });
 
-    var frequencies = ${analyzedDatas[2].frequencies};
-    var spd = ${analyzedDatas[2].spd};
-
     createHighChart('container1', 1);
     createHighChart('container2', 2);
     createHighChart('container3', 3);
@@ -174,14 +171,15 @@
                                     chart.series[0].update({
                                         data: (function () {
                                             var data = [], i;
-                                            for (i = 0; i < spd.length; i += 1) {
+                                            for (i = 0; i < json.spd.length; i += 1) {
                                                 data.push({
                                                     x: json.frequencies[i],
                                                     y: json.spd[i]
                                                 });
                                             }
                                             return data;
-                                        }())
+                                        }()),
+                                        turboThreshold: json.spd.max
                                     }, true, true);
                                 }
                             });
@@ -195,13 +193,9 @@
             xAxis: {
                 title: {
                     text: 'Frequency [Hz]'
-                },
-                max: frequencies.max,
-                min: 0
+                }
             },
             yAxis: {
-                max: spd.max,
-                min: 0,
                 title: {
                     text: 'Power Spectral Density [μV²/HZ]'
                 },
@@ -211,24 +205,10 @@
                     color: '#808080'
                 }]
             },
-            legend: getLegend(${analyzedDatas[2].powerBand.totalPower}, ${analyzedDatas[2].powerBand.alphaPower},
-                ${analyzedDatas[2].powerBand.betaPower}, ${analyzedDatas[2].powerBand.deltaPower}, ${analyzedDatas[2].powerBand.thetaPower}),
+            legend: getLegend(0,0,0,0,0),
             series: [{
                 name: 'Analyzed data',
-                turboThreshold: spd.max,
-                data: (function () {
-                    // generate an array of random data
-                    var data = [],
-                        i;
-
-                    for (i = 0; i < spd.length; i += 1) {
-                        data.push({
-                            x: frequencies[i],
-                            y: spd[i]
-                        });
-                    }
-                    return data;
-                }())
+                data: []
             }]
         });
     }
