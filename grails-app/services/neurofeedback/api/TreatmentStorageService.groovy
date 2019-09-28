@@ -8,7 +8,17 @@ class TreatmentStorageService {
     Map<String, List<AnalyzedData>> treatmentData = [:]
 
     def storeDataForTreatment(String userTreatmentId, List<AnalyzedData> analysis) {
-        treatmentData[userTreatmentId] = analysis
+        def storedAnalysis = treatmentData[userTreatmentId]
+
+        if(!storedAnalysis) {
+            treatmentData[userTreatmentId] = analysis
+        } else {
+            storedAnalysis.eachWithIndex { AnalyzedData entry, int i ->
+                entry.updateAnalysis(analysis[i])
+            }
+
+            treatmentData[userTreatmentId] = storedAnalysis
+        }
     }
 
     List<AnalyzedData> getDataForTreatment(String userTreatmentId) {

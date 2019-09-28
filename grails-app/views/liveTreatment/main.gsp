@@ -72,18 +72,51 @@
 
 <script type="text/javascript">
 
+    /** ******************************************************************** **/
+    /**              Creating high chart for EEG data                        **/
+    /** ******************************************************************** **/
+
+    function createAjax(series, channel_number) {
+        setInterval(function () {
+            $.ajax({
+                url: '/liveTreatment/data/${params.id}?channel=' + channel_number,
+                type: 'get',
+                success: function (json) {
+                    var x = (new Date()).getTime() - 10000;
+
+                    var source = json.sourceData;
+                    var accum = 0;
+
+                    series.update({
+                        data: (function () {
+                            var data = [], i;
+                            for (i = 0; i < source.length; i += 1) {
+                                data.push({
+                                    x: x + accum,
+                                    y: source[i]
+                                });
+                                accum += 10000/1280;
+                            }
+                            return data;
+                        }()),
+                        turboThreshold: json.spd.max
+                    }, true, true);
+                }
+            });
+        }, 10000);
+    }
+
     Highcharts.chart('containerMain', {
         chart: {
             backgroundColor: 'transparent',
             type: 'spline',
-            animation: Highcharts.svg, // don't animate in old IE
+            animation: Highcharts.svg,
             marginRight: 10,
             events: {
                 load: function () {
-                    // set up the updating of the chart each second
-                    var series = this.series;
-                    setInterval(function () {
-                    }, 5000);
+                    for(var i = 0; i < ${analyzedDatasCount}; i++) {
+                        createAjax(this.series[i], i)
+                    }
                 }
             }
         },
@@ -95,7 +128,6 @@
             type: 'datetime'
         },
         yAxis: {
-            max: 50,
             title: {
                 text: 'Hz'
             },
@@ -119,33 +151,46 @@
         exporting: {
             enabled: false
         },
-        series: [{
-            name: 'channel 1',
-            data: (function () {
-                // generate an array of random data
-                var data = [],
-                    time = (new Date()).getTime(),
-                    i;
-
-                for (i = -499; i <= 0; i += 1) {
-                    data.push({
-                        x: time + i * 1000,
-                        y: 0
-                    });
-                }
-                return data;
-            }())
-        }]
+        series: getSeries()
     });
 
-    createHighChart(1);
-    createHighChart(2);
-    createHighChart(3);
-    createHighChart(4);
-    createHighChart(5);
-    createHighChart(6);
-    createHighChart(7);
-    createHighChart(8);
+    function getSeries() {
+        var series = [];
+
+        for(var k = 1; k <= ${analyzedDatasCount}; k++){
+            series.push({
+                name: 'channel ' + k,
+                data: (function () {
+                    var data = [],
+                        time = (new Date()).getTime(),
+                        i;
+
+                    for (i = -10; i <= 0; i += 1) {
+                        data.push({
+                            x: time + i * 1000,
+                            y: k
+                        });
+                    }
+                    return data;
+                }())
+            });
+        }
+
+        return series;
+    }
+
+    /** ******************************************************************** **/
+    /**              Creating high chart for analyzed data                   **/
+    /** ******************************************************************** **/
+
+    createHighCharts(${analyzedDatasCount});
+
+    function createHighCharts(quantity) {
+
+        for (var i = 1; i <= quantity; i++) {
+            createHighChart(i);
+        }
+    }
 
     function createHighChart(channel_number) {
         Highcharts.chart('container' + channel_number, {
@@ -155,7 +200,6 @@
                 animation: false,
                 events: {
                     load: function () {
-                        // set up the updating of the chart each second
                         var chart = this;
                         setInterval(function () {
                             $.ajax({

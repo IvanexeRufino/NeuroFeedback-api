@@ -28,12 +28,13 @@ class LiveTreatmentController {
     }
 
     def live() {
-        render(view: "main.gsp")
+        List<AnalyzedData> ad = treatmentStorageService.getDataForTreatment(params.id)
+        render(view: "main.gsp", model:[sourceDatas: ad, analyzedDatasCount: ad.size()])
     }
 
     def data() {
         int channel = params.channel as int
-        AnalyzedData ad = treatmentStorageService.getDataForTreatment(params.id)[(channel -1)]
+        AnalyzedData ad = treatmentStorageService.getDataForTreatment(params.id)[channel - 1]
         respond ad, formats: ['json']
     }
 

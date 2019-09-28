@@ -25,4 +25,16 @@ class AnalyzedData {
         frequencies.add(frecuency)
         powerBand.addSpectralPower(spectralPower, frecuency)
     }
+
+    def updateAnalysis(AnalyzedData updated) {
+        this.spd = updated.spd
+        this.frequencies = updated.frequencies
+        this.powerBand = updated.powerBand
+
+        if(sourceData.size() > 1280) {
+            this.sourceData = updated.sourceData
+        } else {
+            this.sourceData += updated.sourceData
+        }
+    }
 }
