@@ -224,10 +224,10 @@
             y: 0,
             labelFormatter: function () {
                 return "Total power:" + (totalPower.toFixed(0)) + "<br>\n" +
-                    "                    Delta power:" + ((delta / totalPower) * 100).toFixed(2) + "%<br>\n" +
-                    "                    Theta power:" + ((theta / totalPower) * 100).toFixed(2) + "%<br>\n" +
-                    "                    Alpha power:" + ((alpha / totalPower) * 100).toFixed(2) + "%<br>\n" +
-                    "                    Beta power:" + ((theta / totalPower) * 100).toFixed(2) + "%<br>";
+                    "                    Delta power:" + ((delta / (totalPower ? totalPower : 1)) * 100).toFixed(2) + "%<br>\n" +
+                    "                    Theta power:" + ((theta / (totalPower ? totalPower : 1)) * 100).toFixed(2) + "%<br>\n" +
+                    "                    Alpha power:" + ((alpha / (totalPower ? totalPower : 1)) * 100).toFixed(2) + "%<br>\n" +
+                    "                    Beta power:" + ((theta / (totalPower ? totalPower : 1)) * 100).toFixed(2) + "%<br>";
             }
         };
     }
