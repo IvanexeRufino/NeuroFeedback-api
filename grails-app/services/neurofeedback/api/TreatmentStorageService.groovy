@@ -5,13 +5,13 @@ import grails.gorm.transactions.Transactional
 @Transactional
 class TreatmentStorageService {
 
-    def treatmentData = [:]
+    Map<String, List<AnalyzedData>> treatmentData = [:]
 
-    def storeDataForTreatment(String userTreatmentId, AnalyzedData analysis) {
+    def storeDataForTreatment(String userTreatmentId, List<AnalyzedData> analysis) {
         treatmentData[userTreatmentId] = analysis
     }
 
-    AnalyzedData getDataForTreatment(String userTreatmentId, String channel) {
+    List<AnalyzedData> getDataForTreatment(String userTreatmentId) {
         treatmentData[userTreatmentId]
     }
 }

@@ -13,18 +13,21 @@ class TrackSessionController {
 
     def treatmentSession() {
         def dataArray = request.JSON
+        List<AnalyzedData> analyzedDatas = []
 
         def start = new Date().getTime()
 
         def cb = prepareArraysForChannels(dataArray)
-        AnalyzedData analysis = analysisService.getDataAnalyzed(cb.buffer[2])
-        treatmentStorageService.storeDataForTreatment(params.id, analysis)
+        cb.buffer.forEach { buffer ->
+            analyzedDatas.add(analysisService.getDataAnalyzed(buffer))
+        }
+        treatmentStorageService.storeDataForTreatment(params.id, analyzedDatas)
 
         def end = new Date().getTime()
 
         println("This just took me " + (end - start))
 
-        if(analysis.powerBand.alphaPower > 1) {
+        if(analyzedDatas[2].powerBand.alphaPower > 1) {
             render "FEEDBACK POSITIVO"
         } else {
             render "FEEDBACK NEGATIVO"

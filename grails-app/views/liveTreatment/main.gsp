@@ -71,8 +71,167 @@
 <script src="https://code.highcharts.com/highcharts.js"></script>
 
 <script type="text/javascript">
-    var frequencies = ${analyzedData.frequencies};
-    var spd = ${analyzedData.spd};
+
+    Highcharts.chart('containerMain', {
+        chart: {
+            backgroundColor: 'transparent',
+            type: 'spline',
+            animation: Highcharts.svg, // don't animate in old IE
+            marginRight: 10,
+            events: {
+                load: function () {
+                    // set up the updating of the chart each second
+                    var series = this.series;
+                    setInterval(function () {
+                    }, 5000);
+                }
+            }
+        },
+        title: {
+            text: 'Real time EEG'
+        },
+        xAxis: {
+            tickAmount: 100,
+            type: 'datetime'
+        },
+        yAxis: {
+            max: 50,
+            title: {
+                text: 'Hz'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            formatter: function () {
+                return '<b>' + this.series.name + '</b><br/>' +
+                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>'
+                    +
+                    Highcharts.numberFormat(this.y, 2);
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        exporting: {
+            enabled: false
+        },
+        series: [{
+            name: 'channel 1',
+            data: (function () {
+                // generate an array of random data
+                var data = [],
+                    time = (new Date()).getTime(),
+                    i;
+
+                for (i = -499; i <= 0; i += 1) {
+                    data.push({
+                        x: time + i * 1000,
+                        y: 0
+                    });
+                }
+                return data;
+            }())
+        }]
+    });
+
+    var frequencies = ${analyzedDatas[2].frequencies};
+    var spd = ${analyzedDatas[2].spd};
+
+    createHighChart('container1', 1);
+    createHighChart('container2', 2);
+    createHighChart('container3', 3);
+    createHighChart('container4', 4);
+    createHighChart('container5', 5);
+    createHighChart('container6', 6);
+    createHighChart('container7', 7);
+    createHighChart('container8', 8);
+
+    function createHighChart(container, channel_number) {
+        Highcharts.chart(container, {
+            chart: {
+                type: 'line',
+                backgroundColor: 'transparent',
+                animation: false,
+                events: {
+                    load: function () {
+                        // set up the updating of the chart each second
+                        var chart = this;
+                        setInterval(function () {
+                            $.ajax({
+                                url: '/liveTreatment/data/${params.id}?channel=' + channel_number,
+                                type: 'get',
+                                success: function (json) {
+
+                                    var powerBand = json.powerBand;
+
+                                    chart.legend.update(getLegend(powerBand.totalPower, powerBand.alphaPower,
+                                        powerBand.betaPower, powerBand.deltaPower, powerBand.thetaPower));
+
+                                    chart.series[0].update({
+                                        data: (function () {
+                                            var data = [], i;
+                                            for (i = 0; i < spd.length; i += 1) {
+                                                data.push({
+                                                    x: json.frequencies[i],
+                                                    y: json.spd[i]
+                                                });
+                                            }
+                                            return data;
+                                        }())
+                                    }, true, true);
+                                }
+                            });
+                        }, 1000);
+                    }
+                }
+            },
+            title: {
+                text: 'Analyzed Data ch' + channel_number
+            },
+            xAxis: {
+                title: {
+                    text: 'Frequency [Hz]'
+                },
+                max: frequencies.max,
+                min: 0
+            },
+            yAxis: {
+                max: spd.max,
+                min: 0,
+                title: {
+                    text: 'Power Spectral Density [μV²/HZ]'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            legend: getLegend(${analyzedDatas[2].powerBand.totalPower}, ${analyzedDatas[2].powerBand.alphaPower},
+                ${analyzedDatas[2].powerBand.betaPower}, ${analyzedDatas[2].powerBand.deltaPower}, ${analyzedDatas[2].powerBand.thetaPower}),
+            series: [{
+                name: 'Analyzed data',
+                turboThreshold: spd.max,
+                data: (function () {
+                    // generate an array of random data
+                    var data = [],
+                        i;
+
+                    for (i = 0; i < spd.length; i += 1) {
+                        data.push({
+                            x: frequencies[i],
+                            y: spd[i]
+                        });
+                    }
+                    return data;
+                }())
+            }]
+        });
+    }
 
     function getLegend(totalPower, alpha, beta, delta, theta) {
         return {
@@ -91,163 +250,6 @@
                     "                    Beta power:" + ((theta / totalPower) * 100).toFixed(2) + "%<br>";
             }
         };
-    }
-
-    Highcharts.chart('containerMain', {
-        chart: {
-            type: 'line',
-            backgroundColor: 'transparent',
-            animation: false,
-            events: {
-                load: function () {
-                    // set up the updating of the chart each second
-                    var chart = this;
-                    setInterval(function () {
-                        $.ajax({
-                            url: '/liveTreatment/data/${params.id}?channel=3',
-                            type: 'get',
-                            success: function (json) {
-
-                                var powerBand = json.powerBand;
-
-                                chart.legend.update(getLegend(powerBand.totalPower, powerBand.alphaPower,
-                                    powerBand.betaPower, powerBand.deltaPower, powerBand.thetaPower));
-
-                                chart.series[0].update({
-                                    data: (function () {
-                                        var data = [], i;
-                                        for (i = 0; i < spd.length; i += 1) {
-                                            data.push({
-                                                x: json.frequencies[i],
-                                                y: json.spd[i]
-                                            });
-                                        }
-                                        return data;
-                                    }())}, true, true);
-                            }
-                        });
-                    }, 1000);
-                }
-            }
-        },
-        title: {
-            text: 'Analyzed Data'
-        },
-        xAxis: {
-            title: {
-                text: 'Frequency [Hz]'
-            },
-            max: frequencies.max,
-            min: 0
-        },
-        yAxis: {
-            max: spd.max,
-            min: 0,
-            title: {
-                text: 'Power Spectral Density [μV²/HZ]'
-            },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }]
-        },
-        legend: getLegend(${analyzedData.powerBand.totalPower}, ${analyzedData.powerBand.alphaPower},
-            ${analyzedData.powerBand.betaPower}, ${analyzedData.powerBand.deltaPower}, ${analyzedData.powerBand.thetaPower}),
-        series: [{
-            name: 'Analyzed data',
-            turboThreshold: spd.max,
-            data: (function () {
-                // generate an array of random data
-                var data = [],
-                    i;
-
-                for (i = 0; i < spd.length; i += 1) {
-                    data.push({
-                        x: frequencies[i],
-                        y: spd[i]
-                    });
-                }
-                return data;
-            }())
-        }],
-    });
-
-    createHighChart('container1', 1);
-    createHighChart('container2', 2);
-    createHighChart('container3', 3);
-    createHighChart('container4', 4);
-    createHighChart('container5', 5);
-    createHighChart('container6', 6);
-    createHighChart('container7', 7);
-    createHighChart('container8', 8);
-
-    function createHighChart(container, channel_number) {
-        Highcharts.chart(container, {
-            chart: {
-                backgroundColor: 'transparent',
-                type: 'spline',
-                animation: Highcharts.svg, // don't animate in old IE
-                marginRight: 10,
-                events: {
-                    load: function () {
-                        // set up the updating of the chart each second
-                        var series = this.series;
-                        setInterval(function () {
-                        }, 5000);
-                    }
-                }
-            },
-            title: {
-                text: 'Channel ' + channel_number
-            },
-            xAxis: {
-                tickAmount: 100,
-                type: 'datetime'
-            },
-            yAxis: {
-                max: 50,
-                title: {
-                    text: 'Hz'
-                },
-                plotLines: [{
-                    value: 0,
-                    width: 1,
-                    color: '#808080'
-                }]
-            },
-            tooltip: {
-                formatter: function () {
-                    return '<b>' + this.series.name + '</b><br/>' +
-                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>'
-                        +
-                        Highcharts.numberFormat(this.y, 2);
-                }
-            },
-            legend: {
-                enabled: false
-            },
-            exporting: {
-                enabled: false
-            },
-            series: [{
-                name: 'channel ' +  channel_number,
-                data: (function () {
-                    // generate an array of random data
-                    var data = [],
-                        time = (new Date()).getTime(),
-                        i;
-
-                    for (i = -499; i <= 0; i += 1) {
-                        data.push({
-                            x: time + i * 1000,
-                            y: 0
-                        });
-                    }
-                    return data;
-                }())
-            }]
-        })
     }
 
 </script>
