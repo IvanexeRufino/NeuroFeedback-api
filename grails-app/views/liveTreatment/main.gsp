@@ -138,17 +138,17 @@
         }]
     });
 
-    createHighChart('container1', 1);
-    createHighChart('container2', 2);
-    createHighChart('container3', 3);
-    createHighChart('container4', 4);
-    createHighChart('container5', 5);
-    createHighChart('container6', 6);
-    createHighChart('container7', 7);
-    createHighChart('container8', 8);
+    createHighChart(1);
+    createHighChart(2);
+    createHighChart(3);
+    createHighChart(4);
+    createHighChart(5);
+    createHighChart(6);
+    createHighChart(7);
+    createHighChart(8);
 
-    function createHighChart(container, channel_number) {
-        Highcharts.chart(container, {
+    function createHighChart(channel_number) {
+        Highcharts.chart('container' + channel_number, {
             chart: {
                 type: 'line',
                 backgroundColor: 'transparent',
