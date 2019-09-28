@@ -23,18 +23,22 @@ def main(argv):
         "Content-type": "application/json"
     }
 
+    acumulated_data = 0
+
     with open(inputfile) as fp:
         line = fp.readline()
         while line:
             payload.append([0,0,line.rstrip('\n'),0,0,0,0,0])
+            acumulated_data += 1
+
+            if acumulated_data == 128:
+                r = requests.post(url, data=json.dumps(payload), headers=headers)
+                print(r.content)
+                payload = []
+                acumulated_data = 0
+                time.sleep(1)
+
             line = fp.readline()
-            r = requests.post(url, data=json.dumps(payload), headers=headers)
-            print(r.content)
-            payload = []
-
-
-    r = requests.post(url, data=json.dumps(payload), headers=headers)
-    print(r.content)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
