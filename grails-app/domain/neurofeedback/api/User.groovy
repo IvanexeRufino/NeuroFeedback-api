@@ -3,8 +3,6 @@ package neurofeedback.api
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 import grails.compiler.GrailsCompileStatic
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 @GrailsCompileStatic
 @EqualsAndHashCode(includes='username')
@@ -22,14 +20,20 @@ class User implements Serializable {
     String email
     String username
     String password
+    Role role
 
-    boolean enabled = true
-    boolean accountExpired
-    boolean accountLocked
-    boolean passwordExpired
+    private boolean enabled = true
+    private boolean accountExpired
+    private boolean accountLocked
+    private boolean passwordExpired
+    User assignedDoctor
 
-    Set<Role> getAuthorities() {
-        (UserRole.findAllByUser(this) as List<UserRole>)*.role as Set<Role>
+    List<Role> getAuthorities() {
+        [role]
+    }
+
+    List<UserTreatment> getTreatments() {
+        (UserTreatment.findAllByUser(this) as List<UserTreatment>)
     }
 
     static constraints = {
@@ -42,9 +46,14 @@ class User implements Serializable {
         email (blank:false, email:true, maxSize: 255)
         password nullable: false, blank: false, password: true
         username nullable: false, blank: false, unique: true
+        assignedDoctor nullable: true, blank: true
     }
 
     static mapping = {
 	    password column: '`password`'
+    }
+
+    def toJson(){
+        ["userName": username, "firstName": firstName, "lastName": lastName, "email": email]
     }
 }

@@ -1,24 +1,32 @@
 package neurofeedback.api
 
+import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
+import neurofeedback.api.Role
+import neurofeedback.api.User
+import neurofeedback.api.UserService
+
 import static org.springframework.http.HttpStatus.*
 
-import grails.plugin.springsecurity.annotation.Secured
-import grails.transaction.Transactional
-@Transactional(readOnly = true)
 @Secured(['ROLE_ADMIN','ROLE_PROFESSIONAL'])
 class UserController {
 
     UserService userService
+    def springSecurityService
 
     static Boolean patient = false
     static Boolean professional = true
     static Boolean administrator = true
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    static String adminFriendlyName = "Usuarios del sistema"
+    static String friendlyName = "Pacientes"
+
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond userService.list(params), model:[userCount: userService.count()]
+
+        List<User> applicableUsers = getApplicableUsers(params)
+        respond applicableUsers, model:[userCount: applicableUsers.size()]
     }
 
     def show(Long id) {
@@ -36,6 +44,14 @@ class UserController {
         }
 
         try {
+            User userLoggedIn = springSecurityService.getCurrentUser()
+            if(userLoggedIn.role.authority == "ROLE_PROFESSIONAL") {
+                user.assignedDoctor = userLoggedIn
+                user.role = Role.findByAuthority("ROLE_PATIENT")
+            } else {
+                user.role = Role.findByAuthority("ROLE_PROFESSIONAL")
+            }
+
             userService.save(user)
         } catch (ValidationException e) {
             respond user.errors, view:'create'
@@ -102,5 +118,16 @@ class UserController {
             }
             '*'{ render status: NOT_FOUND }
         }
+    }
+
+    private List<User> getApplicableUsers(Map params) {
+        User currentUser = springSecurityService.getCurrentUser()
+
+        if(currentUser.role.authority == "ROLE_PROFESSIONAL") {
+            return User.findAllByAssignedDoctor(currentUser) as List<User>
+        } else {
+            return userService.list(params)
+        }
+
     }
 }

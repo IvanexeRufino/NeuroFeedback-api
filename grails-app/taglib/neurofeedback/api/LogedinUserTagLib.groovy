@@ -9,7 +9,7 @@ class LogedinUserTagLib {
 
 
     def currentUserProps = { attrs ->
-        def user = springSecurityService.getCurrentUser()
+        User user = springSecurityService.getCurrentUser()
         if (user) {
             if (attrs.username) {
                 out << user.username
@@ -19,6 +19,8 @@ class LogedinUserTagLib {
                 out << user.lastName
             } else if (attrs.email) {
                 out << user.email
+            } else if (attrs.authority) {
+                out << user.role.authority
             }
         }
     }
