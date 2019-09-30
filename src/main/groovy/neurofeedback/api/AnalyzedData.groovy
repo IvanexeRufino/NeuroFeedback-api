@@ -8,11 +8,13 @@ class AnalyzedData {
     def spd
     def frequencies
     PowerBand powerBand
+    List sourceData
 
-    AnalyzedData() {
+    AnalyzedData(List originalData) {
         spd = []
         frequencies = []
         powerBand = new PowerBand()
+        this.sourceData = getMappedSourceData(originalData)
     }
 
     def addComplex(Complex complex, frequencyIndex, nysquiSize) {
@@ -22,5 +24,28 @@ class AnalyzedData {
         spd.add(spectralPower)
         frequencies.add(frecuency)
         powerBand.addSpectralPower(spectralPower, frecuency)
+    }
+
+    def updateAnalysis(AnalyzedData updated) {
+        this.spd = updated.spd
+        this.frequencies = updated.frequencies
+        this.powerBand = updated.powerBand
+
+        this.sourceData += updated.sourceData
+    }
+
+    static List getMappedSourceData(List originalData) {
+        def x = (new Date()).getTime() - 1000
+        def accum = 0
+        Point point
+        def acumulativeData = []
+
+        for (int i = 0; i < originalData.size(); i += 1) {
+            point = new Point(x + accum, originalData[i])
+            accum += 1000/128
+            acumulativeData.add(point)
+        }
+
+        return acumulativeData
     }
 }

@@ -5,23 +5,23 @@ import grails.gorm.transactions.Transactional
 @Transactional
 class TreatmentStorageService {
 
-    def treatmentData = [:]
+    Map<String, List<AnalyzedData>> treatmentData = [:]
 
-    def storeDataForTreatment(String userTreatmentId, arrayData) {
-        arrayData.each { array ->
-            array.eachWithIndex{it,index->
-                if(!treatmentData[userTreatmentId]) {
-                    treatmentData[userTreatmentId] = []
-                }
-                if(index == 2 && it != "end") {
-                    treatmentData[userTreatmentId] += it
-                }
+    def storeDataForTreatment(String userTreatmentId, List<AnalyzedData> analysis) {
+        def storedAnalysis = treatmentData[userTreatmentId]
 
+        if(!storedAnalysis) {
+            treatmentData[userTreatmentId] = analysis
+        } else {
+            storedAnalysis.eachWithIndex { AnalyzedData entry, int i ->
+                entry.updateAnalysis(analysis[i])
             }
+
+            treatmentData[userTreatmentId] = storedAnalysis
         }
     }
 
-    def getDataForTreatment(String userTreatmentId, String channel) {
+    List<AnalyzedData> getDataForTreatment(String userTreatmentId) {
         treatmentData[userTreatmentId]
     }
 }
