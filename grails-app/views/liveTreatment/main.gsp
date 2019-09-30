@@ -82,28 +82,11 @@
                 url: '/liveTreatment/data/${params.id}?channel=' + channel_number,
                 type: 'get',
                 success: function (json) {
-                    var x = (new Date()).getTime() - 10000;
-
                     var source = json.sourceData;
-                    var accum = 0;
-
-                    series.update({
-                        data: (function () {
-                            var data = [], i;
-                            for (i = 0; i < source.length; i += 1) {
-                                data.push({
-                                    x: x + accum,
-                                    y: source[i]
-                                });
-                                accum += 10000/1280;
-                            }
-                            return data;
-                        }()),
-                        turboThreshold: json.spd.max
-                    }, true, true);
+                    series.setData(source, true, false, false);
                 }
             });
-        }, 10000);
+        }, 5000);
     }
 
     Highcharts.chart('containerMain', {
@@ -172,7 +155,8 @@
                         });
                     }
                     return data;
-                }())
+                }()),
+                turboThreshold: 10000000
             });
         }
 

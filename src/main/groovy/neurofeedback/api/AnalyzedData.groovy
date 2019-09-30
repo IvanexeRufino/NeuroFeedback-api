@@ -10,11 +10,11 @@ class AnalyzedData {
     PowerBand powerBand
     List sourceData
 
-    AnalyzedData(originalData) {
+    AnalyzedData(List originalData) {
         spd = []
         frequencies = []
         powerBand = new PowerBand()
-        this.sourceData = originalData
+        this.sourceData = getMappedSourceData(originalData)
     }
 
     def addComplex(Complex complex, frequencyIndex, nysquiSize) {
@@ -31,10 +31,21 @@ class AnalyzedData {
         this.frequencies = updated.frequencies
         this.powerBand = updated.powerBand
 
-        if(sourceData.size() > 1280) {
-            this.sourceData = updated.sourceData
-        } else {
-            this.sourceData += updated.sourceData
+        this.sourceData += updated.sourceData
+    }
+
+    static List getMappedSourceData(List originalData) {
+        def x = (new Date()).getTime() - 1000
+        def accum = 0
+        Point point
+        def acumulativeData = []
+
+        for (int i = 0; i < originalData.size(); i += 1) {
+            point = new Point(x + accum, originalData[i])
+            accum += 1000/128
+            acumulativeData.add(point)
         }
+
+        return acumulativeData
     }
 }

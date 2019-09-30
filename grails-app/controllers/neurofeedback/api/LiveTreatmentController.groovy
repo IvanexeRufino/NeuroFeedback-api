@@ -29,6 +29,10 @@ class LiveTreatmentController {
 
     def live() {
         List<AnalyzedData> ad = treatmentStorageService.getDataForTreatment(params.id)
+
+        if(!ad) {
+            ad = []
+        }
         render(view: "main.gsp", model:[sourceDatas: ad, analyzedDatasCount: ad.size()])
     }
 

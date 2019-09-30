@@ -15,6 +15,9 @@ class TrackSessionController {
         def dataArray = request.JSON
         List<AnalyzedData> analyzedDatas = []
 
+        UserTreatment userT = UserTreatment.findById(params.id)
+        userT.status = "Live"
+
         def start = new Date().getTime()
 
         def cb = prepareArraysForChannels(dataArray)
