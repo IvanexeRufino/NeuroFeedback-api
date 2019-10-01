@@ -2,6 +2,7 @@ package neurofeedback.api
 
 class PowerBand {
 
+    def sampleSize = 0
     def totalPower = 0
     def alphaPower = 0
     def betaPower = 0
@@ -11,6 +12,7 @@ class PowerBand {
 
     def addSpectralPower(spectralPower, frequency) {
         totalPower += spectralPower
+        sampleSize++
 
         if (frequency >= 0.5 && frequency < 4) {
             deltaPower += spectralPower
@@ -21,5 +23,17 @@ class PowerBand {
         } else if (frequency >= 12 && frequency < 30) {
             betaPower += spectralPower
         }
+    }
+
+    def getAverageBandPower() {
+        return totalPower / sampleSize
+    }
+
+    def getAverageAlphaPower() {
+        return alphaPower / sampleSize
+    }
+
+    def getAverageDeltaPower() {
+        return deltaPower / sampleSize
     }
 }

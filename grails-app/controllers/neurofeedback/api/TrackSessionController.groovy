@@ -14,14 +14,13 @@ class TrackSessionController {
     def treatmentSession() {
         def dataArray = request.JSON
         List<AnalyzedData> analyzedDatas = []
+        String userTreatmentId = params.id
 
-        UserTreatment userT = UserTreatment.findById(params.id)
-
-        userT.status = "Live"
-
-        def start = new Date().getTime()
+        UserTreatment userT = UserTreatment.findById(userTreatmentId)
 
         //Prepare
+        def start = new Date().getTime()
+        userT.status = "Live"
         List<AnalyzedData> ads = prepareADSForAnalysis(userT, dataArray)
 
         //Process
@@ -29,19 +28,17 @@ class TrackSessionController {
             analyzedDatas.add(analysisService.getDataAnalyzed(analyzedData))
         }
 
+        //Analyze
+        def response = processResponse(analyzedDatas, userT)
+
         //Storage
-        treatmentStorageService.storeDataForTreatment(params.id, analyzedDatas)
+        treatmentStorageService.storeDataForTreatment(userTreatmentId, analyzedDatas)
 
         def end = new Date().getTime()
-
         println("This just took me " + (end - start))
+        println("DALE WACHO " + analyzedDatas[2].powerBand.averageDeltaPower)
 
-        //Analyze
-        if(analyzedDatas[2].powerBand.alphaPower > 1) {
-            render "FEEDBACK POSITIVO"
-        } else {
-            render "FEEDBACK NEGATIVO"
-        }
+        render response
     }
 
     private static List<AnalyzedData> prepareADSForAnalysis(UserTreatment userT, def data) {
@@ -63,5 +60,15 @@ class TrackSessionController {
         }
 
         return ads
+    }
+
+    private static Map processResponse(List<AnalyzedData> analyzedDatas, UserTreatment userTreatment) {
+        Map<String, Map<String, Boolean>> response = [:]
+
+        userTreatment.treatment.channelsConfig.eachWithIndex { ChannelConfig channelConfig, int i ->
+            response[channelConfig.channel.name] = channelConfig.evaluate(analyzedDatas[i])
+        }
+
+        return response
     }
 }

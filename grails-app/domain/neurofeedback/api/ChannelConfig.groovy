@@ -14,6 +14,13 @@ class ChannelConfig {
         this.maxValue = maxValue
     }
 
+    Map<String, Boolean> evaluate(AnalyzedData analyzedData) {
+        Map analysis = [:]
+        analysis["Average delta power"] = (analyzedData.powerBand.averageDeltaPower < maxValue) && (minValue < analyzedData.powerBand.averageDeltaPower)
+
+        return analysis
+    }
+
     static constraints = {
     }
 }
