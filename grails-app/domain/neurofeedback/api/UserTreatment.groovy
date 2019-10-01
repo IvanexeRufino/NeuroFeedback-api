@@ -8,7 +8,11 @@ class UserTreatment {
 
     String status
     double duration
-    double frecuency
+
+    //Frecuency of the EEG device, the client should find the closest 2x exp to send data on that size.
+    int frecuency
+
+
     double minValue
     double maxValue
 
@@ -27,7 +31,7 @@ class UserTreatment {
         status(inList: ["Finished", "Pending", "Live"], nullable: true)
     }
 
-    static UserTreatment create(User user, Treatment treatment, String status, double duration, double frecuency,
+    static UserTreatment create(User user, Treatment treatment, String status, double duration, int frecuency,
                                 double minValue, double maxValue, double effectivness, boolean flush = false) {
         def instance = new UserTreatment(user: user, treatment: treatment, status: status, duration: duration,
                 frecuency: frecuency, minValue: minValue, maxValue: maxValue, effectiveness: effectivness,
@@ -35,10 +39,6 @@ class UserTreatment {
 
         instance.save(flush: flush)
         instance
-    }
-
-    Boolean isValueNormal(double value) {
-        return value <= maxValue && value >= minValue
     }
 
     def toJson() {
