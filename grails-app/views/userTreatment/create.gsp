@@ -32,9 +32,7 @@
                               optionKey="id"/>
                     <f:field bean="userTreatment" property="treatment" templates="bootstrap3"/>
                     <f:field bean="userTreatment" property="duration" templates="bootstrap3"/>
-                    <f:field bean="userTreatment" property="frecuency" templates="bootstrap3"/>
-                    <f:field bean="userTreatment" property="minValue" templates="bootstrap3"/>
-                    <f:field bean="userTreatment" property="maxValue" templates="bootstrap3"/>
+                    <f:field bean="userTreatment" property="frequency" templates="bootstrap3"/>
                 </fieldset>
                 <fieldset class="buttons">
                     <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
