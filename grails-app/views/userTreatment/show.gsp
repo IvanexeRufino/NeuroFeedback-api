@@ -24,7 +24,7 @@
             <f:display bean="userTreatment" />
             <g:form resource="${this.userTreatment}" method="DELETE">
                 <fieldset class="buttons">
-                    <g:link class="edit btn btn-secondary" style="width: 49%" action="edit" resource="${this.userTreatment}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
+                    <g:link class="edit btn btn-info" style="width: 49%" action="edit" resource="${this.userTreatment}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
                     <input class="delete btn" style="width: 49%;" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
                 </fieldset>
             </g:form>
