@@ -1,19 +1,17 @@
 package neurofeedback.api
 
-class ChannelXTreatment {
+class ChannelConfig {
 
     Channel channel
-    Treatment treatment
-
     double minValue
     double maxValue
-    List buffer
+    List<Double> buffer
 
-    ChannelXTreatment(Channel channel, Treatment treatment, double minValue, double maxValue) {
+    ChannelConfig(Channel channel, double minValue, double maxValue) {
         this.channel = channel
-        this.treatment = treatment
         this.minValue = minValue
         this.maxValue = maxValue
+        this.buffer = []
     }
 
     static constraints = {

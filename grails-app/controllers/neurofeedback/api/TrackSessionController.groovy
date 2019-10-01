@@ -16,13 +16,14 @@ class TrackSessionController {
         List<AnalyzedData> analyzedDatas = []
 
         UserTreatment userT = UserTreatment.findById(params.id)
+        userT.prepareArraysForChannels(dataArray)
+
         userT.status = "Live"
 
         def start = new Date().getTime()
 
-        def cb = prepareArraysForChannels(dataArray)
-        cb.buffer.forEach { buffer ->
-            analyzedDatas.add(analysisService.getDataAnalyzed(buffer))
+        userT.channelsConfig.forEach { channelConfig ->
+            analyzedDatas.add(analysisService.getDataAnalyzed(channelConfig.buffer))
         }
         treatmentStorageService.storeDataForTreatment(params.id, analyzedDatas)
 
@@ -35,15 +36,5 @@ class TrackSessionController {
         } else {
             render "FEEDBACK NEGATIVO"
         }
-    }
-
-    private static ChannelBuffer prepareArraysForChannels(data) {
-        ChannelBuffer cb = new ChannelBuffer()
-
-        data.each { List timeList ->
-            cb.addBufferedData(timeList)
-        }
-
-        return cb
     }
 }
