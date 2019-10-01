@@ -5,7 +5,7 @@ class Treatment {
     int id
     String name
     String description
-    List<Channel> channels
+    List<ChannelConfig> channelsConfig
 
     static constraints = {
         id (unique: true, maxSize: 11)
@@ -14,6 +14,6 @@ class Treatment {
     }
     
     def toJson(){
-        ["id":id,"name":name,"description":description,"channels":channels]
+        ["id":id,"name":name,"description":description, "channels_config": channelsConfig]
     }
 }
