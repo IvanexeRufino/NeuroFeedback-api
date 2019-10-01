@@ -95,14 +95,14 @@ class BootStrap {
 	static def initializeChannels() {
 		def channels = []
 
-		def ch1 = new Channel(name: "ch1")
-		def ch2 = new Channel(name: "ch2")
-		def ch3 = new Channel(name: "ch3")
-		def ch4 = new Channel(name: "ch4")
-		def ch5 = new Channel(name: "ch5")
-		def ch6 = new Channel(name: "ch6")
-		def ch7 = new Channel(name: "ch7")
-		def ch8 = new Channel(name: "ch8")
+		def ch1 = new Channel(name: "ch1", description: "channel 1")
+		def ch2 = new Channel(name: "ch2", description: "channel 2")
+		def ch3 = new Channel(name: "ch3", description: "channel 3")
+		def ch4 = new Channel(name: "ch4", description: "channel 4")
+		def ch5 = new Channel(name: "ch5", description: "channel 5")
+		def ch6 = new Channel(name: "ch6", description: "channel 6")
+		def ch7 = new Channel(name: "ch7", description: "channel 7")
+		def ch8 = new Channel(name: "ch8", description: "channel 8")
 
 		ch1.save(flush:true)
 		ch2.save(flush:true)
