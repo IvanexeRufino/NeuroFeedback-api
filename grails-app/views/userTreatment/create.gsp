@@ -36,9 +36,7 @@
                               optionKey="id"/>
                     <f:field bean="userTreatment" property="treatment" templates="bootstrap3"/>
                     <f:field bean="userTreatment" property="duration" templates="bootstrap3"/>
-                    <f:field bean="userTreatment" property="frecuency" templates="bootstrap3"/>
-                    <f:field bean="userTreatment" property="minValue" templates="bootstrap3"/>
-                    <f:field bean="userTreatment" property="maxValue" templates="bootstrap3"/>
+                    <f:field bean="userTreatment" property="frequency" templates="bootstrap3"/>
                 </fieldset>
                 <br>
                 <fieldset class="buttons">

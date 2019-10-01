@@ -16,13 +16,14 @@ class TrackSessionController {
         List<AnalyzedData> analyzedDatas = []
 
         UserTreatment userT = UserTreatment.findById(params.id)
+
         userT.status = "Live"
 
         def start = new Date().getTime()
 
         def cb = prepareArraysForChannels(dataArray)
         cb.buffer.forEach { buffer ->
-            analyzedDatas.add(analysisService.getDataAnalyzed(buffer))
+            analyzedDatas.add(analysisService.getDataAnalyzed(buffer, userT.frequency))
         }
         treatmentStorageService.storeDataForTreatment(params.id, analyzedDatas)
 
