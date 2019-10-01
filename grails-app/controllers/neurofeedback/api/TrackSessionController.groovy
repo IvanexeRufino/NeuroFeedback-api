@@ -21,16 +21,22 @@ class TrackSessionController {
 
         def start = new Date().getTime()
 
-        def cb = prepareArraysForChannels(dataArray)
-        cb.buffer.forEach { buffer ->
-            analyzedDatas.add(analysisService.getDataAnalyzed(buffer, userT.frequency))
+        //Prepare
+        List<AnalyzedData> ads = prepareADSForAnalysis(userT, dataArray)
+
+        //Process
+        ads.forEach { analyzedData ->
+            analyzedDatas.add(analysisService.getDataAnalyzed(analyzedData))
         }
+
+        //Storage
         treatmentStorageService.storeDataForTreatment(params.id, analyzedDatas)
 
         def end = new Date().getTime()
 
         println("This just took me " + (end - start))
 
+        //Analyze
         if(analyzedDatas[2].powerBand.alphaPower > 1) {
             render "FEEDBACK POSITIVO"
         } else {
@@ -38,13 +44,24 @@ class TrackSessionController {
         }
     }
 
-    private static ChannelBuffer prepareArraysForChannels(data) {
-        ChannelBuffer cb = new ChannelBuffer()
+    private static List<AnalyzedData> prepareADSForAnalysis(UserTreatment userT, def data) {
+        List<List> buffers = []
+        List<AnalyzedData> ads = []
 
-        data.each { List timeList ->
-            cb.addBufferedData(timeList)
+        for(int i = 0; i < userT.treatment.channelsConfig.size(); i++) {
+            buffers.add([])
         }
 
-        return cb
+        data.each { List timeList ->
+            for(int i = 0; i < timeList.size(); i++) {
+                buffers[i] += [timeList[i]]
+            }
+        }
+
+        buffers.each { buffer ->
+            ads.add(new AnalyzedData(buffer, userT.frequency))
+        }
+
+        return ads
     }
 }

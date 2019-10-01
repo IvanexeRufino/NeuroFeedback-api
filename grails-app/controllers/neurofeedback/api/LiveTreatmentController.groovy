@@ -39,7 +39,7 @@ class LiveTreatmentController {
     def data() {
         int channel = params.channel as int
         AnalyzedData ad = treatmentStorageService.getDataForTreatment(params.id)[channel - 1]
-        ad.sourceData = ad.sourceData.takeRight((ad.frequency * 10) as int)
+        ad.visualizedData = ad.visualizedData.takeRight((ad.frequency * 10) as int)
         respond ad, formats: ['json']
     }
 

@@ -10,6 +10,7 @@ class AnalyzedData {
     def analysisTime
     PowerBand powerBand
     List sourceData
+    List visualizedData
 
     AnalyzedData(List originalData, int frequency) {
         this.analysisTime = 1000
@@ -17,7 +18,8 @@ class AnalyzedData {
         this.frequencies = []
         this.powerBand = new PowerBand()
         this.frequency = frequency
-        this.sourceData = getMappedSourceData(originalData)
+        this.sourceData = originalData
+        this.visualizedData = getMappedSourceData(originalData)
     }
 
     def addComplex(Complex complex, frequencyIndex) {
@@ -33,7 +35,7 @@ class AnalyzedData {
         this.frequencies = updated.frequencies
         this.powerBand = updated.powerBand
 
-        this.sourceData += updated.sourceData
+        this.visualizedData += updated.visualizedData
     }
 
     List getMappedSourceData(List originalData) {

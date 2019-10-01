@@ -82,7 +82,7 @@
                 url: '/liveTreatment/data/${params.id}?channel=' + channel_number,
                 type: 'get',
                 success: function (json) {
-                    var source = json.sourceData;
+                    var source = json.visualizedData;
                     series.setData(source, true, false, false);
                 }
             });
