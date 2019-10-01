@@ -86,7 +86,7 @@
                     series.setData(source, true, false, false);
                 }
             });
-        }, 2000);
+        }, 1000);
     }
 
     Highcharts.chart('containerMain', {
