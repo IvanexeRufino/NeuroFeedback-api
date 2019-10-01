@@ -28,9 +28,7 @@ def main(argv):
     with open(inputfile) as fp:
         line = fp.readline()
         while line:
-            payload.append([float(line.rstrip('\n')) -5 ,float(line.rstrip('\n')) + 5,line.rstrip('\n'),
-                            float(line.rstrip('\n')) + 23, float(line.rstrip('\n')) + 2,float(line.rstrip('\n')) - 18,
-                            float(line.rstrip('\n')) -2, float(line.rstrip('\n')) + + 50])
+            payload.append([0,0,float(line.rstrip('\n')),0,0,0,0,0])
             acumulated_data += 1
 
             if acumulated_data == 128:
