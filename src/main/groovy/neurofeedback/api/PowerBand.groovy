@@ -29,11 +29,19 @@ class PowerBand {
         return totalPower / sampleSize
     }
 
-    def getAverageAlphaPower() {
-        return alphaPower / sampleSize
+    def getAlphaPowerContribution() {
+        return (alphaPower / totalPower) * 100
     }
 
-    def getAverageDeltaPower() {
-        return deltaPower / sampleSize
+    def getBetaPowerContribution() {
+        return (betaPower / totalPower) * 100
+    }
+
+    def getDeltaPowerContribution() {
+        return (deltaPower / totalPower) * 100
+    }
+
+    def getThetaPowerContribution() {
+        return (thetaPower / totalPower) * 100
     }
 }

@@ -36,7 +36,7 @@ class TrackSessionController {
 
         def end = new Date().getTime()
         println("This just took me " + (end - start))
-        println("DALE WACHO " + analyzedDatas[2].powerBand.averageDeltaPower)
+        println("DALE WACHO " + analyzedDatas[2].powerBand.averageBandPower)
 
         render response
     }
