@@ -9,7 +9,7 @@
         <li><a class="home" href="${createLink(uri: '/')}"><i class="fa fa-home"></i><g:message code="default.home.label"/></a></li>
     </ul>
 </div>
-<div id="list-finished-userTreatment" class="col-md-6" role="main">
+<div id="list-finished-userTreatment" class="col-md-12" role="main">
     <div class="block">
         <div class="block-title">
             <h1><g:message code="Tratamientos siendo realizados"/></h1>
