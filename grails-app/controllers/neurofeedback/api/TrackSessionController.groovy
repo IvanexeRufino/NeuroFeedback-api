@@ -14,37 +14,61 @@ class TrackSessionController {
     def treatmentSession() {
         def dataArray = request.JSON
         List<AnalyzedData> analyzedDatas = []
+        String userTreatmentId = params.id
 
-        UserTreatment userT = UserTreatment.findById(params.id)
+        UserTreatment userT = UserTreatment.findById(userTreatmentId)
 
-        userT.status = "Live"
-
+        //Prepare
         def start = new Date().getTime()
+        userT.status = "Live"
+        List<AnalyzedData> ads = prepareADSForAnalysis(userT, dataArray)
 
-        def cb = prepareArraysForChannels(dataArray)
-        cb.buffer.forEach { buffer ->
-            analyzedDatas.add(analysisService.getDataAnalyzed(buffer, userT.frequency))
+        //Process
+        ads.forEach { analyzedData ->
+            analyzedDatas.add(analysisService.getDataAnalyzed(analyzedData))
         }
-        treatmentStorageService.storeDataForTreatment(params.id, analyzedDatas)
+
+        //Analyze
+        def response = processResponse(analyzedDatas, userT)
+
+        //Storage
+        treatmentStorageService.storeDataForTreatment(userTreatmentId, analyzedDatas)
 
         def end = new Date().getTime()
-
         println("This just took me " + (end - start))
+        println("DALE WACHO " + analyzedDatas[2].powerBand.averageBandPower)
 
-        if(analyzedDatas[2].powerBand.alphaPower > 1) {
-            render "FEEDBACK POSITIVO"
-        } else {
-            render "FEEDBACK NEGATIVO"
-        }
+        render response
     }
 
-    private static ChannelBuffer prepareArraysForChannels(data) {
-        ChannelBuffer cb = new ChannelBuffer()
+    private static List<AnalyzedData> prepareADSForAnalysis(UserTreatment userT, def data) {
+        List<List> buffers = []
+        List<AnalyzedData> ads = []
 
-        data.each { List timeList ->
-            cb.addBufferedData(timeList)
+        for(int i = 0; i < userT.treatment.channelsConfig.size(); i++) {
+            buffers.add([])
         }
 
-        return cb
+        data.each { List timeList ->
+            for(int i = 0; i < timeList.size(); i++) {
+                buffers[i] += [timeList[i]]
+            }
+        }
+
+        buffers.each { buffer ->
+            ads.add(new AnalyzedData(buffer, userT.frequency))
+        }
+
+        return ads
+    }
+
+    private static Map processResponse(List<AnalyzedData> analyzedDatas, UserTreatment userTreatment) {
+        Map<String, Map<String, Boolean>> response = [:]
+
+        userTreatment.treatment.channelsConfig.eachWithIndex { ChannelConfig channelConfig, int i ->
+            response[channelConfig.channel.name] = channelConfig.evaluate(analyzedDatas[i])
+        }
+
+        return response
     }
 }
