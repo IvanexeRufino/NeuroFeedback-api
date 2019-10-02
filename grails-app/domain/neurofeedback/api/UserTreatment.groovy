@@ -25,11 +25,10 @@ class UserTreatment {
         status(inList: ["Finished", "Pending", "Live"], nullable: true)
     }
 
-    static UserTreatment create(User user, Treatment treatment, String status, double duration, int frequency,
-                                double minValue, double maxValue, double effectivness,
-                                boolean flush = false) {
+    static UserTreatment create(User user, Treatment treatment, String status, double duration, int frequency
+                                , double effectivness, boolean flush = false) {
         def instance = new UserTreatment(user: user, treatment: treatment, status: status, duration: duration,
-                frequency: frequency, minValue: minValue, maxValue: maxValue, effectiveness: effectivness,
+                frequency: frequency, effectiveness: effectivness,
                 treatmentDate: new Date())
         instance.save(flush: flush)
         instance

@@ -36,7 +36,6 @@ class TrackSessionController {
 
         def end = new Date().getTime()
         println("This just took me " + (end - start))
-        println("DALE WACHO " + analyzedDatas[2].powerBand.averageBandPower)
 
         render response
     }
@@ -67,6 +66,7 @@ class TrackSessionController {
 
         userTreatment.treatment.channelsConfig.eachWithIndex { ChannelConfig channelConfig, int i ->
             response[channelConfig.channel.name] = channelConfig.evaluate(analyzedDatas[i])
+            println(analyzedDatas[i].powerBand.deltaPowerContribution)
         }
 
         return response

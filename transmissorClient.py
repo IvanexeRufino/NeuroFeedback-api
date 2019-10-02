@@ -16,7 +16,7 @@ def main(argv):
 
     print 'Input file is ', inputfile
 
-    url = 'http://localhost:8080/trackSession/treatmentSession/3'
+    url = 'http://localhost:8080/trackSession/treatmentSession/2'
 
     payload = []
     headers = {
@@ -28,7 +28,7 @@ def main(argv):
     with open(inputfile) as fp:
         line = fp.readline()
         while line:
-            payload.append([0,0,float(line.rstrip('\n')),0,0,0,0,0])
+            payload.append([float(line.rstrip('\n'))])
             acumulated_data += 1
 
             if acumulated_data == 128:
