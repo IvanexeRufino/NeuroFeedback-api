@@ -21,7 +21,6 @@ class UserTreatmentController {
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         List<UserTreatment> history = getApplicableHistory()
-
         List pending = history.stream().filter() { userT ->
             userT.status == "Pending"
         }.collect()
@@ -29,18 +28,29 @@ class UserTreatmentController {
         List finished = history.stream().filter() { userT ->
             userT.status == "Finished"
         }.collect()
-
         respond history, model:[userTreatmentPending: pending, userTreatmentPendingCount: pending.size(),
                                 userTreatmentFinished: finished, userTreatmentFinishedCount: finished.size()]
     }
-
+    def user(Integer id){
+        User user = User.findById(id)
+        List<UserTreatment> history = UserTreatment.findAllByUser(user)
+        List pending = history.stream().filter() { userT ->
+            userT.status == "Pending"
+        }.collect()
+        List finished = history.stream().filter() { userT ->
+            userT.status == "Finished"
+        }.collect()
+        respond history, model:[userTreatmentPending: pending, userTreatmentPendingCount: pending.size(),
+                                userTreatmentFinished: finished, userTreatmentFinishedCount: finished.size()] 
+    }
     def show(Long id) {
         respond userTreatmentService.get(id)
     }
 
     def create() {
         List<User> patientUsers = getApplicableUsers(params)
-        respond new UserTreatment(params), model:[patientUsers: patientUsers]
+        List<Treatment> treatments = Treatment.findAll()
+        respond new UserTreatment(params), model:[patientUsers: patientUsers, treatments:treatments]
     }
 
     def save(UserTreatment userTreatment) {

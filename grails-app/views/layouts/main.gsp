@@ -14,6 +14,7 @@
     <asset:stylesheet src="themes.css"/>
     <asset:stylesheet src="theme2.css"/>
     <asset:stylesheet src="custom.css"/>
+    <asset:stylesheet src="datatables.min.css"/>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     </head>
     <body>
@@ -209,3 +210,4 @@
     <asset:javascript src="bootstrap.js"/>
     <asset:javascript src="plugins.js"/>
     <asset:javascript src="app.js"/>
+    <asset:javascript src="dataTables.min.js"/>
