@@ -78,7 +78,8 @@
                 <div class="block-title">
                     <h2>Reproducción del tratamiento</h2>   
                 </div>
-
+                <div id="realTime">   
+                </div>
             </div>
         </div>
     </div>
