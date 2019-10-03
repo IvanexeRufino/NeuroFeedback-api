@@ -1,22 +1,25 @@
 import requests, json, sys, getopt, time
 
 def main(argv):
-    inputfile = ''
-    try:
-        opts, args = getopt.getopt(argv,"hi:",["ifile="])
-    except getopt.GetoptError:
-        print 'transmissorClient.py -i <inputfile>'
-        sys.exit(2)
-    for opt, arg in opts:
-        if opt == '-h':
-            print 'transmissorClient.py -i <inputfile>'
-            sys.exit()
-        elif opt in ("-i", "--ifile"):
-            inputfile = arg
+    treatment_id = 0
+
+    type = argv[0]
+    file_number = argv[1]
+
+    if type == 'relaxation':
+        treatment_id = 2
+    elif type == 'cognitive':
+        treatment_id = 3
+    elif type == 'focus':
+        treatment_id = 4
+    elif type == 'memory':
+        treatment_id = 5
+
+    inputfile = type + file_number + '.txt'
 
     print 'Input file is ', inputfile
 
-    url = 'http://localhost:8080/trackSession/treatmentSession/4'
+    url = 'http://localhost:8080/trackSession/treatmentSession/' + str(treatment_id)
 
     payload = []
     headers = {
@@ -25,7 +28,7 @@ def main(argv):
 
     acumulated_data = 0
 
-    with open(inputfile) as fp:
+    with open('testFiles/' + inputfile) as fp:
         line = fp.readline()
         while line:
             data_array = []
