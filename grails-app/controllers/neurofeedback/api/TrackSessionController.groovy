@@ -66,7 +66,7 @@ class TrackSessionController {
 
         userTreatment.treatment.channelsConfig.eachWithIndex { ChannelConfig channelConfig, int i ->
             response[channelConfig.channel.name] = channelConfig.evaluate(analyzedDatas[i])
-            println(analyzedDatas[i].powerBand.deltaPowerContribution)
+            println(analyzedDatas[i].powerBand.getAlphaPowerContribution())
         }
 
         return response

@@ -23,7 +23,7 @@ def main(argv):
 
     with open('parsed_alpha1.txt', 'w+') as f:
         for i in range(len(raw_data[0])):
-            string_data = str(raw_data[12][i]) + ',' + str(raw_data[11][i]) + ',' + str(raw_data[4][i])
+            string_data = str(raw_data[12][i] * 10) + ',' + str(raw_data[11][i] * 10) + ',' + str(raw_data[4][i] * 10)
             f.write(string_data + '\n')
 
 def get_raw_data(inputfile):
