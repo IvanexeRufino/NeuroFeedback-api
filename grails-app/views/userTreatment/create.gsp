@@ -6,15 +6,19 @@
         <title><g:message code="default.create.label" args="[entityName]" /></title>
     </head>
     <body>
-        <a href="#create-userTreatment" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-        <div class="nav" role="navigation">
-            <ul>
-                <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-                <li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
+        
+        <div class="content-header" role="navigation">
+            <ul class="nav-horizontal text-center">
+                <li><a class="home" href="${createLink(uri: '/')}"><i class="fa fa-home"></i><g:message code="default.home.label"/></a></li>
+                <li><g:link class="list" action="index"><i class="fa fa-list"></i>Lista de Tratamientos de Usuario</g:link></li>
+                <li><g:link class="create" action="create"><i class="fa fa-plus"></i>Nuevo Tratamiento de Usuario</g:link></li>
             </ul>
         </div>
-        <div id="create-userTreatment" class="content scaffold-create" role="main">
-            <h1><g:message code="default.create.label" args="[entityName]" /></h1>
+        <div class="block">
+            <div id="create-userTreatment" class="content scaffold-create" role="main">
+                <div class="block-title">
+                    <h1>Crear Usuario</h1>
+                </div>
             <g:if test="${flash.message}">
             <div class="message" role="status">${flash.message}</div>
             </g:if>
@@ -27,19 +31,20 @@
             </g:hasErrors>
             <g:form resource="${this.userTreatment}" method="POST">
                 <fieldset class="form">
-                    <g:select name="user"
-                              from="${patientUsers}"
-                              optionKey="id"/>
-                    <f:field bean="userTreatment" property="treatment" templates="bootstrap3"/>
+                    <label>Paciente</label>
+                    <g:select name="user" from="${patientUsers}" optionKey="id" templates="bootstrap3" optionValue="${{it.firstName+' '+it.lastName}}"/>
+                    <label>Tratamiento</label>
+                    <g:select name="treatment" from="${treatments}" optionKey="id" optionValue="name" templates="bootstrap3"/>
                     <f:field bean="userTreatment" property="duration" templates="bootstrap3"/>
-                    <f:field bean="userTreatment" property="frecuency" templates="bootstrap3"/>
-                    <f:field bean="userTreatment" property="minValue" templates="bootstrap3"/>
-                    <f:field bean="userTreatment" property="maxValue" templates="bootstrap3"/>
+                    <f:field bean="userTreatment" property="frequency" templates="bootstrap3"/>
                 </fieldset>
+                <br>
                 <fieldset class="buttons">
                     <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
                 </fieldset>
+                <br>
             </g:form>
+        </div>
         </div>
     </body>
 </html>

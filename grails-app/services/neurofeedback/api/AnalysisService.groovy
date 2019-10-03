@@ -9,17 +9,15 @@ import org.apache.commons.math3.transform.TransformType
 @Transactional
 class AnalysisService {
 
-    def sampleSize = 128
-
-    def getDataAnalyzed(List data) {
+    def getDataAnalyzed(AnalyzedData analyzedData) {
+        def sampleSize = (analyzedData.frequency / 2) as int
 
         def transformer = new FastFourierTransformer(DftNormalization.STANDARD)
-        def dataTransformed = transformer.transform((data as double[]), TransformType.FORWARD)
-        def mirroredData = (dataTransformed as List).take((sampleSize/2) as int)
-        AnalyzedData analyzedData = new AnalyzedData(data)
+        def dataTransformed = transformer.transform((analyzedData.sourceData as double[]), TransformType.FORWARD)
+        def unMirroredData = (dataTransformed as List).take(sampleSize)
 
-        mirroredData.eachWithIndex { Complex entry, int i ->
-            analyzedData.addComplex(entry, i, sampleSize/2)
+        unMirroredData.eachWithIndex { Complex entry, int i ->
+            analyzedData.addComplex(entry, i)
         }
         return analyzedData
     }
