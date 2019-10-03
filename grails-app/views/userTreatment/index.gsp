@@ -15,7 +15,7 @@
     <div id="list-pending-userTreatment" class="col-md-12" role="main">
         <div class="block">
             <div class="block-title">
-                <h1>Listado de Usuarios</h1>
+                <h1>Tratamientos pendientes</h1>
             </div>
             <div></div>
             <div class="table-responsive" style="text-align: center;">
@@ -56,9 +56,6 @@
                     </g:each>
                 </table>
             </div>
-            <g:if test="${flash.message}">
-                <div class="message" role="status">${flash.message}</div>
-            </g:if>
             <div class="pagination">
                 <g:paginate total="${userTreatmentPendingCount ?: 0}" />
             </div>
@@ -113,13 +110,13 @@
                 </table>
             </div>
             </div>
-            <g:if test="${flash.message}">
-                <div class="message" role="status">${flash.message}</div>
-            </g:if>
             <div class="pagination">
                 <g:paginate total="${userTreatmentFinishedCount ?: 0}" />
             </div>
         </div>
+        <g:if test="${flash.message}">
+            <div class="message" role="status">${flash.message}</div>
+        </g:if>
     </div>
 </body>
 </html>
