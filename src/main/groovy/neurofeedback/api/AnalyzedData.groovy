@@ -8,16 +8,20 @@ class AnalyzedData {
     def spd
     def frequencies
     def analysisTime
+
+    String channelName
     PowerBand powerBand
     List sourceData
     List visualizedData
 
-    AnalyzedData(List originalData, int frequency) {
-        this.analysisTime = 1000
+    AnalyzedData(String channelName, List originalData, int frequency) {
+        this.frequency = frequency
         this.spd = []
         this.frequencies = []
+        this.analysisTime = 1000
+
+        this.channelName = channelName
         this.powerBand = new PowerBand()
-        this.frequency = frequency
         this.sourceData = originalData
         this.visualizedData = getMappedSourceData(originalData)
     }

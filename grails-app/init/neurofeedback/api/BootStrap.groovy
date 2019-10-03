@@ -115,9 +115,9 @@ class BootStrap {
 		FrequencyBand afb = FrequencyBand.findByName("ALPHA")
 		List<ChannelConfig> channelsRelaxation = []
 
-		ChannelConfig cc1 = new ChannelConfig(oz, afb, 0, 0.25, 4, 20, 80)
-		ChannelConfig cc2 = new ChannelConfig(o1, afb, 1, 0.25, 4, 20, 80)
-		ChannelConfig cc3 = new ChannelConfig(c3, afb, 2, 0.25, 4, 10, 55)
+		ChannelConfig cc1 = new ChannelConfig(oz, afb, "Positive", 0, 1.5, 4, 25, 75)
+		ChannelConfig cc2 = new ChannelConfig(o1, afb, "Positive", 1, 1.5, 4, 25, 75)
+		ChannelConfig cc3 = new ChannelConfig(c3, afb, "Positive", 2, 1.5, 4, 15, 50)
 		cc1.save(flush: true)
 		cc2.save(flush: true)
 		cc3.save(flush: true)
@@ -129,6 +129,7 @@ class BootStrap {
 		new Treatment(
 				name: "Relajacion",
 				description: "Tratamiento para mejorar el manejo de estres de las personas",
+				sessionNumber: 7,
 				channelsConfig: channelsRelaxation
 		).save(flush: true)
 	}
@@ -139,8 +140,8 @@ class BootStrap {
 		FrequencyBand tfb = FrequencyBand.findByName("THETA")
 		List<ChannelConfig> channelsMemory= []
 
-		ChannelConfig cc1 = new ChannelConfig(cz, bfb, 0, 0.25, 1.25, 60, 90)
-		ChannelConfig cc2 = new ChannelConfig(cz, tfb, 0, 0.25, 1.25, 60, 90)
+		ChannelConfig cc1 = new ChannelConfig(cz, bfb, "Positive", 0, 0.5, 1.25, 35, 75)
+		ChannelConfig cc2 = new ChannelConfig(cz, tfb, "Negative", 0, 0.1, 0.3, 40, 75)
 		cc1.save(flush: true)
 		cc2.save(flush: true)
 
@@ -150,6 +151,7 @@ class BootStrap {
 		new Treatment(
 				name: "Memoria",
 				description: "Tratamiento para mejorar el manejo de estres de las personas",
+				sessionNumber: 8,
 				channelsConfig: channelsMemory
 		).save(flush: true)
 	}
@@ -161,11 +163,11 @@ class BootStrap {
 		FrequencyBand tfb = FrequencyBand.findByName("THETA")
 		List<ChannelConfig> channelsAttention= []
 
-		ChannelConfig cc1 = new ChannelConfig(cz, bfb, 0, 0.25, 1.25, 60, 90)
-		ChannelConfig cc2 = new ChannelConfig(cz, tfb, 0, 0.25, 1.25, 60, 90)
+		ChannelConfig cc1 = new ChannelConfig(cz, bfb, "Positive", 0, 0.25, 1.25, 60, 90)
+		ChannelConfig cc2 = new ChannelConfig(cz, tfb, "Negative", 0, 0.1, 0.25, 60, 90)
 
-		ChannelConfig cc3 = new ChannelConfig(pz, bfb, 0, 0.25, 1.25, 60, 90)
-		ChannelConfig cc4 = new ChannelConfig(pz, tfb, 0, 0.25, 1.25, 60, 90)
+		ChannelConfig cc3 = new ChannelConfig(pz, bfb, "Positive", 1, 0.25, 1.25, 60, 90)
+		ChannelConfig cc4 = new ChannelConfig(pz, tfb, "Negative", 1, 0.1, 0.25, 60, 90)
 
 		cc1.save(flush: true)
 		cc2.save(flush: true)
@@ -180,6 +182,7 @@ class BootStrap {
 		new Treatment(
 				name: "Concentracion",
 				description: "Tratamiento para mejorar el manejo de estres de las personas",
+				sessionNumber: 20,
 				channelsConfig: channelsAttention
 		).save(flush: true)
 	}
@@ -194,11 +197,11 @@ class BootStrap {
 		FrequencyBand afb = FrequencyBand.findByName("ALPHA")
 		List<ChannelConfig> channelsCognitive = []
 
-		ChannelConfig cc1 = new ChannelConfig(p3, afb, 0, 0.25, 1.25, 60, 90)
-		ChannelConfig cc2 = new ChannelConfig(p4, afb, 0, 0.25, 1.25, 60, 90)
-		ChannelConfig cc3 = new ChannelConfig(pz, afb, 0, 0.25, 1.25, 60, 90)
-		ChannelConfig cc4 = new ChannelConfig(o1, afb, 0, 0.25, 1.25, 60, 90)
-		ChannelConfig cc5 = new ChannelConfig(o2, afb, 0, 0.25, 1.25, 60, 90)
+		ChannelConfig cc1 = new ChannelConfig(p3, afb, "Positive",0, 1.25, 4, 25, 75)
+		ChannelConfig cc2 = new ChannelConfig(pz, afb, "Positive", 1, 1.25, 4, 25, 75)
+		ChannelConfig cc3 = new ChannelConfig(p4, afb, "Positive", 2, 1.25, 4, 25, 75)
+		ChannelConfig cc4 = new ChannelConfig(o1, afb, "Positive", 3, 1.25, 4, 25, 75)
+		ChannelConfig cc5 = new ChannelConfig(o2, afb, "Positive", 4, 1.25, 4, 25, 75)
 
 		cc1.save(flush: true)
 		cc2.save(flush: true)
@@ -213,19 +216,27 @@ class BootStrap {
 		channelsCognitive.add(cc5)
 
 		new Treatment(
-				name: "Concentracion",
+				name: "Performance Cognitiva",
 				description: "Tratamiento para mejorar el manejo de estres de las personas",
+				sessionNumber: 5,
 				channelsConfig: channelsCognitive
 		).save(flush: true)
 	}
 
 	static def initializeUserTreatments() {
 		Treatment relaxation = Treatment.findByName("Relajacion")
+		Treatment cognitive = Treatment.findByName("Performance Cognitiva")
+		Treatment focus = Treatment.findByName("Concentracion")
+		Treatment memory = Treatment.findByName("Memoria")
+
 		User patient = User.findByUsername('paciente')
 		User particular = User.findByUsername('irufino')
 
 		UserTreatment.create(patient, relaxation, "Pending", 360, 128, 95, true)
 		UserTreatment.create(patient, relaxation, "Live", 360, 128, 95, true)
+		UserTreatment.create(patient, cognitive, "Live", 360, 128, 95, true)
+		UserTreatment.create(patient, focus, "Live", 360, 128, 95, true)
+		UserTreatment.create(patient, memory, "Live", 360, 128, 95, true)
 		UserTreatment.create(patient, relaxation, "Finished", 360, 128, 95, true)
 		UserTreatment.create(particular, relaxation, "Finished", 360, 128, 95, true)
 		UserTreatment.create(particular, relaxation, "Pending", 360, 128, 100, true)
