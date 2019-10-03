@@ -8,44 +8,14 @@ class BootStrap {
 		initializeUsers()
 		initializeChannels()
 		initializeFrequencyBands()
-		initializeTreatments()
+
+		initializeRelaxationTreatment()
+		initializeMemoryTreatment()
+		initializeAttentionTreatment()
+		initializeCognitivePerformanceTreatment()
+
+		initializeUserTreatments()
     }
-
-	static def initializeTreatments() {
-		Channel oz = Channel.findByName("oz")
-		Channel o1 = Channel.findByName("o1")
-		Channel c3 = Channel.findByName("c3")
-		FrequencyBand afb = FrequencyBand.findByName("ALPHA")
-		List<ChannelConfig> channelsRelaxation = []
-
-		ChannelConfig cc1 = new ChannelConfig(oz, afb, 0, 0.25, 1.25, 60, 90)
-		ChannelConfig cc2 = new ChannelConfig(o1, afb, 0, 0.25, 1.25, 60, 90)
-		ChannelConfig cc3 = new ChannelConfig(c3, afb, 0, 0.25, 1.25, 60, 90)
-		cc1.save(flush: true)
-		cc2.save(flush: true)
-		cc3.save(flush: true)
-
-		channelsRelaxation.add(cc1)
-		channelsRelaxation.add(cc2)
-		channelsRelaxation.add(cc3)
-
-		Treatment relaxation = new Treatment(
-				name: "Relajación",
-				description: "Tratamiento para mejorar el manejo de estres de las personas",
-				channelsConfig: channelsRelaxation
-		)
-
-		relaxation.save(flush: true)
-
-		User patient = User.findByUsername('paciente')
-		User particular = User.findByUsername('irufino')
-
-		UserTreatment.create(patient, relaxation, "Pending", 360, 128, 95, true)
-		UserTreatment.create(patient, relaxation, "Live", 360, 128, 95, true)
-		UserTreatment.create(patient, relaxation, "Finished", 360, 128, 95, true)
-		UserTreatment.create(particular, relaxation, "Finished", 360, 128, 95, true)
-		UserTreatment.create(particular, relaxation, "Pending", 360, 128, 100, true)
-	}
 
 	static def initializeRoles() {
 		new Role(authority: 'ROLE_ADMIN', description: 'Role that can administrate doctors').save(flush: true)
@@ -136,6 +106,130 @@ class BootStrap {
 		new FrequencyBand(name: "BETA").save(flush: true)
 		new FrequencyBand(name: "DELTA").save(flush: true)
 		new FrequencyBand(name: "THETA").save(flush: true)
+	}
+
+	static def initializeRelaxationTreatment() {
+		Channel oz = Channel.findByName("oz")
+		Channel o1 = Channel.findByName("o1")
+		Channel c3 = Channel.findByName("c3")
+		FrequencyBand afb = FrequencyBand.findByName("ALPHA")
+		List<ChannelConfig> channelsRelaxation = []
+
+		ChannelConfig cc1 = new ChannelConfig(oz, afb, 0, 0.25, 1.25, 60, 90)
+		ChannelConfig cc2 = new ChannelConfig(o1, afb, 0, 0.25, 1.25, 60, 90)
+		ChannelConfig cc3 = new ChannelConfig(c3, afb, 0, 0.25, 1.25, 60, 90)
+		cc1.save(flush: true)
+		cc2.save(flush: true)
+		cc3.save(flush: true)
+
+		channelsRelaxation.add(cc1)
+		channelsRelaxation.add(cc2)
+		channelsRelaxation.add(cc3)
+
+		new Treatment(
+				name: "Relajacion",
+				description: "Tratamiento para mejorar el manejo de estres de las personas",
+				channelsConfig: channelsRelaxation
+		).save(flush: true)
+	}
+
+	static def initializeMemoryTreatment() {
+		Channel cz = Channel.findByName("cz")
+		FrequencyBand bfb = FrequencyBand.findByName("BETA")
+		FrequencyBand tfb = FrequencyBand.findByName("THETA")
+		List<ChannelConfig> channelsMemory= []
+
+		ChannelConfig cc1 = new ChannelConfig(cz, bfb, 0, 0.25, 1.25, 60, 90)
+		ChannelConfig cc2 = new ChannelConfig(cz, tfb, 0, 0.25, 1.25, 60, 90)
+		cc1.save(flush: true)
+		cc2.save(flush: true)
+
+		channelsMemory.add(cc1)
+		channelsMemory.add(cc2)
+
+		new Treatment(
+				name: "Memoria",
+				description: "Tratamiento para mejorar el manejo de estres de las personas",
+				channelsConfig: channelsMemory
+		).save(flush: true)
+	}
+
+	static def initializeAttentionTreatment() {
+		Channel cz = Channel.findByName("cz")
+		Channel pz = Channel.findByName("pz")
+		FrequencyBand bfb = FrequencyBand.findByName("BETA")
+		FrequencyBand tfb = FrequencyBand.findByName("THETA")
+		List<ChannelConfig> channelsAttention= []
+
+		ChannelConfig cc1 = new ChannelConfig(cz, bfb, 0, 0.25, 1.25, 60, 90)
+		ChannelConfig cc2 = new ChannelConfig(cz, tfb, 0, 0.25, 1.25, 60, 90)
+
+		ChannelConfig cc3 = new ChannelConfig(pz, bfb, 0, 0.25, 1.25, 60, 90)
+		ChannelConfig cc4 = new ChannelConfig(pz, tfb, 0, 0.25, 1.25, 60, 90)
+
+		cc1.save(flush: true)
+		cc2.save(flush: true)
+		cc3.save(flush: true)
+		cc4.save(flush: true)
+
+		channelsAttention.add(cc1)
+		channelsAttention.add(cc2)
+		channelsAttention.add(cc3)
+		channelsAttention.add(cc4)
+
+		new Treatment(
+				name: "Concentracion",
+				description: "Tratamiento para mejorar el manejo de estres de las personas",
+				channelsConfig: channelsAttention
+		).save(flush: true)
+	}
+
+	static def initializeCognitivePerformanceTreatment() {
+		Channel p3 = Channel.findByName("p3")
+		Channel p4 = Channel.findByName("p4")
+		Channel pz = Channel.findByName("pz")
+		Channel o1 = Channel.findByName("o1")
+		Channel o2 = Channel.findByName("o2")
+
+		FrequencyBand afb = FrequencyBand.findByName("ALPHA")
+		List<ChannelConfig> channelsCognitive = []
+
+		ChannelConfig cc1 = new ChannelConfig(p3, afb, 0, 0.25, 1.25, 60, 90)
+		ChannelConfig cc2 = new ChannelConfig(p4, afb, 0, 0.25, 1.25, 60, 90)
+		ChannelConfig cc3 = new ChannelConfig(pz, afb, 0, 0.25, 1.25, 60, 90)
+		ChannelConfig cc4 = new ChannelConfig(o1, afb, 0, 0.25, 1.25, 60, 90)
+		ChannelConfig cc5 = new ChannelConfig(o2, afb, 0, 0.25, 1.25, 60, 90)
+
+		cc1.save(flush: true)
+		cc2.save(flush: true)
+		cc3.save(flush: true)
+		cc4.save(flush: true)
+		cc5.save(flush: true)
+
+		channelsCognitive.add(cc1)
+		channelsCognitive.add(cc2)
+		channelsCognitive.add(cc3)
+		channelsCognitive.add(cc4)
+		channelsCognitive.add(cc5)
+
+		new Treatment(
+				name: "Concentracion",
+				description: "Tratamiento para mejorar el manejo de estres de las personas",
+				channelsConfig: channelsCognitive
+		).save(flush: true)
+	}
+
+	static def initializeUserTreatments() {
+		Treatment relaxation = Treatment.findByName("Relajacion")
+		User patient = User.findByUsername('paciente')
+		User particular = User.findByUsername('irufino')
+
+		UserTreatment.create(patient, relaxation, "Pending", 360, 128, 95, true)
+		UserTreatment.create(patient, relaxation, "Live", 360, 128, 95, true)
+		UserTreatment.create(patient, relaxation, "Finished", 360, 128, 95, true)
+		UserTreatment.create(particular, relaxation, "Finished", 360, 128, 95, true)
+		UserTreatment.create(particular, relaxation, "Pending", 360, 128, 100, true)
+
 	}
 
     def destroy = {
