@@ -83,6 +83,7 @@
                 type: 'get',
                 success: function (json) {
                     var source = json.visualizedData;
+                    series.name = json.channelName;
                     series.setData(source, true, false, false);
                 }
             });
@@ -196,6 +197,10 @@
                                     chart.legend.update(getLegend(powerBand.totalPower, powerBand.alphaPower,
                                         powerBand.betaPower, powerBand.deltaPower, powerBand.thetaPower));
 
+                                    chart.title.update({
+                                        text: 'Analyzed Data ' + json.channelName
+                                    });
+
                                     chart.series[0].update({
                                         data: (function () {
                                             var data = [], i;
@@ -216,7 +221,7 @@
                 }
             },
             title: {
-                text: 'Analyzed Data ch' + channel_number
+                text: 'Analyzed Data'
             },
             xAxis: {
                 title: {
