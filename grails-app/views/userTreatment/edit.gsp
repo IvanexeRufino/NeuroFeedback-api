@@ -27,20 +27,17 @@
                 </g:eachError>
             </ul>
             </g:hasErrors>
-
-            <sec:ifAllGranted roles="ROLE_PROFESSIONAL">
-                 <g:form resource="${this.userTreatment}" method="PUT">
-                    <g:hiddenField name="version" value="${this.userTreatment?.version}" />
-                    <fieldset class="form">
-                        <f:all bean="userTreatment"/>
-                    </fieldset>
-                    <br>
-                    <fieldset class="buttons">
-                        <input class="save" type="submit" value="${message(code: 'default.button.update.label', default: 'Update')}" />
-                    </fieldset>
-                    <br>
-                </g:form>
-            </sec:ifAllGranted>
+            <g:form resource="${this.userTreatment}" method="PUT">
+                <g:hiddenField name="version" value="${this.userTreatment?.version}" />
+                <fieldset class="form">
+                    <f:all bean="userTreatment"/>
+                </fieldset>
+                <br>
+                <fieldset class="buttons">
+                    <input class="save" type="submit" value="${message(code: 'default.button.update.label', default: 'Update')}" />
+                </fieldset>
+                <br>
+            </g:form>
         </div>
     </body>
 </html>

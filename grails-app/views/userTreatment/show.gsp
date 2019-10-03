@@ -45,11 +45,14 @@
                 </div>
             </div>
             <div class="col-md-12">
-                <g:form resource="${this.userTreatment}" method="DELETE">
-                <fieldset class="buttons">
-                    <input class="delete btn btn-danger" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Estás seguro?')}');" />
-                </fieldset>
-            </g:form>
+                <sec:ifAllGranted roles="ROLE_PROFESSIONAL">
+                    <g:form resource="${this.userTreatment}" method="DELETE">
+                        <fieldset class="buttons">
+                            <input class="delete btn btn-danger" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Estás seguro?')}');" />
+                        </fieldset>
+                    </g:form>
+            </sec:ifAllGranted>
+                
             </div>
         </div>
     </body>
