@@ -28,7 +28,8 @@ def main(argv):
     with open(inputfile) as fp:
         line = fp.readline()
         while line:
-            payload.append([float(line.rstrip('\n'))])
+            splitted_array = line.split(',')
+            payload.append([float(splitted_array[0]), float(splitted_array[1]), float(splitted_array[2].rstrip('\n'))])
             acumulated_data += 1
 
             if acumulated_data == 128:
