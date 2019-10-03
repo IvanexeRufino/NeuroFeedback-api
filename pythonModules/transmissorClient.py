@@ -16,7 +16,7 @@ def main(argv):
 
     print 'Input file is ', inputfile
 
-    url = 'http://localhost:8080/trackSession/treatmentSession/5'
+    url = 'http://localhost:8080/trackSession/treatmentSession/4'
 
     payload = []
     headers = {

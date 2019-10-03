@@ -141,7 +141,7 @@ class BootStrap {
 		List<ChannelConfig> channelsMemory= []
 
 		ChannelConfig cc1 = new ChannelConfig(cz, bfb, "Positive", 0, 0.5, 1.25, 35, 75)
-		ChannelConfig cc2 = new ChannelConfig(cz, tfb, "Negative", 0, 0.1, 0.3, 40, 75)
+		ChannelConfig cc2 = new ChannelConfig(cz, tfb, "Negative", 0, 0.1, 0.3, 30, 50)
 		cc1.save(flush: true)
 		cc2.save(flush: true)
 
@@ -163,11 +163,11 @@ class BootStrap {
 		FrequencyBand tfb = FrequencyBand.findByName("THETA")
 		List<ChannelConfig> channelsAttention= []
 
-		ChannelConfig cc1 = new ChannelConfig(cz, bfb, "Positive", 0, 0.25, 1.25, 60, 90)
-		ChannelConfig cc2 = new ChannelConfig(cz, tfb, "Negative", 0, 0.1, 0.25, 60, 90)
+		ChannelConfig cc1 = new ChannelConfig(cz, bfb, "Positive", 0, 0.5, 1.25, 35, 75)
+		ChannelConfig cc2 = new ChannelConfig(cz, tfb, "Negative", 0, 0.1, 0.3, 30, 50)
 
-		ChannelConfig cc3 = new ChannelConfig(pz, bfb, "Positive", 1, 0.25, 1.25, 60, 90)
-		ChannelConfig cc4 = new ChannelConfig(pz, tfb, "Negative", 1, 0.1, 0.25, 60, 90)
+		ChannelConfig cc3 = new ChannelConfig(pz, bfb, "Positive", 1, 0.5, 1.25, 35, 75)
+		ChannelConfig cc4 = new ChannelConfig(pz, tfb, "Negative", 1, 0.1, 0.3, 30, 50)
 
 		cc1.save(flush: true)
 		cc2.save(flush: true)
