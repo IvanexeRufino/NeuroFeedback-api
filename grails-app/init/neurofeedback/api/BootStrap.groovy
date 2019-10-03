@@ -115,8 +115,8 @@ class BootStrap {
 		FrequencyBand afb = FrequencyBand.findByName("ALPHA")
 		List<ChannelConfig> channelsRelaxation = []
 
-		ChannelConfig cc1 = new ChannelConfig(oz, afb, 0, 0.25, 4, 25, 85)
-		ChannelConfig cc2 = new ChannelConfig(o1, afb, 1, 0.25, 4, 25, 85)
+		ChannelConfig cc1 = new ChannelConfig(oz, afb, 0, 0.25, 4, 20, 80)
+		ChannelConfig cc2 = new ChannelConfig(o1, afb, 1, 0.25, 4, 20, 80)
 		ChannelConfig cc3 = new ChannelConfig(c3, afb, 2, 0.25, 4, 10, 55)
 		cc1.save(flush: true)
 		cc2.save(flush: true)
