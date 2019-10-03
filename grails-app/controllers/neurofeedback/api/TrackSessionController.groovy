@@ -36,7 +36,6 @@ class TrackSessionController {
 
         def end = new Date().getTime()
         println("This just took me " + (end - start))
-        println("DALE WACHO " + analyzedDatas[2].powerBand.averageBandPower)
 
         render response
     }
@@ -44,8 +43,9 @@ class TrackSessionController {
     private static List<AnalyzedData> prepareADSForAnalysis(UserTreatment userT, def data) {
         List<List> buffers = []
         List<AnalyzedData> ads = []
+        Set<String> names = userT.treatment.getChannels()
 
-        for(int i = 0; i < userT.treatment.channelsConfig.size(); i++) {
+        for(int i = 0; i < names.size(); i++) {
             buffers.add([])
         }
 
@@ -55,18 +55,31 @@ class TrackSessionController {
             }
         }
 
-        buffers.each { buffer ->
-            ads.add(new AnalyzedData(buffer, userT.frequency))
+        buffers.eachWithIndex { buffer, ix ->
+            ads.add(new AnalyzedData(names[ix], buffer, userT.frequency))
         }
 
         return ads
     }
 
     private static Map processResponse(List<AnalyzedData> analyzedDatas, UserTreatment userTreatment) {
-        Map<String, Map<String, Boolean>> response = [:]
+        Map<String, Map<String, String>> response = [:]
 
-        userTreatment.treatment.channelsConfig.eachWithIndex { ChannelConfig channelConfig, int i ->
-            response[channelConfig.channel.name] = channelConfig.evaluate(analyzedDatas[i])
+        userTreatment.treatment.channelsConfig.each { ChannelConfig channelConfig ->
+            def analyzedData = analyzedDatas.find ({ AnalyzedData analyzedData ->
+                analyzedData.channelName == channelConfig.channel.name
+            })
+
+            Map<String, String> definiteResponse = channelConfig.evaluate(analyzedData)
+            Map<String, String> alreadyResponse = response[channelConfig.channel.name]
+
+            if(alreadyResponse) {
+                if(alreadyResponse["Total power"] != "Neutral" || alreadyResponse["Average band power"] != "Neutral") {
+                    definiteResponse = alreadyResponse
+                }
+            }
+
+            response[channelConfig.channel.name] = definiteResponse
         }
 
         return response
