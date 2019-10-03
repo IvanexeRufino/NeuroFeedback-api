@@ -83,6 +83,7 @@
                         <th class="sortable"><a href="/userTreatment/index?sort=status&amp;max=10&amp;order=asc">Estado</a></th>
                         <th class="sortable"><a href="/userTreatment/index?sort=user&amp;max=10&amp;order=asc">Usuario</a></th>
                         <th class="sortable"><a href="/userTreatment/index?sort=treatment&amp;max=10&amp;order=asc">Tratamiento</a></th>
+                        <th></th>
                     </tr>
                     <g:each var="userTreatment" in="${userTreatmentFinished}">
                         <tr>
@@ -106,6 +107,7 @@
                             </td>
                             <td>${userTreatment.user.firstName}</td>
                             <td>${userTreatment.treatment.name}</td>
+                            <td><a href="/userTreatment/history/${userTreatment.id}"><i class="fa fa-eye"></i></a></td>
                         </tr>
                     </g:each>
                 </table>

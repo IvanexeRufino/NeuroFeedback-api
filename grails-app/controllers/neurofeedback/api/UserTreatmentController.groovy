@@ -102,6 +102,12 @@ class UserTreatmentController {
         }
     }
 
+    def history(Long id){
+        UserTreatment treatment = UserTreatment.findById(id)
+        User usuario = User.findById(treatment.user.id)
+        List<UserTreatment> tratamientos = UserTreatment.findAllByUserAndTreatment(usuario,treatment.treatment)
+        respond new UserTreatment(params), model:[tratamiento: treatment,tratamientos:tratamientos,user:usuario]
+    }
     def delete(Long id) {
         if (id == null) {
             notFound()
