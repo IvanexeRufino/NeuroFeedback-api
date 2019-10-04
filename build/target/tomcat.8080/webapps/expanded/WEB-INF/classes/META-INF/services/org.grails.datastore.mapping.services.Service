@@ -1,0 +1,4 @@
+neurofeedback.api.$ChannelServiceImplementation
+neurofeedback.api.$TreatmentServiceImplementation
+neurofeedback.api.$UserServiceImplementation
+neurofeedback.api.$UserTreatmentServiceImplementation
