@@ -56,7 +56,7 @@ class BootStrap {
 		new User(
 				username:'paciente',password:'1',firstName:'Pac',lastName:'iente',
 				docType: 'DNI',
-				docNumber: '33333333',
+				docNumber: '1',
 				dateOfBirth: new Date(),
 				email: 'smth@smth.com',
 				role: Role.findByAuthority("ROLE_PATIENT"),

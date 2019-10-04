@@ -26,6 +26,7 @@ repositories {
 }
 
 dependencies {
+    compile 'com.github.jsimone:webapp-runner:8.5.11.3'
     compile "org.springframework.boot:spring-boot-starter-logging"
     compile "org.springframework.boot:spring-boot-autoconfigure"
     compile "org.grails:grails-core"
@@ -81,10 +82,6 @@ tasks.withType(Test) {
 assets {
     minifyJs = true
     minifyCss = true
-}
-
-dependencies {
-    compile 'com.github.jsimone:webapp-runner:8.5.11.3'
 }
 
 task stage() {
