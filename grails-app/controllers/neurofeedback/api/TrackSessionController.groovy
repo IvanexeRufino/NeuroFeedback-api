@@ -74,7 +74,7 @@ class TrackSessionController {
             Map<String, String> alreadyResponse = response[channelConfig.channel.name]
 
             if(alreadyResponse) {
-                if(alreadyResponse["Total power"] != "Neutral" || alreadyResponse["Average band power"] != "Neutral") {
+                if(alreadyResponse["Average band power"] != "Neutral" || alreadyResponse["Frequency contribution"] != "Neutral") {
                     definiteResponse = alreadyResponse
                 }
             }

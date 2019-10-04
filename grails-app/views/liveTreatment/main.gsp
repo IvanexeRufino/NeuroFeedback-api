@@ -4,67 +4,41 @@
 	<meta name="layout" content="main"/>
 </head>
 <body>
-<content tag="nav">
-	<li class="dropdown">
-		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Application Status <span class="caret"></span></a>
-		<ul class="dropdown-menu">
-			<li><a href="#">Environment: ${grails.util.Environment.current.name}</a></li>
-			<li><a href="#">App profile: ${grailsApplication.config.grails?.profile}</a></li>
-			<li><a href="#">App version:
-				<g:meta name="info.app.version"/></a>
-			</li>
-			<li role="separator" class="divider"></li>
-			<li><a href="#">Grails version:
-				<g:meta name="info.app.grailsVersion"/></a>
-			</li>
-			<li><a href="#">Groovy version: ${GroovySystem.getVersion()}</a></li>
-			<li><a href="#">JVM version: ${System.getProperty('java.version')}</a></li>
-			<li role="separator" class="divider"></li>
-			<li><a href="#">Reloading active: ${grails.util.Environment.reloadingAgentEnabled}</a></li>
-		</ul>
-	</li>
-	<li class="dropdown">
-		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Artefacts <span class="caret"></span></a>
-		<ul class="dropdown-menu">
-			<li><a href="#">Controllers: ${grailsApplication.controllerClasses.size()}</a></li>
-			<li><a href="#">Domains: ${grailsApplication.domainClasses.size()}</a></li>
-			<li><a href="#">Services: ${grailsApplication.serviceClasses.size()}</a></li>
-			<li><a href="#">Tag Libraries: ${grailsApplication.tagLibClasses.size()}</a></li>
-		</ul>
-	</li>
-	<li class="dropdown">
-		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Installed Plugins <span class="caret"></span></a>
-		<ul class="dropdown-menu">
-			<g:each var="plugin" in="${applicationContext.getBean('pluginManager').allPlugins}">
-				<li><a href="#">${plugin.name} - ${plugin.version}</a></li>
-			</g:each>
-		</ul>
-	</li>
-</content>
-
+<div class="content-header">
+    <div class="header-section">
+        <i class="fas fa-brain"></i><h1>NeuroCare</h1>
+    </div>
+</div>
 <div class="row">
 	<div class="col-md-12">
 		<div class="row">
-			<h1>NeuroCare</h1>
-		</div>
-		<div class="row">
-            <div id="containerMain" style="height: 350px"></div>
-			<div class="column">
-				<div id="container1" style="height: 250px; width: 550px; display: inline-block"></div>
-				<div id="container2" style="height: 250px; width: 550px; display: inline-block"></div>
-			</div>
-			<div class="column">
-				<div id="container3" style="height: 250px; width: 550px; display: inline-block"></div>
-				<div id="container4" style="height: 250px; width: 550px; display: inline-block"></div>
-			</div>
-			<div class="column">
-				<div id="container5" style="height: 250px; width: 550px; display: inline-block"></div>
-				<div id="container6" style="height: 250px; width: 550px; display: inline-block"></div>
-			</div>
-			<div class="column">
-				<div id="container7" style="height: 250px; width: 550px; display: inline-block"></div>
-				<div id="container8" style="height: 250px; width: 550px; display: inline-block"></div>
-			</div>
+            <div class="col-md-12 block">
+                <div id="containerMain" style="height: 350px"></div>
+            </div>
+            <div class="col-md-6 block">
+                <div id="container1" style="height: 250px; width: 550px; display: inline-block"></div>
+            </div>
+            <div class="col-md-6 block">
+                <div id="container2" style="height: 250px; width: 550px; display: inline-block"></div>
+            </div>
+            <div class="col-md-6 block">
+                <div id="container3" style="height: 250px; width: 550px; display: inline-block"></div>
+            </div>
+            <div class="col-md-6 block">
+                <div id="container4" style="height: 250px; width: 550px; display: inline-block"></div>
+            </div>
+            <div class="col-md-6 block">
+                <div id="container5" style="height: 250px; width: 550px; display: inline-block"></div>
+            </div>
+            <div class="col-md-6 block">
+                <div id="container6" style="height: 250px; width: 550px; display: inline-block"></div>
+            </div>
+            <div class="col-md-6 block">
+                <div id="container7" style="height: 250px; width: 550px; display: inline-block"></div>
+            </div>
+            <div class="col-md-6 block">
+                <div id="container8" style="height: 250px; width: 550px; display: inline-block"></div>
+            </div>
 		</div>
 	</div>
 </div>
