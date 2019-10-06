@@ -3,5 +3,5 @@ out/*
 *.iml
 .idea/*
 .gradle/*
-build/*
 *.db
+build/*
