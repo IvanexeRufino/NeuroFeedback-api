@@ -26,9 +26,9 @@ class UserTreatment {
     }
 
     static UserTreatment create(User user, Treatment treatment, String status, double duration, int frequency
-                                , double effectivness, boolean flush = false) {
+                                , boolean flush = false) {
         def instance = new UserTreatment(user: user, treatment: treatment, status: status, duration: duration,
-                frequency: frequency, effectiveness: effectivness)
+                frequency: frequency)
         instance.save(flush: flush)
         instance
     }

@@ -232,14 +232,17 @@ class BootStrap {
 		User patient = User.findByUsername('paciente')
 		User particular = User.findByUsername('irufino')
 
-		UserTreatment.create(patient, relaxation, "Pending", 360, 128, 95, true)
-		UserTreatment.create(patient, relaxation, "Live", 360, 128, 95, true)
-		UserTreatment.create(patient, cognitive, "Live", 360, 128, 95, true)
-		UserTreatment.create(patient, focus, "Live", 360, 128, 95, true)
-		UserTreatment.create(patient, memory, "Live", 360, 128, 95, true)
-		UserTreatment.create(patient, relaxation, "Finished", 360, 128, 95, true)
-		UserTreatment.create(particular, relaxation, "Finished", 360, 128, 95, true)
-		UserTreatment.create(particular, relaxation, "Pending", 360, 128, 100, true)
+		UserTreatment.create(patient, relaxation, "Pending", 360, 128, true)
+		UserTreatment.create(patient, cognitive, "Pending", 1800, 128, true)
+        UserTreatment.create(patient, focus, "Pending", 1200, 128, true)
+		UserTreatment.create(patient, relaxation, "Live", 360, 128,true)
+		UserTreatment.create(patient, cognitive, "Live", 360, 128, true)
+		UserTreatment.create(patient, focus, "Live", 360, 128, true)
+		UserTreatment.create(patient, memory, "Live", 360, 128, true)
+		UserTreatment.create(patient, relaxation, "Finished", 360, 128, true)
+
+		UserTreatment.create(particular, relaxation, "Finished", 360, 128, true)
+		UserTreatment.create(particular, relaxation, "Pending", 360, 128, true)
 
 	}
 
