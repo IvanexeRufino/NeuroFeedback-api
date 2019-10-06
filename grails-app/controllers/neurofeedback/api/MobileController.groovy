@@ -17,14 +17,14 @@ class MobileController{
         def user = User.findByDocNumber(docNumber)
         if (user != null) {
             if (passwordEncoder.matches(pass, user.password)) {
-                map = [status: 200, message: "Succesfuly Logged in"]
+                map = [status: 200, message: [response: "Successfuly logged in", userId: user.id.toString()]]
 
             }
             else{
-                map = [status: 400, message: "Error Password"]
+                map = [status: 400, message: [response: "Error Password"]]
             }
         } else {
-            map = [status: 400, message: "Error User"]
+            map = [status: 400, message: [response: "Error User"]]
         }
 
         respond map, formats: ['json']
