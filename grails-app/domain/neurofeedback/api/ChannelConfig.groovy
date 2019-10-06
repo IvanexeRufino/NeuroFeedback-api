@@ -6,17 +6,15 @@ class ChannelConfig {
     FrequencyBand frequencyBand
 
     String feedbackType
-    int pos
     double minTotalPowerValue
     double maxTotalPowerValue
     double minAverageFrequencyPowerValue
     double maxAverageFrequencyPowerValue
 
-    ChannelConfig(Channel channel, FrequencyBand fb, String feedbackType, int pos, double minTotalPowerValue, double maxTotalPowerValue, double minAverageFrequencyPowerValue, double maxAverageFrequencyPowerValue) {
+    ChannelConfig(Channel channel, FrequencyBand fb, String feedbackType, double minTotalPowerValue, double maxTotalPowerValue, double minAverageFrequencyPowerValue, double maxAverageFrequencyPowerValue) {
         this.channel = channel
         this.frequencyBand = fb
         this.feedbackType = feedbackType
-        this.pos = pos
         this.minTotalPowerValue = minTotalPowerValue
         this.maxTotalPowerValue = maxTotalPowerValue
         this.minAverageFrequencyPowerValue = minAverageFrequencyPowerValue
@@ -51,6 +49,10 @@ class ChannelConfig {
         } else {
             return "Neutral"
         }
+    }
+
+    def toJson() {
+        [channel_name: channel.name, channel_pos: channel.pos]
     }
 
     static constraints = {
