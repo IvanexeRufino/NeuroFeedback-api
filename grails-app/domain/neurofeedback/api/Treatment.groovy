@@ -24,7 +24,7 @@ class Treatment {
     }
     
     def toJson(){
-        ["id":id,"name":name,"description":description, "sessionNumber": sessionNumber,
+        ["name":name,"description":description, "sessionNumber": sessionNumber,
          "channels_config": channelsConfig.stream().map { cc -> cc.toJson()}.collect()]
     }
 }
