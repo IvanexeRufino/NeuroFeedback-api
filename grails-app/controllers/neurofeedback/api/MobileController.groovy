@@ -7,26 +7,27 @@ class MobileController{
         render "You should not be doing this"
     }
 
-    def authMobile(){ 
-    	def map
-        def req = params.docNumber
-        def pass = params.password
-        //def req = "11111111"
-        //def pass = "123456"
-        def user = User.findByDocNumber(req)
+    def authMobile(){
+        def map
+
+        def userJSON = request.JSON
+        def docNumber = userJSON.docNumber
+        def pass = userJSON.password
+
+        def user = User.findByDocNumber(docNumber)
         if (user != null) {
-            if (passwordEncoder.matches(pass, user.password)) { //validates raw password against hashed
-                map = user
-                respond map, formats: ['json']
+            if (passwordEncoder.matches(pass, user.password)) {
+                map = [status: 200, message: ["Successfuly loged in"]]
+
             }
             else{
                 map = [status: 400, message: ["response":"Error Password"]]
-                respond map, formats: ['json']
             }
         } else {
             map = [status: 400, message: ["response":"Error User"]]
-            respond map, formats: ['json']
         }
+
+        respond map, formats: ['json']
     }
 
 
