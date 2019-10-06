@@ -7,7 +7,7 @@ class MobileController{
         render "You should not be doing this"
     }
 
-    def authMobile(){
+    def auth(){
         def map
 
         def userJSON = request.JSON
@@ -31,16 +31,16 @@ class MobileController{
     }
 
 
-    def getTreatment(){
-        def map
-        def userId = 4// params.userId
-        def userTreatment = UserTreatment.findAllByUser(User.findById(userId)).stream().filter { userT ->
+    def treatments(){
+        def userId = params.id
+
+        def userTreatments = UserTreatment.findAllByUser(User.findById(userId)).stream().filter { userT ->
             userT.status == "Pending"
         }.map {
             ut -> ut.toJson()
         }.collect()
-        map = [status: 200, message: userTreatment]
-        respond map, formats: ['json']
+
+        respond userTreatments, formats: ['json']
     }
 }
 

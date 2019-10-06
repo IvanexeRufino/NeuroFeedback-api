@@ -75,30 +75,30 @@ class BootStrap {
 	}
 
 	static def initializeChannels() {
-		new Channel(name: "ch1", description: "channel 1").save(flush: true)
-		new Channel(name: "ch2", description: "channel 2").save(flush: true)
-		new Channel(name: "ch3", description: "channel 3").save(flush: true)
-		new Channel(name: "t3", description: "Temporal 3").save(flush: true)
-		new Channel(name: "t4", description: "Temporal 4").save(flush: true)
-		new Channel(name: "t5", description: "Temporal 5").save(flush: true)
-		new Channel(name: "t6", description: "Temporal 6").save(flush: true)
-		new Channel(name: "c3", description: "Central 3").save(flush: true)
-		new Channel(name: "c4", description: "Central 4").save(flush: true)
-		new Channel(name: "cz", description: "Central Ground").save(flush: true)
-		new Channel(name: "p3", description: "Parietal 3").save(flush: true)
-		new Channel(name: "p4", description: "Parietal 4").save(flush: true)
-		new Channel(name: "pz", description: "Parietal Ground").save(flush: true)
-		new Channel(name: "o1", description: "Occipital 1").save(flush: true)
-		new Channel(name: "o2", description: "Occipital 2").save(flush: true)
-		new Channel(name: "oz", description: "Occipital Ground").save(flush: true)
-		new Channel(name: "f3", description: "Frontal 3").save(flush: true)
-		new Channel(name: "f4", description: "Frontal 4").save(flush: true)
-		new Channel(name: "f7", description: "Frontal 7").save(flush: true)
-		new Channel(name: "f8", description: "Frontal 8").save(flush: true)
-		new Channel(name: "fz", description: "Frontal Ground").save(flush: true)
-		new Channel(name: "fp1", description: "Pre-Frontal 1").save(flush: true)
-		new Channel(name: "fp2", description: "Pre-frontal 2").save(flush: true)
-		new Channel(name: "fpz", description: "Pre-Frontal Ground").save(flush: true)
+		new Channel(name: "ch1", description: "channel 1", pos: 2).save(flush: true)
+		new Channel(name: "ch2", description: "channel 2", pos: 1).save(flush: true)
+		new Channel(name: "ch3", description: "channel 3", pos: 0).save(flush: true)
+		new Channel(name: "t3", description: "Temporal 3", pos: 7).save(flush: true)
+		new Channel(name: "t4", description: "Temporal 4", pos: 3).save(flush: true)
+		new Channel(name: "t5", description: "Temporal 5", pos: 15).save(flush: true)
+		new Channel(name: "t6", description: "Temporal 6", pos: 8).save(flush: true)
+		new Channel(name: "c3", description: "Central 3", pos: 6).save(flush: true)
+		new Channel(name: "c4", description: "Central 4", pos: 4).save(flush: true)
+		new Channel(name: "cz", description: "Central Ground", pos: 5).save(flush: true)
+		new Channel(name: "p3", description: "Parietal 3", pos: 13).save(flush: true)
+		new Channel(name: "p4", description: "Parietal 4", pos: 9).save(flush: true)
+		new Channel(name: "pz", description: "Parietal Ground", pos: 11).save(flush: true)
+		new Channel(name: "o1", description: "Occipital 1", pos: 14).save(flush: true)
+		new Channel(name: "o2", description: "Occipital 2", pos: 10).save(flush: true)
+		new Channel(name: "oz", description: "Occipital Ground", pos: 12).save(flush: true)
+		new Channel(name: "f3", description: "Frontal 3", pos: 21).save(flush: true)
+		new Channel(name: "f4", description: "Frontal 4", pos: 18).save(flush: true)
+		new Channel(name: "f7", description: "Frontal 7", pos: 23).save(flush: true)
+		new Channel(name: "f8", description: "Frontal 8", pos: 16).save(flush: true)
+		new Channel(name: "fz", description: "Frontal Ground", pos: 19).save(flush: true)
+		new Channel(name: "fp1", description: "Pre-Frontal 1", pos: 22).save(flush: true)
+		new Channel(name: "fp2", description: "Pre-frontal 2", pos: 17).save(flush: true)
+		new Channel(name: "fpz", description: "Pre-Frontal Ground", pos: 20).save(flush: true)
 	}
 
 	static def initializeFrequencyBands() {
@@ -115,9 +115,9 @@ class BootStrap {
 		FrequencyBand afb = FrequencyBand.findByName("ALPHA")
 		List<ChannelConfig> channelsRelaxation = []
 
-		ChannelConfig cc1 = new ChannelConfig(oz, afb, "Positive", 0, 1.5, 4, 25, 75)
-		ChannelConfig cc2 = new ChannelConfig(o1, afb, "Positive", 1, 1.5, 4, 25, 75)
-		ChannelConfig cc3 = new ChannelConfig(c3, afb, "Positive", 2, 1.5, 4, 15, 50)
+		ChannelConfig cc1 = new ChannelConfig(oz, afb, "Positive", 1.5, 4, 25, 75)
+		ChannelConfig cc2 = new ChannelConfig(o1, afb, "Positive", 1.5, 4, 25, 75)
+		ChannelConfig cc3 = new ChannelConfig(c3, afb, "Positive", 1.5, 4, 15, 50)
 		cc1.save(flush: true)
 		cc2.save(flush: true)
 		cc3.save(flush: true)
@@ -140,8 +140,8 @@ class BootStrap {
 		FrequencyBand tfb = FrequencyBand.findByName("THETA")
 		List<ChannelConfig> channelsMemory= []
 
-		ChannelConfig cc1 = new ChannelConfig(cz, bfb, "Positive", 0, 0.5, 1.25, 35, 75)
-		ChannelConfig cc2 = new ChannelConfig(cz, tfb, "Negative", 0, 0.1, 0.3, 30, 50)
+		ChannelConfig cc1 = new ChannelConfig(cz, bfb, "Positive", 0.5, 1.25, 35, 75)
+		ChannelConfig cc2 = new ChannelConfig(cz, tfb, "Negative", 0.1, 0.3, 30, 50)
 		cc1.save(flush: true)
 		cc2.save(flush: true)
 
@@ -163,11 +163,11 @@ class BootStrap {
 		FrequencyBand tfb = FrequencyBand.findByName("THETA")
 		List<ChannelConfig> channelsAttention= []
 
-		ChannelConfig cc1 = new ChannelConfig(cz, bfb, "Positive", 0, 0.5, 1.25, 35, 75)
-		ChannelConfig cc2 = new ChannelConfig(cz, tfb, "Negative", 0, 0.1, 0.3, 30, 50)
+		ChannelConfig cc1 = new ChannelConfig(cz, bfb, "Positive", 0.5, 1.25, 35, 75)
+		ChannelConfig cc2 = new ChannelConfig(cz, tfb, "Negative", 0.1, 0.3, 30, 50)
 
-		ChannelConfig cc3 = new ChannelConfig(pz, bfb, "Positive", 1, 0.5, 1.25, 35, 75)
-		ChannelConfig cc4 = new ChannelConfig(pz, tfb, "Negative", 1, 0.1, 0.3, 30, 50)
+		ChannelConfig cc3 = new ChannelConfig(pz, bfb, "Positive", 0.5, 1.25, 35, 75)
+		ChannelConfig cc4 = new ChannelConfig(pz, tfb, "Negative", 0.1, 0.3, 30, 50)
 
 		cc1.save(flush: true)
 		cc2.save(flush: true)
@@ -197,11 +197,11 @@ class BootStrap {
 		FrequencyBand afb = FrequencyBand.findByName("ALPHA")
 		List<ChannelConfig> channelsCognitive = []
 
-		ChannelConfig cc1 = new ChannelConfig(p3, afb, "Positive",0, 1.25, 4, 25, 75)
-		ChannelConfig cc2 = new ChannelConfig(pz, afb, "Positive", 1, 1.25, 4, 25, 75)
-		ChannelConfig cc3 = new ChannelConfig(p4, afb, "Positive", 2, 1.25, 4, 25, 75)
-		ChannelConfig cc4 = new ChannelConfig(o1, afb, "Positive", 3, 1.25, 4, 25, 75)
-		ChannelConfig cc5 = new ChannelConfig(o2, afb, "Positive", 4, 1.25, 4, 25, 75)
+		ChannelConfig cc1 = new ChannelConfig(p3, afb, "Positive", 1.25, 4, 25, 75)
+		ChannelConfig cc2 = new ChannelConfig(pz, afb, "Positive", 1.25, 4, 25, 75)
+		ChannelConfig cc3 = new ChannelConfig(p4, afb, "Positive", 1.25, 4, 25, 75)
+		ChannelConfig cc4 = new ChannelConfig(o1, afb, "Positive", 1.25, 4, 25, 75)
+		ChannelConfig cc5 = new ChannelConfig(o2, afb, "Positive", 1.25, 4, 25, 75)
 
 		cc1.save(flush: true)
 		cc2.save(flush: true)
