@@ -5,6 +5,7 @@ class Channel {
     int id
     String name
     String description
+    int pos
 
     static constraints = {
         id (unique: true, maxSize: 11)
