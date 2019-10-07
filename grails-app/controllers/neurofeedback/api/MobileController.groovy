@@ -16,7 +16,7 @@ class MobileController{
         def user = User.findByDocNumber(req)
         if (user != null) {
             if (passwordEncoder.matches(pass, user.password)) { //validates raw password against hashed
-                map = user
+                map = [status:200, message:user]
                 respond map, formats: ['json']
             }
             else{
@@ -30,15 +30,25 @@ class MobileController{
     }
 
 
-    def getTreatment(){
+    //Recibe un user_id y devuelve el array de todos sus tratamientos pendientes.
+    def getTreatments(){
         def map
-        def userId = 4// params.userId
+        def userId = params.userId
         def userTreatment = UserTreatment.findAllByUser(User.findById(userId)).stream().filter { userT ->
             userT.status == "Pending"
         }.map {
             ut -> ut.toJson()
         }.collect()
         map = [status: 200, message: userTreatment]
+        respond map, formats: ['json']
+    }
+
+    //recibe un userTreatment_id y devuelve un unico tratamiento
+    def getUserTreatment(){
+        def map
+        def userId = params.userTreatment_id
+        def userTreatment = UserTreatment.findById(userId).toJson()
+        map = [status: 200, message:userTreatment]
         respond map, formats: ['json']
     }
 }

@@ -16,6 +16,8 @@ class UrlMappings {
         "/logout"(controller:"Logout")
         "/error"(view:'/error')
         "/mobile/auth"(controller: 'mobile', action: ['POST': 'authMobile', 'GET': 'authMobile'])
-        "/mobile/treatments"(controller: 'mobile', action: ['POST': 'getTreatment', 'GET': 'getTreatment'])
+        "/mobile/treatments"(controller: 'mobile', action: ['POST': 'getTreatments', 'GET': 'getTreatments'])
+        "/mobile/userTreatment"(controller: 'mobile', action: ['POST': 'getUserTreatment', 'GET': 'getUserTreatment'])
+
     }
 }
