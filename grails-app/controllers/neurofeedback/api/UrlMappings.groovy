@@ -15,5 +15,8 @@ class UrlMappings {
         "404"(view:'/notFound')
         "/logout"(controller:"Logout")
         "/error"(view:'/error')
+        "/mobile/auth"(controller: 'mobile', action: ['POST': 'authMobile', 'GET': 'authMobile'])
+        "/mobile/treatments"(controller: 'mobile', action: ['POST': 'getTreatments', 'GET': 'getTreatments'])
+        "/mobile/userTreatment"(controller: 'mobile', action: ['POST': 'getUserTreatment', 'GET': 'getUserTreatment'])
     }
 }
