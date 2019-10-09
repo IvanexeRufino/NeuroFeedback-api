@@ -21,22 +21,23 @@ class ChannelConfig {
         this.maxAverageFrequencyPowerValue = maxAverageFrequencyPowerValue
     }
 
-    Map<String, String> evaluate(AnalyzedData analyzedData) {
-        Map analysis = [:]
-        analysis["Average band power"] = evaluateSignal(analyzedData.powerBand.averageBandPower, minTotalPowerValue, maxTotalPowerValue)
+    AnalyzyedResponse evaluate(AnalyzedData analyzedData) {
+        AnalyzyedResponse analysis = new AnalyzyedResponse(channelName: channel.name)
+
+        analysis.averageBandPower = evaluateSignal(analyzedData.powerBand.averageBandPower, minTotalPowerValue, maxTotalPowerValue)
 
         switch(frequencyBand.name) {
             case "ALPHA":
-                analysis["Frequency contribution"] = evaluateSignal(analyzedData.powerBand.alphaPowerContribution, minAverageFrequencyPowerValue, maxAverageFrequencyPowerValue)
+                analysis.frequencyBandContribution = evaluateSignal(analyzedData.powerBand.alphaPowerContribution, minAverageFrequencyPowerValue, maxAverageFrequencyPowerValue)
                 break
             case "BETA":
-                analysis["Frequency contribution"] = evaluateSignal(analyzedData.powerBand.betaPowerContribution, minAverageFrequencyPowerValue, maxAverageFrequencyPowerValue)
+                analysis.frequencyBandContribution = evaluateSignal(analyzedData.powerBand.betaPowerContribution, minAverageFrequencyPowerValue, maxAverageFrequencyPowerValue)
                 break
             case "DELTA":
-                analysis["Frequency contribution"] = evaluateSignal(analyzedData.powerBand.deltaPowerContribution, minAverageFrequencyPowerValue, maxAverageFrequencyPowerValue)
+                analysis.frequencyBandContribution = evaluateSignal(analyzedData.powerBand.deltaPowerContribution, minAverageFrequencyPowerValue, maxAverageFrequencyPowerValue)
                 break
             case "THETA":
-                analysis["Frequency contribution"] = evaluateSignal(analyzedData.powerBand.thetaPowerContribution, minAverageFrequencyPowerValue, maxAverageFrequencyPowerValue)
+                analysis.frequencyBandContribution = evaluateSignal(analyzedData.powerBand.thetaPowerContribution, minAverageFrequencyPowerValue, maxAverageFrequencyPowerValue)
                 break
         }
 
