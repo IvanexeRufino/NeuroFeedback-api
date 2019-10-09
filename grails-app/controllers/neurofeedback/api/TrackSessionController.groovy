@@ -36,8 +36,10 @@ class TrackSessionController {
 
         def end = new Date().getTime()
         println("This just took me " + (end - start))
+        println("Im about to responde ${response}")
 
-        render response
+
+        respond response, formats: ['json']
     }
 
     private static List<AnalyzedData> prepareADSForAnalysis(UserTreatment userT, def data) {
@@ -62,24 +64,26 @@ class TrackSessionController {
         return ads
     }
 
-    private static Map processResponse(List<AnalyzedData> analyzedDatas, UserTreatment userTreatment) {
-        Map<String, Map<String, String>> response = [:]
+    private static List<AnalyzyedResponse> processResponse(List<AnalyzedData> analyzedDatas, UserTreatment userTreatment) {
+        List<AnalyzyedResponse> response = []
 
         userTreatment.treatment.channelsConfig.each { ChannelConfig channelConfig ->
             def analyzedData = analyzedDatas.find ({ AnalyzedData analyzedData ->
                 analyzedData.channelName == channelConfig.channel.name
             })
 
-            Map<String, String> definiteResponse = channelConfig.evaluate(analyzedData)
-            Map<String, String> alreadyResponse = response[channelConfig.channel.name]
+            AnalyzyedResponse definiteResponse = channelConfig.evaluate(analyzedData)
+            AnalyzyedResponse alreadyResponse = response.find({ AnalyzyedResponse analyzedResponse ->
+                analyzedResponse.channelName == channelConfig.channel.name
+            })
 
             if(alreadyResponse) {
-                if(alreadyResponse["Average band power"] != "Neutral" || alreadyResponse["Frequency contribution"] != "Neutral") {
+                if(alreadyResponse.averageBandPower != "Neutral" || alreadyResponse.frequencyBandContribution != "Neutral") {
                     definiteResponse = alreadyResponse
                 }
             }
 
-            response[channelConfig.channel.name] = definiteResponse
+            response.add(definiteResponse)
         }
 
         return response

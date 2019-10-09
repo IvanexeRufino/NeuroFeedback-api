@@ -42,6 +42,15 @@ class MobileController{
 
         respond userTreatments, formats: ['json']
     }
+
+    //recibe un userTreatment_id y devuelve un unico tratamiento
+    def getUserTreatment(){
+        def map
+        def userId = params.userTreatment_id
+        def userTreatment = UserTreatment.findById(userId).toJson()
+        map = [status: 200, message:userTreatment]
+        respond map, formats: ['json']
+    }
 }
 
 
