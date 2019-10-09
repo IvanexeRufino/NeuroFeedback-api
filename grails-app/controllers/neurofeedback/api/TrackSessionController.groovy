@@ -37,7 +37,7 @@ class TrackSessionController {
         def end = new Date().getTime()
         println("This just took me " + (end - start))
 
-        
+
         respond response, formats: ['json']
     }
 
