@@ -7,13 +7,13 @@ def main(argv):
     file_number = argv[1]
 
     if type == 'relaxation':
-        treatment_id = 2
-    elif type == 'cognitive':
-        treatment_id = 3
-    elif type == 'focus':
         treatment_id = 4
-    elif type == 'memory':
+    elif type == 'cognitive':
         treatment_id = 5
+    elif type == 'focus':
+        treatment_id = 6
+    elif type == 'memory':
+        treatment_id = 7
 
     inputfile = type + file_number + '.txt'
 
@@ -28,7 +28,7 @@ def main(argv):
 
     acumulated_data = 0
 
-    with open('testFiles/' + inputfile) as fp:
+    with open('../testFiles/' + inputfile) as fp:
         line = fp.readline()
         while line:
             data_array = []
@@ -41,6 +41,8 @@ def main(argv):
             acumulated_data += 1
 
             if acumulated_data == 128:
+
+                print payload
                 r = requests.post(url, data=json.dumps(payload), headers=headers)
                 print(r.content)
                 payload = []

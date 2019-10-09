@@ -37,7 +37,8 @@ class TrackSessionController {
         def end = new Date().getTime()
         println("This just took me " + (end - start))
 
-        render response
+        
+        respond response, formats: ['json']
     }
 
     private static List<AnalyzedData> prepareADSForAnalysis(UserTreatment userT, def data) {
