@@ -8,7 +8,7 @@ class Treatment {
     String name
     String description
     int sessionNumber
-    List<ChannelConfig> channelsConfig
+    static hasMany = [channelsConfig: ChannelConfig]
 
     static constraints = {
         id (unique: true, maxSize: 11)
