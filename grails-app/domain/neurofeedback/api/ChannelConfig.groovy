@@ -2,6 +2,7 @@ package neurofeedback.api
 
 class ChannelConfig {
 
+    static belongsTo = [treatment: Treatment]
     Channel channel
     FrequencyBand frequencyBand
 
