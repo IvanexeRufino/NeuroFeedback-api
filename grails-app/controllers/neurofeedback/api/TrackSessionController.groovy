@@ -88,4 +88,8 @@ class TrackSessionController {
 
         return response
     }
+    def endTreatment(String userT_id){
+        List<AnalyzedData> ad = treatmentStorageService.getDataForTreatment(userT_id)
+        render ((ad ? ad : []))
+    }
 }

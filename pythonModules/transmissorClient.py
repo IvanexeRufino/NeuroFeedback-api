@@ -17,7 +17,7 @@ def main(argv):
 
     inputfile = type + file_number + '.txt'
 
-    print 'Input file is ', inputfile
+    print ('Input file is ', inputfile)
 
     url = 'http://localhost:8080/trackSession/treatmentSession/' + str(treatment_id)
 
@@ -42,7 +42,7 @@ def main(argv):
 
             if acumulated_data == 128:
 
-                print payload
+                print(payload)
                 r = requests.post(url, data=json.dumps(payload), headers=headers)
                 print(r.content)
                 payload = []
