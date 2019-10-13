@@ -1,5 +1,4 @@
 package neurofeedback.api
-
 class TrackSessionController {
 
     def treatmentStorageService
@@ -88,8 +87,31 @@ class TrackSessionController {
 
         return response
     }
-    def endTreatment(String userT_id){
+    def endTreatment(){
+        def userT_id = params.id // user Treatment Id Necesario, chequear que sea del tipo string o int en la linea 92 necesita string.
         List<AnalyzedData> ad = treatmentStorageService.getDataForTreatment(userT_id)
-        render ((ad ? ad : []))
+        File file = new File("treatmentHistory/treatment"+userT_id+".json")
+        if(!ad) {
+            file.write("[]")
+            render "null array"
+            return 
+        }
+        def text = "["
+        ad.each {
+            text += it.toJson()
+            text +=" ,"
+        }
+        text= text.substring(0, text.length() - 1)
+        text+="]"
+        file.write(text)
+        UserTreatment.executeUpdate("Update UserTreatment u set u.status='Finished' where u.id=:userTId", [userTId: userT_id.toInteger()])
+        treatmentStorageService.clearData(userT_id) // Limpia la memoria
+        render "ok"
+    }
+
+    def treatmentHistory(){
+        def userT_id = params.id
+        File file = new File("treatmentHistory/treatment"+userT_id+".json")
+        render file.text
     }
 }
