@@ -83,7 +83,7 @@
             </div>
         </div>
     </div>
-<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
 <script type="text/javascript">
     
 Highcharts.chart('generalChart', {
@@ -131,7 +131,9 @@ Highcharts.chart('generalChart', {
                 data:{id:${tratamiento.id}},
                 type:"POST",
                 success:function(result){
+                    console.log(result);
                     graficar(result);
+                    console.log(result);
                     $("#historial_tratamiento").show();
                 }
             })  
@@ -140,7 +142,10 @@ Highcharts.chart('generalChart', {
     })
     
     function graficar(data){
-        var points = JSON.parse(data)[0].visualizedData;
+        //console.log(data);
+        //var points = JSON.parse(data)[0].visualizedData;
+
+        data = (JSON.parse(data));
         Highcharts.chart('chart_history', {
             chart: {
                 backgroundColor: 'transparent',
@@ -154,14 +159,11 @@ Highcharts.chart('generalChart', {
             text: 'Entrenamiento Finalizado'
             },
             xAxis: {
-                min: 10,
-                max: 50,
+                min: 0,
+                max: 25,
                 scrollbar: {
                     enabled: true
                 }
-            },
-            scrollbar: {
-                enabled: true
             },
             yAxis: {
                 title: {
@@ -187,16 +189,18 @@ Highcharts.chart('generalChart', {
             exporting: {
                 enabled: false
             },
-            series: [{
-                name: 'EEG',
-                data: convert(points),
-                type: 'spline',
-                tooltip: {
-                    valueDecimals: 2
-                }
-            }]
+            series: createSeries(data)
         });
 
+    }
+
+    function createSeries(data){
+        var series = [];
+        $.each(data, function( index, value ) {
+            var newSeries = {name:value.channelName,data:convert(value.visualizedData),type:'spline',tooltip:{valueDecimals:2}};
+            series.push(newSeries);
+        });
+        return series;
     }
 
     function convert(data){
