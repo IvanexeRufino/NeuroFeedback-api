@@ -1,4 +1,7 @@
 package neurofeedback.api
+
+import com.oracle.tools.packager.Log
+
 class TrackSessionController {
 
     def treatmentStorageService
@@ -57,6 +60,7 @@ class TrackSessionController {
         }
 
         buffers.eachWithIndex { buffer, ix ->
+            Log.info("HERE WE HAVE " + buffer.size())
             ads.add(new AnalyzedData(names[ix], buffer, userT.frequency))
         }
 
