@@ -27,7 +27,7 @@ class AnalyzedData {
     }
 
     def addComplex(Complex complex, frequencyIndex) {
-        def spectralPower = ((complex.abs() * complex.abs()) / 1000000)
+        def spectralPower = ((complex.abs() * complex.abs()) / 100000)
 
         spd.add(spectralPower)
         frequencies.add(frequencyIndex)
