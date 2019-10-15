@@ -87,7 +87,7 @@
         },
         yAxis: {
             title: {
-                text: 'Hz'
+                text: 'Voltage [V]'
             },
             plotLines: [{
                 value: 0,
