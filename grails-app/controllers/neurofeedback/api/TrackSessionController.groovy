@@ -112,7 +112,7 @@ class TrackSessionController {
 
     def treatmentHistory(){
         def userT_id = params.id
-        File file = new File("treatmentHistory/treatment"+userT_id+".json")
+        File file = new File("treatment"+userT_id+".json")
         render file.text
     }
 }
