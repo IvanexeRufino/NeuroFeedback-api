@@ -91,7 +91,7 @@ class TrackSessionController {
     def endTreatment(){
         def userT_id = params.id // user Treatment Id Necesario, chequear que sea del tipo string o int en la linea 92 necesita string.
         List<AnalyzedData> ad = treatmentStorageService.getDataForTreatment(userT_id)
-        File file = new File("~/treatmentHistory/treatment"+userT_id+".json")
+        File file = new File("treatment"+userT_id+".json")
         if(!ad) {
             file.write("[]")
             render "null array"
