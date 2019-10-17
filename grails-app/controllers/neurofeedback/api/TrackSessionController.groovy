@@ -107,7 +107,10 @@ class TrackSessionController {
         file.write(text)
         UserTreatment.executeUpdate("Update UserTreatment u set u.status='Finished' where u.id=:userTId", [userTId: userT_id.toInteger()])
         treatmentStorageService.clearData(userT_id) // Limpia la memoria
-        render "ok"
+
+        def responseMap = ["status": "200", "message": "ok"]
+
+        respond responseMap, formats: ['json']
     }
 
     def treatmentHistory(){
