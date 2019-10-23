@@ -44,4 +44,7 @@ class PowerBand {
     def getThetaPowerContribution() {
         return (thetaPower / totalPower) * 100
     }
+    def toJson(){
+        "{\"sampleSize\":"+sampleSize+",\"totalPower\":"+totalPower+",\"alphaPower\":"+alphaPower+",\"betaPower\":"+betaPower+",\"deltaPower\":"+deltaPower+",\"thetaPower\":"+thetaPower+"}"
+    }
 }

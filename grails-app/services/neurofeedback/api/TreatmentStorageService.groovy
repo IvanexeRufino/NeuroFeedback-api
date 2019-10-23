@@ -24,4 +24,8 @@ class TreatmentStorageService {
     List<AnalyzedData> getDataForTreatment(String userTreatmentId) {
         treatmentData[userTreatmentId]
     }
+
+    def clearData(String userTreatmentId){
+        treatmentData[userTreatmentId] = null
+    }
 }

@@ -9,5 +9,8 @@ class Point {
         this.x = axis
         this.y = value
     }
-
+    def toJson(){
+    	//["x":x,"y":y]
+    	return "{\"x\":"+x+",\"y\":"+y+"}"
+    }
 }

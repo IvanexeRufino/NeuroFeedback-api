@@ -9,7 +9,7 @@ class ChannelController {
 
     static Boolean patient = false
     static Boolean professional = false
-    static Boolean administrator = true
+    static Boolean administrator = false
 
     static String adminFriendlyName = "Canales de EEG"
     static String friendlyName = "Canales"

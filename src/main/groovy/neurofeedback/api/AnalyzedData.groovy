@@ -27,7 +27,7 @@ class AnalyzedData {
     }
 
     def addComplex(Complex complex, frequencyIndex) {
-        def spectralPower = ((complex.abs() * complex.abs()) / 1000000)
+        def spectralPower = ((complex.abs() * complex.abs()) / 100000)
 
         spd.add(spectralPower)
         frequencies.add(frequencyIndex)
@@ -55,5 +55,23 @@ class AnalyzedData {
         }
 
         return acumulativeData
+    }
+
+    def toJson(){
+        def aux= "[ "
+        visualizedData.each{aux+="${it.toJson()}  ,"}
+        aux = aux.substring(0, aux.length() - 1)
+        aux += "]  "
+        return "{"+
+            "\"frequency\":"+frequency+
+            ",\"spd\":"+spd+
+            ",\"frequencies\":"+frequencies+
+            ",\"analysisTime\":"+analysisTime+
+            ",\"channelName\":\""+channelName+"\""+
+            ",\"powerBand\":"+powerBand.toJson()+
+            ",\"sourceData\":"+sourceData+
+            ",\"visualizedData\":"+aux+
+        "}  "
+
     }
 }

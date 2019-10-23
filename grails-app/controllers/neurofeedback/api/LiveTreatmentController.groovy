@@ -52,6 +52,4 @@ class LiveTreatmentController {
 
         return user.treatments
     }
-
-
 }

@@ -29,7 +29,7 @@
                 </div>
                 <ul style="list-style: none; font-size: 12px;text-align: center;" >
                     <li>Duración: ${tratamiento.duration}</li>
-                    <li>Estado: ${tratamiento.status}</li>
+                    <li>Estado: <div id="treatment_status">${tratamiento.status}</div></li>
                     <li>Fecha Inicio: ${tratamiento.treatmentDate}</li>
                 </ul>
             </div>
@@ -73,17 +73,17 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12">   
+        <div class="col-md-12" id="historial_tratamiento" >   
             <div class="block">  
                 <div class="block-title">
                     <h2>Reproducción del tratamiento</h2>   
                 </div>
-                <div id="realTime">   
+                <div id="chart_history">   
                 </div>
             </div>
         </div>
     </div>
-<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
 <script type="text/javascript">
     
 Highcharts.chart('generalChart', {
@@ -105,7 +105,7 @@ Highcharts.chart('generalChart', {
                 cursor: 'pointer',
                 dataLabels: {
                     enabled: true,
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                    format: '{point.percentage:.1f} %'
                 }
             }
         },
@@ -123,6 +123,94 @@ Highcharts.chart('generalChart', {
             }]
         }]
     });
+
+    window.addEventListener('load', function () {
+        if($("#treatment_status").html()=="Finished"){
+            $.ajax({
+                url:"../../trackSession/treatmentHistory",
+                data:{id:${tratamiento.id}},
+                type:"POST",
+                success:function(result){
+                    console.log(result);
+                    graficar(result);
+                    console.log(result);
+                    $("#historial_tratamiento").show();
+                }
+            })  
+          
+        }
+    })
+    
+    function graficar(data){
+        //console.log(data);
+        //var points = JSON.parse(data)[0].visualizedData;
+
+        data = (JSON.parse(data));
+        Highcharts.chart('chart_history', {
+            chart: {
+                backgroundColor: 'transparent',
+                type: 'spline',
+                animation: Highcharts.svg,
+                scrollbar:{
+                    enabled:true
+                }
+            },
+            title: {
+            text: 'Entrenamiento Finalizado'
+            },
+            xAxis: {
+                min: 0,
+                max: 25,
+                scrollbar: {
+                    enabled: true
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Hz'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.series.name + '</b><br/>' +
+                        Highcharts.dateFormat('%H:%M:%S', this.x) + '<br/>'
+                        +
+                        Highcharts.numberFormat(this.y, 2);
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            series: createSeries(data)
+        });
+
+    }
+
+    function createSeries(data){
+        var series = [];
+        $.each(data, function( index, value ) {
+            var newSeries = {name:value.channelName,data:convert(value.visualizedData),type:'spline',tooltip:{valueDecimals:2}};
+            series.push(newSeries);
+        });
+        return series;
+    }
+
+    function convert(data){
+        var i = 0;
+        var result = data.map(function(a) {
+          i++;return [i,a.y];
+        });
+        return result;
+    }
+
 </script>
 </body>
 </html>
