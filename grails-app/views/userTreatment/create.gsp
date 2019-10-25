@@ -11,7 +11,6 @@
             <ul class="nav-horizontal text-center">
                 <li><a class="home" href="${createLink(uri: '/')}"><i class="fa fa-home"></i><g:message code="default.home.label"/></a></li>
                 <li><g:link class="list" action="index"><i class="fa fa-list"></i>Lista de Tratamientos de Usuario</g:link></li>
-                <li><g:link class="create" action="create"><i class="fa fa-plus"></i>Nuevo Tratamiento de Usuario</g:link></li>
             </ul>
         </div>
         <div class="block">
