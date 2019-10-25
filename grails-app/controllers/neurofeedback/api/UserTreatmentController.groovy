@@ -49,9 +49,10 @@ class UserTreatmentController {
     }
 
     def create() {
+        List<User> doctorUsers = User.findAllByRole(Role.findByAuthority("ROLE_PROFESSIONAL"))
         List<User> patientUsers = getApplicableUsers(params)
         List<Treatment> treatments = Treatment.findAll()
-        respond new UserTreatment(params), model:[patientUsers: patientUsers, treatments:treatments]
+        respond new UserTreatment(params), model:[patientUsers: patientUsers, treatments:treatments, doctorUsers: doctorUsers]
     }
 
     def save(UserTreatment userTreatment) {
@@ -141,14 +142,21 @@ class UserTreatmentController {
 
         if(user.role.authority == "ROLE_PROFESSIONAL") {
             return (User.findAllByAssignedDoctor(user) as List<User>)*.treatments.flatten() as List<Treatment>
+        } else if (user.role.authority == "ROLE_ADMIN") {
+            return (User.findAll() as List<User>)*.treatments.flatten() as List<Treatment>
         }
 
         return user.treatments
     }
 
     private List<User> getApplicableUsers(Map params) {
-        User profesional = springSecurityService.getCurrentUser()
+        User user = springSecurityService.getCurrentUser()
         Role patient = Role.findByAuthority("ROLE_PATIENT")
-        return  User.findAllByRoleAndAssignedDoctor(patient, profesional)
+
+        if(user.role.authority == "ROLE_PROFESSIONAL") {
+            return  User.findAllByRoleAndAssignedDoctor(patient, user)
+        } else if (user.role.authority == "ROLE_ADMIN") {
+            return (User.findAllByRole(patient) as List<User>)
+        }
     }
 }

@@ -16,7 +16,7 @@
         <div class="block">
             <div id="create-userTreatment" class="content scaffold-create" role="main">
                 <div class="block-title">
-                    <h1>Crear Usuario</h1>
+                    <h1>Crear tratamiento para usuario</h1>
                 </div>
             <g:if test="${flash.message}">
             <div class="message" role="status">${flash.message}</div>
@@ -30,6 +30,10 @@
             </g:hasErrors>
             <g:form resource="${this.userTreatment}" method="POST">
                 <fieldset class="form">
+                    <sec:ifAllGranted roles="ROLE_ADMIN">
+                    <label>Doctor</label>
+                        <g:select name="doctor" from="${doctorUsers}" optionKey="id" templates="bootstrap3" optionValue="${{it.firstName+' '+it.lastName}}"/>
+                    </sec:ifAllGranted>
                     <label>Paciente</label>
                     <g:select name="user" from="${patientUsers}" optionKey="id" templates="bootstrap3" optionValue="${{it.firstName+' '+it.lastName}}"/>
                     <label>Tratamiento</label>
