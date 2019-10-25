@@ -149,8 +149,13 @@ class UserTreatmentController {
     }
 
     private List<User> getApplicableUsers(Map params) {
-        User profesional = springSecurityService.getCurrentUser()
+        User user = springSecurityService.getCurrentUser()
         Role patient = Role.findByAuthority("ROLE_PATIENT")
-        return  User.findAllByRoleAndAssignedDoctor(patient, profesional)
+
+        if(user.role.authority == "ROLE_PROFESSIONAL") {
+            return  User.findAllByRoleAndAssignedDoctor(patient, user)
+        } else if (user.role.authority == "ROLE_ADMIN") {
+            return (User.findAllByRole(patient) as List<User>)
+        }
     }
 }
