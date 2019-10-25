@@ -30,10 +30,6 @@
             </g:hasErrors>
             <g:form resource="${this.userTreatment}" method="POST">
                 <fieldset class="form">
-                    <sec:ifAllGranted roles="ROLE_ADMIN">
-                    <label>Doctor</label>
-                        <g:select name="doctor" from="${doctorUsers}" optionKey="id" templates="bootstrap3" optionValue="${{it.firstName+' '+it.lastName}}"/>
-                    </sec:ifAllGranted>
                     <label>Paciente</label>
                     <g:select name="user" from="${patientUsers}" optionKey="id" templates="bootstrap3" optionValue="${{it.firstName+' '+it.lastName}}"/>
                     <label>Tratamiento</label>
