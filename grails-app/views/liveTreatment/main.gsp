@@ -79,7 +79,7 @@
             }
         },
         title: {
-            text: 'Real time EEG'
+            text: 'Tratamiento en vivo'
         },
         xAxis: {
             tickAmount: 100,
@@ -87,7 +87,7 @@
         },
         yAxis: {
             title: {
-                text: 'Voltage [V]'
+                text: 'Volts [V]'
             },
             plotLines: [{
                 value: 0,
@@ -195,16 +195,16 @@
                 }
             },
             title: {
-                text: 'Analyzed Data'
+                text: 'Data analizada'
             },
             xAxis: {
                 title: {
-                    text: 'Frequency [Hz]'
+                    text: 'Frecuencia [Hz]'
                 }
             },
             yAxis: {
                 title: {
-                    text: 'Power Spectral Density [μV²/HZ]'
+                    text: 'PSD [μV²/HZ]'
                 },
                 plotLines: [{
                     value: 0,
@@ -214,7 +214,7 @@
             },
             legend: getLegend(0,0,0,0,0),
             series: [{
-                name: 'Analyzed data',
+                name: 'Data analizada',
                 data: []
             }]
         });
