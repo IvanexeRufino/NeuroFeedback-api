@@ -8,7 +8,7 @@ import neurofeedback.api.UserService
 
 import static org.springframework.http.HttpStatus.*
 
-@Secured(['ROLE_ADMIN','ROLE_PROFESSIONAL'])
+@Secured(['ROLE_ADMIN','ROLE_PROFESSIONAL','ROLE_ADMIN'])
 class UserController {
 
     UserService userService

@@ -4,14 +4,15 @@ import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
-@Secured(['ROLE_PROFESSIONAL', 'ROLE_PATIENT'])
+@Secured(['ROLE_PROFESSIONAL', 'ROLE_PATIENT', 'ROLE_ADMIN'])
 class UserTreatmentController {
 
     static Boolean patient = true
     static Boolean professional = true
-    static Boolean administrator = false
+    static Boolean administrator = true
 
     static String friendlyName = "Historial de tratamientos"
+    static String adminFriendlyName = "Historial de tratamientos"
     def springSecurityService
 
     UserTreatmentService userTreatmentService
