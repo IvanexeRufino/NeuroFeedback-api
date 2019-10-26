@@ -49,7 +49,9 @@ def main(argv):
                 acumulated_data = 0
                 time.sleep(0.9)
 
-            line = fp.readline()
+                url = 'http://localhost:8080/trackSession/endTreatment/' + str(treatment_id)
+                requests.get(url, headers=headers)
+                line = False
 
 if __name__ == "__main__":
     main(sys.argv[1:])

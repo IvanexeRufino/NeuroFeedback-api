@@ -89,22 +89,11 @@ class TrackSessionController {
         return response
     }
     def endTreatment(){
-        def userT_id = params.id // user Treatment Id Necesario, chequear que sea del tipo string o int en la linea 92 necesita string.
+        String userT_id = params.id // user Treatment Id Necesario, chequear que sea del tipo string o int en la linea 92 necesita string.
+
+        println("Im about to close ${userT_id}")
         List<AnalyzedData> ad = treatmentStorageService.getDataForTreatment(userT_id)
-        File file = new File("treatment"+userT_id+".json")
-        if(!ad) {
-            file.write("[]")
-            render "null array"
-            return 
-        }
-        def text = "["
-        ad.each {
-            text += it.toJson()
-            text +=" ,"
-        }
-        text= text.substring(0, text.length() - 1)
-        text+="]"
-        file.write(text)
+        Grapher.generateGraphImage(userT_id, ad)
         UserTreatment.executeUpdate("Update UserTreatment u set u.status='Finished' where u.id=:userTId", [userTId: userT_id.toInteger()])
         treatmentStorageService.clearData(userT_id) // Limpia la memoria
 
