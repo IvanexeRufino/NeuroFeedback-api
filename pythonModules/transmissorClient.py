@@ -51,5 +51,8 @@ def main(argv):
 
             line = fp.readline()
 
+    url = 'http://localhost:8080/trackSession/endTreatment/' + str(treatment_id)
+    requests.post(url, headers=headers)
+
 if __name__ == "__main__":
     main(sys.argv[1:])

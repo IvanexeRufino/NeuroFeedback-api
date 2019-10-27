@@ -94,6 +94,7 @@ class TrackSessionController {
 
     def endTreatment(){
         def userT_id = params.id
+        println("Ending the treatment")
 
         createGraphFile(userT_id)
         calculateEffectiveness(userT_id)
@@ -131,7 +132,7 @@ class TrackSessionController {
     }
 
     def calculateEffectiveness(String userT_id) {
-        double calculatedEffectivness = 0
+        double calculatedEffectiveness = 0
         List<AnalyzedData> ads = treatmentStorageService.getDataForTreatment(userT_id)
         List<AnalyzyedResponse> ars = ads.stream().map { a ->
             a.feedback
@@ -140,10 +141,10 @@ class TrackSessionController {
         for(ar in ars) {
             switch (ar.frequencyBandContribution) {
                 case "Positive":
-                    calculatedEffectivness += 4
+                    calculatedEffectiveness += 4
                     break
                 case "Neutral":
-                    calculatedEffectivness += 1
+                    calculatedEffectiveness += 1
                     break
                 default:
                     break
@@ -151,18 +152,18 @@ class TrackSessionController {
 
             switch (ar.averageBandPower) {
                 case "Positive":
-                    calculatedEffectivness += 4
+                    calculatedEffectiveness += 4
                     break
                 case "Neutral":
-                    calculatedEffectivness += 1
+                    calculatedEffectiveness += 1
                     break
                 default:
                     break
             }
         }
 
-        calculatedEffectivness = (calculatedEffectivness/(ars.size() * 2 * 4))
+        calculatedEffectiveness = ((calculatedEffectiveness/(ars.size() * 2 * 4)) * 100 )
 
-        UserTreatment.executeUpdate("Update UserTreatment u set u.effectivness=:calculatedEffectivness where u.id=:userTId", [calculatedEffectivness: calculatedEffectivness, userTId: userT_id.toInteger()])
+        UserTreatment.executeUpdate("Update UserTreatment u set u.effectiveness=:calculatedEffectiveness where u.id=:userTId", [calculatedEffectiveness: calculatedEffectiveness, userTId: userT_id.toInteger()])
     }
 }
