@@ -29,7 +29,6 @@
                 </div>
                 <ul style="list-style: none; font-size: 12px;text-align: center;" >
                     <li>Duración: ${tratamiento.duration}</li>
-                    <li>Estado: <div id="treatment_status">${tratamiento.status}</div></li>
                     <li>Fecha Inicio: ${tratamiento.treatmentDate}</li>
                 </ul>
             </div>
@@ -60,7 +59,6 @@
                                     </g:else>
                                     <div class="timeline-time"><small>${htratamientos.treatmentDate} </small></div>
                                     <div class="timeline-content">
-                                        <p class="push-bit">Estado: <strong>${htratamientos.status}</strong></p>
                                         <p class="push-bit">Duración: <strong>${htratamientos.duration}</strong></p>
                                         <p class="push-bit">Efectividad: <strong>${htratamientos.effectiveness}</strong> </p>
                                         <p class="push-bit"><a href="/userTreatment/history/${htratamientos.id}" class="btn btn-xs btn-info"><i class="fa fa-eye"></i></a></p>
