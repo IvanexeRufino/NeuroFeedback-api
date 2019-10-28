@@ -23,10 +23,7 @@
                         <tr>
                             <th class="sortable"><a href="/userTreatment/index?sort=id&amp;max=10&amp;order=asc">N°</a></th>
                             <th class="sortable"><a href="/userTreatment/index?sort=frequency&amp;max=10&amp;order=asc">Frecuencia</a></th>
-                            <th class="sortable"><a href="/userTreatment/index?sort=treatmentDate&amp;max=10&amp;order=asc">Fecha Tratamiento</a></th>
-                            <th class="sortable"><a href="/userTreatment/index?sort=duration&amp;max=10&amp;order=asc">Duración</a></th>
-                            <th class="sortable"><a href="/userTreatment/index?sort=effectiveness&amp;max=10&amp;order=asc">Efectividad</a></th>
-                            <th class="sortable"><a href="/userTreatment/index?sort=status&amp;max=10&amp;order=asc">Estado</a></th>
+                            <th class="sortable"><a href="/userTreatment/index?sort=treatmentDate&amp;max=10&amp;order=asc">Duración</a></th>
                             <th class="sortable"><a href="/userTreatment/index?sort=user&amp;max=10&amp;order=asc">Usuario</a></th>
                             <th class="sortable"><a href="/userTreatment/index?sort=treatment&amp;max=10&amp;order=asc">Tratamiento</a></th>
                         </tr>
@@ -39,16 +36,7 @@
                                     ${userTreatment.frequency}
                                 </td>
                                 <td>
-                                    ${userTreatment.treatmentDate}
-                                </td>
-                                <td>
-                                    ${userTreatment.duration}
-                                </td>
-                                <td>
-                                    ${userTreatment.effectiveness}
-                                </td>
-                                <td>
-                                    ${userTreatment.status}
+                                    ${userTreatment.duration}"
                                 </td>
                                 <td>${userTreatment.user.firstName}</td>
                                 <td>${userTreatment.treatment.name}</td>
@@ -77,7 +65,6 @@
                             <th class="sortable"><a href="/userTreatment/index?sort=treatmentDate&amp;max=10&amp;order=asc">Fecha Tratamiento</a></th>
                             <th class="sortable"><a href="/userTreatment/index?sort=duration&amp;max=10&amp;order=asc">Duración</a></th>
                             <th class="sortable"><a href="/userTreatment/index?sort=effectiveness&amp;max=10&amp;order=asc">Efectividad</a></th>
-                            <th class="sortable"><a href="/userTreatment/index?sort=status&amp;max=10&amp;order=asc">Estado</a></th>
                             <th class="sortable"><a href="/userTreatment/index?sort=user&amp;max=10&amp;order=asc">Usuario</a></th>
                             <th class="sortable"><a href="/userTreatment/index?sort=treatment&amp;max=10&amp;order=asc">Tratamiento</a></th>
                             <th></th>
@@ -94,13 +81,10 @@
                                     ${userTreatment.treatmentDate}
                                 </td>
                                 <td>
-                                    ${userTreatment.duration}
+                                    ${userTreatment.duration}"
                                 </td>
                                 <td>
                                     ${userTreatment.effectiveness}
-                                </td>
-                                <td>
-                                    ${userTreatment.status}
                                 </td>
                                 <td>${userTreatment.user.firstName}</td>
                                 <td>${userTreatment.treatment.name}</td>

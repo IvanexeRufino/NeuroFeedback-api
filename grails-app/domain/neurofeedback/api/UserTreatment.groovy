@@ -7,7 +7,7 @@ class UserTreatment {
     Treatment treatment
 
     String status
-    double duration
+    int duration
 
     //Frequency of the EEG device, the client should find the closest 2x exp to send data on that size.
     int frequency

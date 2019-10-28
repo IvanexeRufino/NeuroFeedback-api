@@ -42,7 +42,7 @@
                                 ${userTreatment.treatmentDate}
                             </td>
                             <td>
-                                ${userTreatment.duration}
+                                ${userTreatment.duration}"
                             </td>
                             <td>
                                 ${userTreatment.effectiveness}
@@ -96,7 +96,7 @@
                                 ${userTreatment.treatmentDate}
                             </td>
                             <td>
-                                ${userTreatment.duration}
+                                ${userTreatment.duration}"
                             </td>
                             <td>
                                 ${userTreatment.effectiveness}
