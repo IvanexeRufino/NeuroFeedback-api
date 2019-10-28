@@ -47,11 +47,7 @@ class MobileController{
     def getUserTreatment(){
         //def map
         def userT_id = params.id
-        def userTreatment = UserTreatment.findAllById(userT_id).stream().map {
-            ut -> ut.toJson()
-        }.collect()[0]
-
-        //map = [status: 200, message:userTreatment]
+        def userTreatment = UserTreatment.findById(userT_id).toJson()
         
         respond userTreatment, formats: ['json']
     }
