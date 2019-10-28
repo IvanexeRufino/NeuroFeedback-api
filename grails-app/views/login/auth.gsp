@@ -14,7 +14,7 @@
     <!-- Login Title -->
     <div class="login-title text-center">
         <h1><i class="fa fa-brain"></i> <strong>NeuroCare</strong><br><small>
-        Por favor <strong>Inicie Sesión</strong> o <strong>Registrese</strong></small></h1>
+        Por favor <strong>Inicie Sesión</strong></small></h1>
     </div>
     <div class="block push-bit">
 		<s2ui:form type='login' class="form-horizontal form-bordered form-control-borderless" focus='username'>
