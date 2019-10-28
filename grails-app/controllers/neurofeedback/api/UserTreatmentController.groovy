@@ -4,14 +4,15 @@ import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
-@Secured(['ROLE_PROFESSIONAL', 'ROLE_PATIENT'])
+@Secured(['ROLE_PROFESSIONAL', 'ROLE_PATIENT', 'ROLE_ADMIN'])
 class UserTreatmentController {
 
     static Boolean patient = true
     static Boolean professional = true
-    static Boolean administrator = false
+    static Boolean administrator = true
 
     static String friendlyName = "Historial de tratamientos"
+    static String adminFriendlyName = "Historial de tratamientos"
     def springSecurityService
 
     UserTreatmentService userTreatmentService
@@ -105,7 +106,7 @@ class UserTreatmentController {
     def history(Long id){
         UserTreatment treatment = UserTreatment.findById(id)
         User usuario = User.findById(treatment.user.id)
-        List<UserTreatment> tratamientos = UserTreatment.findAllByUserAndTreatment(usuario,treatment.treatment)
+        List<UserTreatment> tratamientos = UserTreatment.findAllByUserAndTreatmentAndStatus(usuario,treatment.treatment, "Finished")
         respond new UserTreatment(params), model:[tratamiento: treatment,tratamientos:tratamientos,user:usuario]
     }
     def delete(Long id) {
@@ -140,14 +141,21 @@ class UserTreatmentController {
 
         if(user.role.authority == "ROLE_PROFESSIONAL") {
             return (User.findAllByAssignedDoctor(user) as List<User>)*.treatments.flatten() as List<Treatment>
+        } else if (user.role.authority == "ROLE_ADMIN") {
+            return (User.findAll() as List<User>)*.treatments.flatten() as List<Treatment>
         }
 
         return user.treatments
     }
 
     private List<User> getApplicableUsers(Map params) {
-        User profesional = springSecurityService.getCurrentUser()
+        User user = springSecurityService.getCurrentUser()
         Role patient = Role.findByAuthority("ROLE_PATIENT")
-        return  User.findAllByRoleAndAssignedDoctor(patient, profesional)
+
+        if(user.role.authority == "ROLE_PROFESSIONAL") {
+            return  User.findAllByRoleAndAssignedDoctor(patient, user)
+        } else if (user.role.authority == "ROLE_ADMIN") {
+            return (User.findAllByRole(patient) as List<User>)
+        }
     }
 }
