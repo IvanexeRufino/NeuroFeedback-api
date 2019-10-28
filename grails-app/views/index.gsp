@@ -47,7 +47,7 @@
             <section class="row">
                 <h1>NeuroCare</h1>
                 <p>
-                    Bienvenido a la plataforma de aministración del sistema de neurocare
+                    Bienvenido a la plataforma de administración del sistema Neurocare
                 </p>
             </section>
             <section class="row">
