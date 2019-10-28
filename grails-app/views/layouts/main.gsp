@@ -58,9 +58,7 @@
                         </div>
                         <sec:ifLoggedIn>
                             <div class="sidebar-user-avatar">
-                                <a href="page_ready_user_profile.php">
-                                    <g:img dir="images" file="avatar.jpg"/>
-                                </a>
+                                <g:img dir="images" file="avatar.jpg"/>
                             </div>
                             <div class="sidebar-user-name">
                                 <g:message
