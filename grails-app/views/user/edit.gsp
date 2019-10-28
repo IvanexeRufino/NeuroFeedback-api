@@ -30,7 +30,18 @@
             <g:form resource="${this.user}" method="PUT">
                 <g:hiddenField name="version" value="${this.user?.version}" />
                 <fieldset class="form">
-                    <f:all bean="user"/>
+                    <f:field bean="user" property="firstName" templates="bootstrap3"/>
+                    <f:field bean="user" property="lastName" templates="bootstrap3"/>
+                    <f:field bean="user" property="dateOfBirth" templates="bootstrap3"/>
+                    <f:field bean="user" property="docType" templates="bootstrap3"/>
+                    <f:field bean="user" property="docNumber" templates="bootstrap3"/>
+                    <f:field bean="user" property="email" templates="bootstrap3"/>
+                    <f:field bean="user" property="username" templates="bootstrap3"/>
+                    <f:field bean="user" property="password" templates="bootstrap3"/>
+                    <sec:ifAllGranted roles="ROLE_ADMIN">
+                        <f:field bean="user" property="role" templates="bootstrap3"/>
+                        <f:field bean="user" property="assignedDoctor" templates="bootstrap3"/>
+                    </sec:ifAllGranted>
                 </fieldset>
                 <br>
                 <fieldset class="buttons">

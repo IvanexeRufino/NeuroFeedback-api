@@ -10,8 +10,6 @@
             <ul class="nav-horizontal text-center">
                 <li><a class="home" href="${createLink(uri: '/')}"><i class="fa fa-home"></i><g:message code="default.home.label"/></a></li>
                 <li><g:link class="list" action="index"><i class="fa fa-list"></i>Lista de Tratamientos de Usuario</g:link></li>
-                <li><g:link class="create" action="create"><i class="fa fa-plus"></i>Nuevo Tratamiento de Usuario</g:link></li>
-                <li><g:link class="edit" action="edit" resource="${this.userTreatment}"><i class="fa fa-edit"></i><g:message code="default.button.edit.label" default="Edit" /></g:link></li>
                <!-- <li><a href="/userTreatment/delete/2"><i class="fa fa-trash"></i>Eliminar Tratamiento</a></li>-->
             </ul>
         </div>

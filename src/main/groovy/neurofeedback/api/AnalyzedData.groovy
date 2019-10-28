@@ -14,6 +14,8 @@ class AnalyzedData {
     List sourceData
     List visualizedData
 
+    AnalyzyedResponse feedback
+
     AnalyzedData(String channelName, List originalData, int frequency) {
         this.frequency = frequency
         this.spd = []

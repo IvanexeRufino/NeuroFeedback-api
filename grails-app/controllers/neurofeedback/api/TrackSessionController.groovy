@@ -1,5 +1,7 @@
 package neurofeedback.api
 
+import java.util.stream.Collectors
+
 class TrackSessionController {
 
     def treatmentStorageService
@@ -64,7 +66,7 @@ class TrackSessionController {
         return ads
     }
 
-    private static List<AnalyzyedResponse> processResponse(List<AnalyzedData> analyzedDatas, UserTreatment userTreatment) {
+    private List<AnalyzyedResponse> processResponse(List<AnalyzedData> analyzedDatas, UserTreatment userTreatment) {
         List<AnalyzyedResponse> response = []
 
         userTreatment.treatment.channelsConfig.each { ChannelConfig channelConfig ->
@@ -84,18 +86,41 @@ class TrackSessionController {
             }
 
             response.add(definiteResponse)
+            analyzedData.feedback = definiteResponse
         }
 
         return response
     }
+
     def endTreatment(){
-        def userT_id = params.id // user Treatment Id Necesario, chequear que sea del tipo string o int en la linea 92 necesita string.
+        def userT_id = params.id
+        println("Ending the treatment")
+
+        createGraphFile(userT_id)
+        calculateEffectiveness(userT_id)
+
+        UserTreatment.executeUpdate("Update UserTreatment u set u.status='Finished' where u.id=:userTId", [userTId: userT_id.toInteger()])
+        UserTreatment.executeUpdate("Update UserTreatment u set u.treatmentDate=:date where u.id=:userTId", [date: new Date(), userTId: userT_id.toInteger()])
+        treatmentStorageService.clearData(userT_id)
+
+        def responseMap = ["status": "200", "message": "ok"]
+        respond responseMap, formats: ['json']
+    }
+
+    def treatmentHistory(){
+        def userT_id = params.id
+        File file = new File("treatment"+userT_id+".json")
+        render file.text
+    }
+
+    def createGraphFile(String userT_id) {
+
         List<AnalyzedData> ad = treatmentStorageService.getDataForTreatment(userT_id)
         File file = new File("treatment"+userT_id+".json")
         if(!ad) {
             file.write("[]")
             render "null array"
-            return 
+            return
         }
         def text = "["
         ad.each {
@@ -105,17 +130,41 @@ class TrackSessionController {
         text= text.substring(0, text.length() - 1)
         text+="]"
         file.write(text)
-        UserTreatment.executeUpdate("Update UserTreatment u set u.status='Finished' where u.id=:userTId", [userTId: userT_id.toInteger()])
-        treatmentStorageService.clearData(userT_id) // Limpia la memoria
-
-        def responseMap = ["status": "200", "message": "ok"]
-
-        respond responseMap, formats: ['json']
     }
 
-    def treatmentHistory(){
-        def userT_id = params.id
-        File file = new File("treatment"+userT_id+".json")
-        render file.text
+    def calculateEffectiveness(String userT_id) {
+        double calculatedEffectiveness = 0
+        List<AnalyzedData> ads = treatmentStorageService.getDataForTreatment(userT_id)
+        List<AnalyzyedResponse> ars = ads.stream().map { a ->
+            a.feedback
+        }.collect(Collectors.toList())
+
+        for(ar in ars) {
+            switch (ar.frequencyBandContribution) {
+                case "Positive":
+                    calculatedEffectiveness += 4
+                    break
+                case "Neutral":
+                    calculatedEffectiveness += 1
+                    break
+                default:
+                    break
+            }
+
+            switch (ar.averageBandPower) {
+                case "Positive":
+                    calculatedEffectiveness += 4
+                    break
+                case "Neutral":
+                    calculatedEffectiveness += 1
+                    break
+                default:
+                    break
+            }
+        }
+
+        calculatedEffectiveness = ((calculatedEffectiveness/(ars.size() * 2 * 4)) * 100 )
+
+        UserTreatment.executeUpdate("Update UserTreatment u set u.effectiveness=:calculatedEffectiveness where u.id=:userTId", [calculatedEffectiveness: calculatedEffectiveness, userTId: userT_id.toInteger()])
     }
 }

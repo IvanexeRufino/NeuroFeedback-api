@@ -30,15 +30,6 @@
             <div class="col-md-6 block">
                 <div id="container5" style="height: 250px; width: 550px; display: inline-block"></div>
             </div>
-            <div class="col-md-6 block">
-                <div id="container6" style="height: 250px; width: 550px; display: inline-block"></div>
-            </div>
-            <div class="col-md-6 block">
-                <div id="container7" style="height: 250px; width: 550px; display: inline-block"></div>
-            </div>
-            <div class="col-md-6 block">
-                <div id="container8" style="height: 250px; width: 550px; display: inline-block"></div>
-            </div>
 		</div>
 	</div>
 </div>
@@ -79,7 +70,7 @@
             }
         },
         title: {
-            text: 'Real time EEG'
+            text: 'Tratamiento en vivo'
         },
         xAxis: {
             tickAmount: 100,
@@ -87,7 +78,7 @@
         },
         yAxis: {
             title: {
-                text: 'Voltage [V]'
+                text: 'Volts [V]'
             },
             plotLines: [{
                 value: 0,
@@ -172,7 +163,7 @@
                                         powerBand.betaPower, powerBand.deltaPower, powerBand.thetaPower));
 
                                     chart.title.update({
-                                        text: 'Analyzed Data ' + json.channelName
+                                        text: 'Datos analizados ' + json.channelName
                                     });
 
                                     chart.series[0].update({
@@ -195,16 +186,16 @@
                 }
             },
             title: {
-                text: 'Analyzed Data'
+                text: 'Datos analizados'
             },
             xAxis: {
                 title: {
-                    text: 'Frequency [Hz]'
+                    text: 'Frecuencia [Hz]'
                 }
             },
             yAxis: {
                 title: {
-                    text: 'Power Spectral Density [μV²/HZ]'
+                    text: 'PSD [μV²/HZ]'
                 },
                 plotLines: [{
                     value: 0,
@@ -214,7 +205,7 @@
             },
             legend: getLegend(0,0,0,0,0),
             series: [{
-                name: 'Analyzed data',
+                name: 'Datos analizados',
                 data: []
             }]
         });

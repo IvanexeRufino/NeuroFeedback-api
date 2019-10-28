@@ -38,6 +38,10 @@
                     <f:field bean="user" property="docNumber" templates="bootstrap3"/>
                     <f:field bean="user" property="dateOfBirth" templates="bootstrap3"/>
                     <f:field bean="user" property="email" templates="bootstrap3"/>
+                    <sec:ifAllGranted roles="ROLE_ADMIN">
+                        <f:field bean="user" property="role" templates="bootstrap3"/>
+                        <f:field bean="user" property="assignedDoctor" templates="bootstrap3"/>
+                    </sec:ifAllGranted>
                 </fieldset>
                 <br>
                 <fieldset class="buttons">

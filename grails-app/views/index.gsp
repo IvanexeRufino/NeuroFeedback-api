@@ -47,7 +47,7 @@
             <section class="row">
                 <h1>NeuroCare</h1>
                 <p>
-                    Bienvenido a la plataforma de aministración del sistema de neurocare
+                    Bienvenido a la plataforma de administración del sistema Neurocare
                 </p>
             </section>
             <section class="row">
@@ -82,7 +82,7 @@ Highcharts.chart('container', {
         }
     },
     title: {
-        text: 'Live Brain data'
+        text: 'Ondas Cerebrales en vivo'
     },
     xAxis: {
         type: 'datetime',
@@ -113,7 +113,7 @@ Highcharts.chart('container', {
         enabled: false
     },
     series: [{
-        name: 'Heartbeats data',
+        name: 'Datos cerebrales',
         data: (function () {
             // generate an array of random data
             var data = [],

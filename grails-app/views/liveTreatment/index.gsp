@@ -18,9 +18,9 @@
         <div class="table table-responsive" style="text-align: center;">
         <table width='100%'>
             <tr>
-                <th>User</th>
-                <th>Treatment</th>
-                <th>Status</th>
+                <th>Usuario</th>
+                <th>Tratamiento</th>
+                <th>Ver Tratamiento</th>
             </tr>
             <g:each var="userTreatment" in="${userTreatmentLive}">
                 <tr>
@@ -31,7 +31,7 @@
                         ${userTreatment.treatment.name}
                     </td>
                     <td>
-                        <g:link class="save" action="live" id="${userTreatment.id}"><g:message code="WATCH LIVE" /></g:link>
+                        <g:link class="save" action="live" id="${userTreatment.id}"><g:message code="EN VIVO" /></g:link>
                     </td>
                 </tr>
             </g:each>

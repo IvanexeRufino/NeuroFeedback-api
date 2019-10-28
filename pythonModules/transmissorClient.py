@@ -19,7 +19,7 @@ def main(argv):
 
     print ('Input file is ', inputfile)
 
-    url = 'http://localhost:8080/trackSession/treatmentSession/' + str(treatment_id)
+    url = 'http://whispering-temple-11733.herokuapp.com/trackSession/treatmentSession/' + str(treatment_id)
 
     payload = []
     headers = {
@@ -50,6 +50,9 @@ def main(argv):
                 time.sleep(0.9)
 
             line = fp.readline()
+
+    url = 'http://whispering-temple-11733.herokuapp.com/trackSession/endTreatment/' + str(treatment_id)
+    requests.post(url, headers=headers)
 
 if __name__ == "__main__":
     main(sys.argv[1:])

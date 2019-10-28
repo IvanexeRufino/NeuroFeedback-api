@@ -15,7 +15,7 @@
     <div id="list-pending-userTreatment" class="col-md-12" role="main">
         <div class="block">
             <div class="block-title">
-                <h1>Listado de Usuarios</h1>
+                <h1>Listado de Tratamientos</h1>
             </div>
             <div></div>
             <div class="table-responsive" style="text-align: center;">
@@ -42,7 +42,7 @@
                                 ${userTreatment.treatmentDate}
                             </td>
                             <td>
-                                ${userTreatment.duration}
+                                ${userTreatment.duration}"
                             </td>
                             <td>
                                 ${userTreatment.effectiveness}
@@ -96,7 +96,7 @@
                                 ${userTreatment.treatmentDate}
                             </td>
                             <td>
-                                ${userTreatment.duration}
+                                ${userTreatment.duration}"
                             </td>
                             <td>
                                 ${userTreatment.effectiveness}
