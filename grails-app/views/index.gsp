@@ -82,7 +82,7 @@ Highcharts.chart('container', {
         }
     },
     title: {
-        text: 'Live Brain data'
+        text: 'Ondas Cerebrales en vivo'
     },
     xAxis: {
         type: 'datetime',
