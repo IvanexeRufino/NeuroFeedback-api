@@ -100,6 +100,7 @@ class TrackSessionController {
         calculateEffectiveness(userT_id)
 
         UserTreatment.executeUpdate("Update UserTreatment u set u.status='Finished' where u.id=:userTId", [userTId: userT_id.toInteger()])
+        UserTreatment.executeUpdate("Update UserTreatment u set u.treatmentDate=:date where u.id=:userTId", [date: new Date(), userTId: userT_id.toInteger()])
         treatmentStorageService.clearData(userT_id)
 
         def responseMap = ["status": "200", "message": "ok"]
