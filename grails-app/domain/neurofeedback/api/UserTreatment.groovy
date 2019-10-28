@@ -34,6 +34,6 @@ class UserTreatment {
     }
 
     def toJson() {
-        [id: id, treatment: treatment.toJson(), duration: duration, frequency: frequency]
+        [id: id, treatment: treatment.toJson(), duration: duration, frequency: frequency, effectiveness:effectiveness]
     }
 }

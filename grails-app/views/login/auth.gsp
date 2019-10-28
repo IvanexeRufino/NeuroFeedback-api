@@ -22,7 +22,7 @@
 				<div class="form-group">
 	                <div class="col-xs-12">
 	                    <div class="input-group">
-	                        <span class="input-group-addon"><g:message code='spring.security.ui.login.username'/></span>
+	                        <span class="input-group-addon">Usuario</span>
 	                        <input type="text" name="${securityConfig.apf.usernameParameter}" id="username" class='formLogin' size="20"/>
 	                    </div>
 	                </div>
@@ -30,7 +30,7 @@
 	            <div class="form-group">
 	                <div class="col-xs-12">
 	                    <div class="input-group">
-	                        <span class="input-group-addon"><g:message code='spring.security.ui.login.password'/></span>
+	                        <span class="input-group-addon">Contraseña</span>
 	                        <input type="password" name="${securityConfig.apf.passwordParameter}" id="password" class="formLogin" size="20"/>
 	                    </div>
 	                </div>
