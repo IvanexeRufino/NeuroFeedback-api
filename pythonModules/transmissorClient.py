@@ -19,7 +19,7 @@ def main(argv):
 
     print ('Input file is ', inputfile)
 
-    url = 'http://whispering-temple-11733.herokuapp.com/trackSession/treatmentSession/' + str(treatment_id)
+    url = 'http://localhost:8080/trackSession/treatmentSession/' + str(treatment_id)
 
     payload = []
     headers = {
@@ -31,13 +31,13 @@ def main(argv):
     with open('../testFiles/' + inputfile) as fp:
         line = fp.readline()
         while line:
-            data_array = []
             splitted_array = line.split(',')
+            if acumulated_data == 0:
+                payload = [[] for i in range(len(splitted_array))]
 
             for i in range(len(splitted_array)):
-                data_array.append(float(splitted_array[i]))
+                payload[i].append(float(splitted_array[i]))
 
-            payload.append(data_array)
             acumulated_data += 1
 
             if acumulated_data == 128:
@@ -45,13 +45,12 @@ def main(argv):
                 print(payload)
                 r = requests.post(url, data=json.dumps(payload), headers=headers)
                 print(r.content)
-                payload = []
                 acumulated_data = 0
                 time.sleep(0.9)
 
             line = fp.readline()
 
-    url = 'http://whispering-temple-11733.herokuapp.com/trackSession/endTreatment/' + str(treatment_id)
+    url = 'http://localhost:8080/trackSession/endTreatment/' + str(treatment_id)
     requests.post(url, headers=headers)
 
 if __name__ == "__main__":
