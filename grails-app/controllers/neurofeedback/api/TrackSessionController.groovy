@@ -45,21 +45,10 @@ class TrackSessionController {
     }
 
     private static List<AnalyzedData> prepareADSForAnalysis(UserTreatment userT, def data) {
-        List<List> buffers = []
         List<AnalyzedData> ads = []
         Set<String> names = userT.treatment.getChannels()
 
-        for(int i = 0; i < names.size(); i++) {
-            buffers.add([])
-        }
-
-        data.each { List timeList ->
-            for(int i = 0; i < timeList.size(); i++) {
-                buffers[i] += [timeList[i]]
-            }
-        }
-
-        buffers.eachWithIndex { buffer, ix ->
+        data.eachWithIndex { buffer, ix ->
             ads.add(new AnalyzedData(names[ix], buffer, buffer.size()))
         }
 
@@ -90,6 +79,18 @@ class TrackSessionController {
         }
 
         return response
+    }
+
+    def cancelTreatment() {
+        def userT_id = params.id
+        println("Canceling the treatment")
+
+        UserTreatment.executeUpdate("Update UserTreatment u set u.status='Pending' where u.id=:userTId", [userTId: userT_id.toInteger()])
+        treatmentStorageService.clearData(userT_id)
+
+        def responseMap = ["status": "200", "message": "ok"]
+        respond responseMap, formats: ['json']
+
     }
 
     def endTreatment(){
