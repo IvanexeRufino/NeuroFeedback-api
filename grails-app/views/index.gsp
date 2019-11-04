@@ -1,60 +1,85 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="layout" content="main"/>
 </head>
 <body>
-    <content tag="nav">
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Application Status <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li><a href="#">Environment: ${grails.util.Environment.current.name}</a></li>
-                <li><a href="#">App profile: ${grailsApplication.config.grails?.profile}</a></li>
-                <li><a href="#">App version:
-                    <g:meta name="info.app.version"/></a>
-                </li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Grails version:
-                    <g:meta name="info.app.grailsVersion"/></a>
-                </li>
-                <li><a href="#">Groovy version: ${GroovySystem.getVersion()}</a></li>
-                <li><a href="#">JVM version: ${System.getProperty('java.version')}</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Reloading active: ${grails.util.Environment.reloadingAgentEnabled}</a></li>
-            </ul>
-        </li>
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Artefacts <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li><a href="#">Controllers: ${grailsApplication.controllerClasses.size()}</a></li>
-                <li><a href="#">Domains: ${grailsApplication.domainClasses.size()}</a></li>
-                <li><a href="#">Services: ${grailsApplication.serviceClasses.size()}</a></li>
-                <li><a href="#">Tag Libraries: ${grailsApplication.tagLibClasses.size()}</a></li>
-            </ul>
-        </li>
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Installed Plugins <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <g:each var="plugin" in="${applicationContext.getBean('pluginManager').allPlugins}">
-                    <li><a href="#">${plugin.name} - ${plugin.version}</a></li>
-                </g:each>
-            </ul>
-        </li>
-    </content>
-
-    <div class="row">
-        <div class="col-md-12">
-            <section class="row">
-                <h1>NeuroCare</h1>
-                <p>
-                    Bienvenido a la plataforma de administración del sistema Neurocare
-                </p>
-            </section>
-            <section class="row">
-                <div id="container" >
+    <div class="content-header content-header-media">
+        <div class="header-section">
+            <div class="row"> 
+                <div class="col-md-4 col-lg-6 hidden-xs hidden-sm">
+                    <h1>Bienvenido <strong>${usuario.firstName} ${usuario.lastName}</strong><br><small>A la plataforma de gestión de entrenamiento por neurofeedback</small></h1>
                 </div>
-            </section>
+            </div>
         </div>
+        <g:img dir="images" file="main-header.jpg" style="background-size:no-repeat"/>
+    </div>
+    <div class="row">
+        <g:if test="${tratamientos_pendientes != 0}">
+            <div class="col-sm-6 col-lg-6">
+                <a class="widget widget-hover-effect1">
+                    <div class="widget-simple">
+                        <div class="widget-icon pull-left themed-background animation-fadeIn">
+                            <i class="fa fa-plus"></i>
+                        </div>
+                        <h3 class="widget-content text-right animation-pullDown">
+                            Nuevos <strong>tratamientos</strong><br>
+                            <strong>${tratamientos_pendientes}</strong>
+                        </h3>
+                    </div>
+                </a>
+            </div>
+        </g:if>
+        <g:if test="${tratamientos_finalizados != 0}">
+            <div class="col-sm-6 col-lg-6">
+                <a class="widget widget-hover-effect1">
+                    <div class="widget-simple">
+                        <div class="widget-icon pull-left themed-background-success animation-fadeIn">
+                            <i class="fa fa-check"></i>
+                        </div>
+                        <h3 class="widget-content text-right animation-pullDown">
+                            <strong>Trat.</strong> Finalizados<br>
+                            ${tratamientos_finalizados}
+                        </h3>
+                    </div>
+                </a>
+            </div>
+        </g:if>
+        <g:if test="${tratamientos_hoy != 0 && tratamientos_finalizados == 0}">
+            <div class="col-sm-6 col-lg-6">
+                <a class="widget widget-hover-effect1">
+                    <div class="widget-simple">
+                        <div class="widget-icon pull-left themed-background-success animation-fadeIn">
+                            <i class="fa fa-check"></i>
+                        </div>
+                        <h3 class="widget-content text-right animation-pullDown">
+                            <strong>Trat.</strong> Finalizados Hoy<br> por pacientes ${tratamientos_hoy}
+                        </h3>
+                    </div>
+                </a>
+            </div>
+        </g:if>
+        <g:if test="${personas_a_cargo != 0}">
+            <div class="col-sm-6 col-lg-6">
+                <a class="widget widget-hover-effect1">
+                    <div class="widget-simple">
+                        <div class="widget-icon pull-left themed-background animation-fadeIn">
+                            <i class="fa fa-check"></i>
+                        </div>
+                        <h3 class="widget-content text-right animation-pullDown">
+                            <strong>Pacientes </strong> a cargo<br>
+                            ${personas_a_cargo}
+                        </h3>
+                    </div>
+                </a>
+            </div>
+        </g:if>
+    </div>
+
+
+
+    <div id="container">
+        
     </div>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 

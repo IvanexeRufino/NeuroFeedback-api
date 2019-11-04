@@ -98,11 +98,10 @@ class TrackSessionController {
 
         createGraphFile(userT_id)
         calculateEffectiveness(userT_id)
-
+        calculateAverage(userT_id)
         UserTreatment.executeUpdate("Update UserTreatment u set u.status='Finished' where u.id=:userTId", [userTId: userT_id.toInteger()])
         UserTreatment.executeUpdate("Update UserTreatment u set u.treatmentDate=:date where u.id=:userTId", [date: new Date(), userTId: userT_id.toInteger()])
-        treatmentStorageService.clearData(userT_id)
-
+        treatmentStorageService.clearData(userT_id) 
         def responseMap = ["status": "200", "message": "ok"]
         respond responseMap, formats: ['json']
     }
@@ -166,5 +165,17 @@ class TrackSessionController {
         calculatedEffectiveness = ((calculatedEffectiveness/(ars.size() * 2 * 4)) * 100 )
 
         UserTreatment.executeUpdate("Update UserTreatment u set u.effectiveness=:calculatedEffectiveness where u.id=:userTId", [calculatedEffectiveness: calculatedEffectiveness, userTId: userT_id.toInteger()])
+    }
+    def calculateAverage(String userT_id){
+        List<AnalyzedData> ads = treatmentStorageService.getDataForTreatment(userT_id)
+        def channel_average = ""
+        List<AnalyzyedResponse> ars = ads.stream().map { a ->
+            channel_average+=a.powerBand.getAverageBandPower().toString()+","
+        }.collect(Collectors.toList())
+
+        channel_average = channel_average.substring(0, channel_average.length() - 1)
+        channel_average += ""
+
+        UserTreatment.executeUpdate("Update UserTreatment u set u.channel_average=:channel_average where u.id=:userTId", [channel_average: channel_average, userTId: userT_id.toInteger()])
     }
 }

@@ -15,11 +15,13 @@ class UserTreatment {
     //Completed after the treatment has ended
     double effectiveness
     Date treatmentDate
+    String channel_average
 
     static constraints = {
         id (unique: true, maxSize: 11)
         frequency (blank: false)
         treatmentDate(nullable: true)
+        channel_average(nullable: true)
         duration (nullable: true, minValue: 0)
         effectiveness (blank: true, range: 0..100)
         status(inList: ["Finished", "Pending", "Live"], nullable: true)

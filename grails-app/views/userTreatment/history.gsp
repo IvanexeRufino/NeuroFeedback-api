@@ -29,6 +29,7 @@
                 </div>
                 <ul style="list-style: none; font-size: 12px;text-align: center;" >
                     <li>Duración: ${tratamiento.duration}</li>
+                    <li style="display: none;">Estado: <div id="treatment_status">${tratamiento.status}</div></li>
                     <li>Fecha Inicio: ${tratamiento.treatmentDate}</li>
                 </ul>
             </div>
@@ -71,6 +72,47 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="widget">
+                <div class="widget-extra themed-background-dark">
+                    <h3 class="widget-content-light">
+                        <strong>Canales </strong>utilizados en el tratamiento
+                    </h3>
+                </div>
+                <div class="widget-extra">
+                    <!-- Timeline Content -->
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Canal</th>
+                                    <th>Valor Mínimo</th>
+                                    <th>Valor Máximo</th>
+                                    <th>Promedio Obtenido</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <g:each var="canal" in="${canales}" status="i">
+                                    
+                                   
+                                    <tr class="hover" data-placement="top" data-toggle="popover" data-container="body" data-html="true" data-id="${canal.channel.name}">
+                                        <div id="popover-content${canal.channel.name}" style="display: none;">
+                                            <g:img dir="images"  width="200" height="200" file="channels/channel${canal.channel.name}.png"/>
+                                        </div>
+                                        <td><strong>${canal.channel.name}</strong></td>
+                                        <td>${canal.minAverageFrequencyPowerValue}</td>
+                                        <td>${canal.maxAverageFrequencyPowerValue}</td>
+                                        <td>${promedio_canales[i].substring(0,10)}</td>
+                                    </tr>
+                                </g:each>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- END Timeline Content -->
+                </div>
+            </div>
+        </div>
         <div class="col-md-12" id="historial_tratamiento" >   
             <div class="block">  
                 <div class="block-title">
@@ -81,9 +123,11 @@
             </div>
         </div>
     </div>
+
+
 <script src="https://code.highcharts.com/stock/highstock.js"></script>
 <script type="text/javascript">
-    
+
 Highcharts.chart('generalChart', {
         chart: {
             backgroundColor: 'transparent',
@@ -209,6 +253,13 @@ Highcharts.chart('generalChart', {
         return result;
     }
 
+    $("[data-toggle=popover]").popover({
+        html: true, 
+        trigger: "hover",
+        content: function() {
+              return $('#popover-content'+$(this).data("id")).html();
+            }
+    });
 </script>
 </body>
 </html>
