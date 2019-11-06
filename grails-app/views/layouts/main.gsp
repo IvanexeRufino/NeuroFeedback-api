@@ -5,7 +5,6 @@
 <html class="no-js"> <!--<![endif]-->
     <head>
         <meta charset="utf-8">
-        <title><g:layoutTitle default="Grails"/></title>
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
         <asset:stylesheet src="bootstrap.min.css"/>
         <asset:stylesheet src="plugins.css"/>
@@ -22,6 +21,7 @@
         <asset:javascript src="plugins.js"/>
         <asset:javascript src="app.js"/>
         <asset:javascript src="dataTables.min.js"/>
+        <title>NeuroCare</title>
     </head>
     <body>
     <div id="page-wrapper">
