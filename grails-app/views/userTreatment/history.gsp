@@ -103,7 +103,7 @@
                                         <td><strong>${canal.channel.name}</strong></td>
                                         <td>${canal.minAverageFrequencyPowerValue}</td>
                                         <td>${canal.maxAverageFrequencyPowerValue}</td>
-                                        <td>${promedio_canales[i].substring(0,10)}</td>
+                                        <td>${promedio_canales[i].substring(0,7)}</td>
                                     </tr>
                                 </g:each>
                             </tbody>

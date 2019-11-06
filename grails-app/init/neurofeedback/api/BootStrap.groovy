@@ -18,9 +18,9 @@ class BootStrap {
     }
 
 	static def initializeRoles() {
-		new Role(authority: 'ROLE_ADMIN', description: 'Role that can administrate doctors').save(flush: true)
-		new Role(authority: 'ROLE_PROFESSIONAL', description: 'Role that can create treatments and users').save(flush: true)
-		new Role(authority: 'ROLE_PATIENT', description: 'Role that can take treatments').save(flush: true)
+		new Role(authority: 'ROLE_ADMIN', description: 'Role that can administrate doctors',beauty:"Administrador").save(flush: true)
+		new Role(authority: 'ROLE_PROFESSIONAL', description: 'Role that can create treatments and users',beauty:"Profesional").save(flush: true)
+		new Role(authority: 'ROLE_PATIENT', description: 'Role that can take treatments',beauty:"Paciente").save(flush: true)
 	}
 
 	static def initializeUsers() {

@@ -17,50 +17,56 @@
             <div class="block">
                 <div class="block-title">
                     <h1>Listado de Usuarios</h1>
-                </div>
-                <div></div>
-                <div class="table table-responsive" style="text-align: center;">
-                    <table class="table table-striped" id="table-pending">
-                    <tr>
-                        <th class="sortable">N°</th>
-                        <th class="sortable"><a href="/user/index?sort=firstName&amp;max=10&amp;order=asc">Nombre</a></th>
-                        <th class="sortable"><a href="/user/index?sort=lastName&amp;max=10&amp;order=asc">Apellido</a></th>
-                        <th class="sortable"><a href="/user/index?sort=dateOfBirth&amp;max=10&amp;order=desc">Nacimiento</a></th>
-                        <th class="sortable"><a href="/user/index?sort=docType&amp;max=10&amp;order=asc">Tipo Documento</a></th>
-                        <th class="sortable"><a href="/user/index?sort=docNumber&amp;max=10&amp;order=asc">N° Documento</a></th>
-                        <th class="sortable"><a href="/user/index?sort=email&amp;max=10&amp;order=asc">Email</a></th>
-                    </tr>
-                    <g:each var="user" in="${userList}">
+                </div> 
+
+                <g:if test="${userList.size() != 0}">
+                    <div class="table table-responsive" style="text-align: center;">
+                        <table class="table table-striped" id="table-pending">
                         <tr>
-                            <td>
-                                <a href="/user/show/${user.id}">${user.id}</a>
-                            </td>
-                            <td>
-                                ${user.firstName}
-                            </td>
-                            <td>
-                                ${user.lastName}
-                            </td>
-                            <td>
-                                ${user.dateOfBirth}
-                            </td>
-                            <td>
-                                ${user.docType}
-                            </td>
-                            <td>
-                                ${user.docNumber}
-                            </td>
-                            <td>${user.email}</td>
+                            <th class="sortable">N°</th>
+                            <th class="sortable"><a href="/user/index?sort=firstName&amp;max=10&amp;order=asc">Nombre</a></th>
+                            <th class="sortable"><a href="/user/index?sort=lastName&amp;max=10&amp;order=asc">Apellido</a></th>
+                            <th class="sortable"><a href="/user/index?sort=dateOfBirth&amp;max=10&amp;order=desc">Nacimiento</a></th>
+                            <th class="sortable"><a href="/user/index?sort=docType&amp;max=10&amp;order=asc">Tipo Documento</a></th>
+                            <th class="sortable"><a href="/user/index?sort=docNumber&amp;max=10&amp;order=asc">N° Documento</a></th>
+                            <th class="sortable"><a href="/user/index?sort=email&amp;max=10&amp;order=asc">Email</a></th>
                         </tr>
-                    </g:each>
-                </table>
-                </div>
-                <g:if test="${flash.message}">
-                    <div class="message" role="status">${flash.message}</div>
+                        <g:each var="user" in="${userList}">
+                            <tr>
+                                <td>
+                                    <a href="/user/show/${user.id}">${user.id}</a>
+                                </td>
+                                <td>
+                                    ${user.firstName}
+                                </td>
+                                <td>
+                                    ${user.lastName}
+                                </td>
+                                <td>
+                                    ${user.dateOfBirth}
+                                </td>
+                                <td>
+                                    ${user.docType}
+                                </td>
+                                <td>
+                                    ${user.docNumber}
+                                </td>
+                                <td>${user.email}</td>
+                            </tr>
+                        </g:each>
+                    </table>
+                    </div>
+                    <g:if test="${flash.message}">
+                        <div class="message" role="status">${flash.message}</div>
+                    </g:if>
+                    <div class="pagination">
+                        <g:paginate total="${userCount ?: 0}" />
+                    </div>
                 </g:if>
-                <div class="pagination">
-                    <g:paginate total="${userCount ?: 0}" />
-                </div>
+                
+                <g:else>
+                    <h4>No tiene personas a cargo</h4>
+                </g:else>
             </div>
             
         </div>

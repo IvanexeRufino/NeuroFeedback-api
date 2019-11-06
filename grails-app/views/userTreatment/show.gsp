@@ -10,7 +10,13 @@
             <ul class="nav-horizontal text-center">
                 <li><a class="home" href="${createLink(uri: '/')}"><i class="fa fa-home"></i><g:message code="default.home.label"/></a></li>
                 <li><g:link class="list" action="index"><i class="fa fa-list"></i>Lista de Tratamientos de Usuario</g:link></li>
-               <!-- <li><a href="/userTreatment/delete/2"><i class="fa fa-trash"></i>Eliminar Tratamiento</a></li>-->
+
+                <g:if test="${userTreatment.status == 'Finished'}">
+                    <li><a href="/userTreatment/history/${userTreatment.id}"><i class="fa fa-check"></i>Resultado</a></li>
+                </g:if>
+                <g:if test="${userTreatment.status == 'Live'}">
+                    <li><a href="/liveTreatment/live/${userTreatment.id}"><i class="fa fa-eye"></i>En vivo</a></li>
+                </g:if>
             </ul>
         </div>
         <div class="row">

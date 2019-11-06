@@ -13,7 +13,7 @@ class Role implements Serializable {
 	int id
     String description
 	String authority
-
+	String beauty
 	static constraints = {
 		authority nullable: false, blank: false, unique: true
         id (unique: true, maxSize: 11)
