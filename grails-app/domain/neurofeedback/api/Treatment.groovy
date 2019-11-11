@@ -13,7 +13,7 @@ class Treatment {
     static constraints = {
         id (unique: true, maxSize: 11)
         name (unique: true, blank: false, maxSize: 50)
-        description (blank: false, maxSize: 255)
+        description (blank: false, maxSize: 1023)
         sessionNumber (blank: false)
     }
 

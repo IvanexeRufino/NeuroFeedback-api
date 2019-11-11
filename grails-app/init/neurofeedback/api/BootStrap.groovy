@@ -24,53 +24,186 @@ class BootStrap {
 	}
 
 	static def initializeUsers() {
-		new User(
-				username:'administrador',password:'1',firstName:'Admin',lastName:'istrador',
+		User admin = new User(
+				username:'administrador',password:'1',firstName:'Administrador',lastName:'Hospital',
 				docType: 'DNI',
 				docNumber: '11111111',
 				dateOfBirth: new Date(),
-				email: 'smth@smth.com',
+				email: 'neurocare@gmail.com',
 				role: Role.findByAuthority("ROLE_ADMIN")
 		).save(flush: true)
 
 		User doctor = new User(
-				username:'profesional',password:'1',firstName:'Profe',lastName:'ssional',
+				username:'profesional',password:'1',firstName:'Teresa',lastName:'Tudela',
 				docType: 'DNI',
-				docNumber: '22222222',
+				docNumber: '27439894',
 				dateOfBirth: new Date(),
-				email: 'smth@smth.com',
-				role: Role.findByAuthority("ROLE_PROFESSIONAL")
+				email: 'teresa.tudela@gmail.com',
+				role: Role.findByAuthority("ROLE_PROFESSIONAL"),
+				assignedDoctor: admin
 		)
 		doctor.save(flush: true)
 
 		User doctor2 = new User(
-				username:'profe',password:'1',firstName:'Profe',lastName:'ssional',
+				username:'lortigoza',password:'1',firstName:'Lorena',lastName:'Ortigoza',
 				docType: 'DNI',
-				docNumber: '22222222',
+				docNumber: '22323241',
 				dateOfBirth: new Date(),
-				email: 'smth@smth.com',
-				role: Role.findByAuthority("ROLE_PROFESSIONAL")
+				email: 'lorena.ortigoza@gmail.com',
+				role: Role.findByAuthority("ROLE_PROFESSIONAL"),
+				assignedDoctor: admin
 		)
 		doctor2.save(flush: true)
 
+		User doctor3 = new User(
+				username:'lgalarza',password:'1',firstName:'Laura',lastName:'Galarza',
+				docType: 'DNI',
+				docNumber: '25892893',
+				dateOfBirth: new Date(),
+				email: 'laura.galarza@gmail.com',
+				role: Role.findByAuthority("ROLE_PROFESSIONAL"),
+				assignedDoctor: admin
+		)
+		doctor3.save(flush: true)
+
+		User doctor4 = new User(
+				username:'ecasares',password:'1',firstName:'Eduardo',lastName:'Casares',
+				docType: 'DNI',
+				docNumber: '31432850',
+				dateOfBirth: new Date(),
+				email: 'eduardo.casares@gmail.com',
+				role: Role.findByAuthority("ROLE_PROFESSIONAL"),
+				assignedDoctor: admin
+		)
+		doctor4.save(flush: true)
+
+
+		User doctor5 = new User(
+				username:'juceda',password:'1',firstName:'Julian',lastName:'Uceda',
+				docType: 'DNI',
+				docNumber: '38434698',
+				dateOfBirth: new Date(),
+				email: 'juli.uceda@gmail.com',
+				role: Role.findByAuthority("ROLE_PROFESSIONAL"),
+				assignedDoctor: admin
+		)
+		doctor5.save(flush: true)
+
+
 		new User(
-				username:'paciente',password:'1',firstName:'Pac',lastName:'iente',
+				username:'paciente',password:'1',firstName:'Jorge',lastName:'Blesa',
 				docType: 'DNI',
 				docNumber: '1',
 				dateOfBirth: new Date(),
-				email: 'smth@smth.com',
+				email: 'jblesa@gmail.com',
 				role: Role.findByAuthority("ROLE_PATIENT"),
 				assignedDoctor: doctor
 		).save(flush: true)
 
 		new User(
-				username:'irufino',password:'1',firstName:'ivan',lastName:'rufino',
+				username:'irufino',password:'1',firstName:'Ivan',lastName:'Rufino',
 				docType: 'DNI',
 				docNumber: '883938',
 				dateOfBirth: new Date(),
-				email: 'smth@smth.com',
+				email: 'ivanexerufino@gmail.com',
+				role: Role.findByAuthority("ROLE_PATIENT"),
+				assignedDoctor: doctor
+		).save(flush: true)
+
+		new User(
+				username:'asosa',password:'1',firstName:'Alberto',lastName:'Sosa',
+				docType: 'DNI',
+				docNumber: '1357865',
+				dateOfBirth: new Date(),
+				email: 'alsosa@gmail.com',
+				role: Role.findByAuthority("ROLE_PATIENT"),
+				assignedDoctor: doctor
+		).save(flush: true)
+
+		new User(
+				username:'ijareño',password:'1',firstName:'Ivan',lastName:'Jareño',
+				docType: 'DNI',
+				docNumber: '1479238',
+				dateOfBirth: new Date(),
+				email: 'jareñoivan@gmail.com',
 				role: Role.findByAuthority("ROLE_PATIENT"),
 				assignedDoctor: doctor2
+		).save(flush: true)
+		new User(
+				username:'ccapel',password:'1',firstName:'Claudia',lastName:'Capel',
+				docType: 'DNI',
+				docNumber: '243982792',
+				dateOfBirth: new Date(),
+				email: 'ccapel@gmail.com',
+				role: Role.findByAuthority("ROLE_PATIENT"),
+				assignedDoctor: doctor2
+		).save(flush: true)
+
+		new User(
+				username:'mcuriel',password:'1',firstName:'Maria',lastName:'Curiel',
+				docType: 'DNI',
+				docNumber: '25546789',
+				dateOfBirth: new Date(),
+				email: 'mcuriel@gmail.com',
+				role: Role.findByAuthority("ROLE_PATIENT"),
+				assignedDoctor: doctor2
+		).save(flush: true)
+		new User(
+				username:'lcorreas',password:'1',firstName:'Lidia',lastName:'Correas',
+				docType: 'DNI',
+				docNumber: '275342793',
+				dateOfBirth: new Date(),
+				email: 'lcorreas@gmail.com',
+				role: Role.findByAuthority("ROLE_PATIENT"),
+				assignedDoctor: doctor2
+		).save(flush: true)
+	
+		new User(
+				username:'icampos',password:'1',firstName:'Ines',lastName:'Campos',
+				docType: 'DNI',
+				docNumber: '10363412',
+				dateOfBirth: new Date(),
+				email: 'icampos@gmail.com',
+				role: Role.findByAuthority("ROLE_PATIENT"),
+				assignedDoctor: doctor3
+		).save(flush: true)
+
+		new User(
+				username:'pgallart',password:'1',firstName:'Paula',lastName:'Gallart',
+				docType: 'DNI',
+				docNumber: '17908923',
+				dateOfBirth: new Date(),
+				email: 'pgallart@gmail.com',
+				role: Role.findByAuthority("ROLE_PATIENT"),
+				assignedDoctor: doctor3
+		).save(flush: true)
+		
+		new User(
+				username:'mgallart',password:'1',firstName:'Miguel',lastName:'Gallart',
+				docType: 'DNI',
+				docNumber: '17908924',
+				dateOfBirth: new Date(),
+				email: 'mgallart@gmail.com',
+				role: Role.findByAuthority("ROLE_PATIENT"),
+				assignedDoctor: doctor4
+		).save(flush: true)
+		new User(
+				username:'sroncero',password:'1',firstName:'Salvador',lastName:'Roncero',
+				docType: 'DNI',
+				docNumber: '17124924',
+				dateOfBirth: new Date(),
+				email: 'roncero@gmail.com',
+				role: Role.findByAuthority("ROLE_PATIENT"),
+				assignedDoctor: doctor4
+		).save(flush: true)
+		new User(
+				username:'fberrocal',password:'1',firstName:'Francisco',lastName:'Berrocal',
+				docType: 'DNI',
+				docNumber: '34237987',
+				dateOfBirth: new Date(),
+				email: 'fberrocal@yahoo.com.ar',
+				role: Role.findByAuthority("ROLE_PATIENT"),
+				assignedDoctor: doctor5
 		).save(flush: true)
 	}
 
@@ -128,7 +261,7 @@ class BootStrap {
 
 		new Treatment(
 				name: "Relajacion",
-				description: "Tratamiento para mejorar el manejo de estres de las personas",
+				description: "Tratamiento para mejorar el manejo de estres de las personas.  El sistema procesa las ondas cerebrales y tendrá configurado como rango deseado a aquellas ondas que corresponden a la categoría Alpha (8-13 Hz). Para ello, analizará en tiempo real las muestras recibidas del medidor de ondas cerebrales. ",
 				sessionNumber: 7,
 				channelsConfig: channelsRelaxation
 		).save(flush: true)
@@ -150,7 +283,7 @@ class BootStrap {
 
 		new Treatment(
 				name: "Memoria",
-				description: "Tratamiento para mejorar el manejo de estres de las personas",
+				description: "Tratamiento para mejorar el manejo de estres de las personas. El sistema procesa las ondas cerebrales y tendrá configurado como rango deseado a aquellas ondas que corresponden a la categoría Lower Alpha (8-10 Hz). Para ello, analizará en tiempo real las muestras recibidas del medidor de ondas cerebrales. ",
 				sessionNumber: 8,
 				channelsConfig: channelsMemory
 		).save(flush: true)
@@ -181,7 +314,7 @@ class BootStrap {
 
 		new Treatment(
 				name: "Concentracion",
-				description: "Tratamiento para mejorar el manejo de estres de las personas",
+				description: "Tratamiento para mejorar el manejo de estres de las personas. El sistema procesa las ondas cerebrales y tendrá configurado como rango deseado a aquellas ondas que corresponden a la categoría Beta (15-20 Hz). Para ello, analizará en tiempo real las muestras recibidas del medidor de ondas cerebrales. ",
 				sessionNumber: 20,
 				channelsConfig: channelsAttention
 		).save(flush: true)
@@ -217,7 +350,7 @@ class BootStrap {
 
 		new Treatment(
 				name: "Performance Cognitiva",
-				description: "Tratamiento para mejorar el manejo de estres de las personas",
+				description: "Tratamiento para mejorar el manejo de estres de las personas. El sistema procesa las ondas cerebrales y tendrá configurado como rango deseado a aquellas ondas que corresponden a la categoría Upper Alpha(10-13 Hz). Para ello, analizará en tiempo real las muestras recibidas del medidor de ondas cerebrales. ",
 				sessionNumber: 5,
 				channelsConfig: channelsCognitive
 		).save(flush: true)

@@ -25,7 +25,7 @@
     </head>
     <body>
     <div id="page-wrapper">
-    <div id="page-container" class="enable-cookies  disable-menu-autoscroll footer-fixed sidebar-no-animations sidebar-partial sidebar-visible-lg">
+    <div id="page-container" class="enable-cookies  disable-menu-autoscroll footer-fixed sidebar-no-animations sidebar-visible-lg">
         <!-- Alternative Sidebar -->
         <div id="sidebar-alt">
             <!-- Wrapper for scrolling functionality -->
