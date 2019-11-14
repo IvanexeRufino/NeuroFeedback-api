@@ -11,7 +11,7 @@
                 <div class="col-md-6">
                     <div class="block" style="align-content: center;text-align: center;">
                         <div class="block-title">
-                            <h4>${it.name}</h4>
+                            <h3>Tratamiento: <strong>${it.name}</strong></h3>
                         </div>
                         <p style="align-self: center;">${it.description} </p>
                         <g:img dir="images"  width="60%" height="60%" file="treatments/${it.id}.png"/>
