@@ -261,7 +261,8 @@ class BootStrap {
 
 		new Treatment(
 				name: "Relajacion",
-				description: "Tratamiento para mejorar el manejo de estres de las personas.  El sistema procesa las ondas cerebrales y tendrá configurado como rango deseado a aquellas ondas que corresponden a la categoría Alpha (8-13 Hz). Para ello, analizará en tiempo real las muestras recibidas del medidor de ondas cerebrales. ",
+				description: "Tratamiento para mejorar el manejo de estres de las personas.",
+				longDescription: "  El sistema procesa las ondas cerebrales y tendrá configurado como rango deseado a aquellas ondas que corresponden a la categoría Alpha (8-13 Hz). Para ello, analizará en tiempo real las muestras recibidas del medidor de ondas cerebrales. ",
 				sessionNumber: 7,
 				channelsConfig: channelsRelaxation
 		).save(flush: true)
@@ -283,8 +284,8 @@ class BootStrap {
 
 		new Treatment(
 				name: "Memoria",
-				description: "Tratamiento para mejorar el manejo de estres de las personas.",
-				longDescription: "El sistema procesa las ondas cerebrales y tendrá configurado como rango deseado a aquellas ondas que corresponden a la categoría Lower Alpha (8-10 Hz). Para ello, analizará en tiempo real las muestras recibidas del medidor de ondas cerebrales."
+				description: "Tratamiento para mejorar la memoria de las personas.",
+				longDescription: "El sistema procesa las ondas cerebrales y tendrá configurado como rango deseado a aquellas ondas que corresponden a la categoría Lower Alpha (8-10 Hz). Para ello, analizará en tiempo real las muestras recibidas del medidor de ondas cerebrales.",
 				sessionNumber: 8,
 				channelsConfig: channelsMemory
 		).save(flush: true)
@@ -315,7 +316,8 @@ class BootStrap {
 
 		new Treatment(
 				name: "Concentracion",
-				description: "Tratamiento para mejorar el manejo de estres de las personas. El sistema procesa las ondas cerebrales y tendrá configurado como rango deseado a aquellas ondas que corresponden a la categoría Beta (15-20 Hz). Para ello, analizará en tiempo real las muestras recibidas del medidor de ondas cerebrales. ",
+				description: "Tratamiento para mejorar la concentración de las personas.",
+				longDescription: " El sistema procesa las ondas cerebrales y tendrá configurado como rango deseado a aquellas ondas que corresponden a la categoría Beta (15-20 Hz). Para ello, analizará en tiempo real las muestras recibidas del medidor de ondas cerebrales. ",
 				sessionNumber: 20,
 				channelsConfig: channelsAttention
 		).save(flush: true)
@@ -351,7 +353,8 @@ class BootStrap {
 
 		new Treatment(
 				name: "Performance Cognitiva",
-				description: "Tratamiento para mejorar el manejo de estres de las personas. El sistema procesa las ondas cerebrales y tendrá configurado como rango deseado a aquellas ondas que corresponden a la categoría Upper Alpha(10-13 Hz). Para ello, analizará en tiempo real las muestras recibidas del medidor de ondas cerebrales. ",
+				description: "Tratamiento para mejorar el funcionamiento del cerebro de las personas.",
+				longDescription: "El sistema procesa las ondas cerebrales y tendrá configurado como rango deseado a aquellas ondas que corresponden a la categoría Upper Alpha(10-13 Hz). Para ello, analizará en tiempo real las muestras recibidas del medidor de ondas cerebrales. ",
 				sessionNumber: 5,
 				channelsConfig: channelsCognitive
 		).save(flush: true)

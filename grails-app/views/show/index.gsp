@@ -13,7 +13,7 @@
                         <div class="block-title">
                             <h3>Tratamiento: <strong>${it.name}</strong></h3>
                         </div>
-                        <p style="align-self: center;">${it.description} </p>
+                        <p style="align-self: center;">${it.longDescription} </p>
                         <g:img dir="images"  width="60%" height="60%" file="treatments/${it.id}.png"/>
                         <br><br><br>
                         <div class="block-title">
