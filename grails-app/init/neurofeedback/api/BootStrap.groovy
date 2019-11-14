@@ -18,9 +18,9 @@ class BootStrap {
     }
 
 	static def initializeRoles() {
-		new Role(authority: 'ROLE_ADMIN', description: 'Role that can administrate doctors',beauty:"Administrador").save(flush: true)
-		new Role(authority: 'ROLE_PROFESSIONAL', description: 'Role that can create treatments and users',beauty:"Profesional").save(flush: true)
-		new Role(authority: 'ROLE_PATIENT', description: 'Role that can take treatments',beauty:"Paciente").save(flush: true)
+		new Role(authority: 'ROLE_ADMIN', description: 'Usuario administrador de Profesionales',beauty:"Administrador").save(flush: true)
+		new Role(authority: 'ROLE_PROFESSIONAL', description: 'Usuario administrador de Pacientes',beauty:"Profesional").save(flush: true)
+		new Role(authority: 'ROLE_PATIENT', description: 'Paciente, realiza tratamientos',beauty:"Paciente").save(flush: true)
 	}
 
 	static def initializeUsers() {
@@ -283,7 +283,8 @@ class BootStrap {
 
 		new Treatment(
 				name: "Memoria",
-				description: "Tratamiento para mejorar el manejo de estres de las personas. El sistema procesa las ondas cerebrales y tendrá configurado como rango deseado a aquellas ondas que corresponden a la categoría Lower Alpha (8-10 Hz). Para ello, analizará en tiempo real las muestras recibidas del medidor de ondas cerebrales. ",
+				description: "Tratamiento para mejorar el manejo de estres de las personas.",
+				longDescription: "El sistema procesa las ondas cerebrales y tendrá configurado como rango deseado a aquellas ondas que corresponden a la categoría Lower Alpha (8-10 Hz). Para ello, analizará en tiempo real las muestras recibidas del medidor de ondas cerebrales."
 				sessionNumber: 8,
 				channelsConfig: channelsMemory
 		).save(flush: true)

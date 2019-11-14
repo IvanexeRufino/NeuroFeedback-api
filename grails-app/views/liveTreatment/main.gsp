@@ -84,7 +84,9 @@
                 value: 0,
                 width: 1,
                 color: '#808080'
-            }]
+            }],
+            max: 2000,
+            min: -2000
         },
         tooltip: {
             formatter: function () {
@@ -201,7 +203,9 @@
                     value: 0,
                     width: 1,
                     color: '#808080'
-                }]
+                }],
+                min:0,
+                max:250
             },
             legend: getLegend(0,0,0,0,0),
             series: [{
