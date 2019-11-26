@@ -21,6 +21,11 @@
         <asset:javascript src="plugins.js"/>
         <asset:javascript src="app.js"/>
         <asset:javascript src="dataTables.min.js"/>
+        <script type="text/javascript">
+            $(function() {
+            $( "a[href='/showTreatment/index'" ).hide();
+});
+        </script>
         <title>NeuroCare</title>
     </head>
     <body>
@@ -208,3 +213,4 @@
     
     </body>
 </html>
+

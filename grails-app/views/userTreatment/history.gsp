@@ -103,7 +103,14 @@
                                         <td><strong>${canal.channel.name}</strong></td>
                                         <td>${canal.minAverageFrequencyPowerValue}</td>
                                         <td>${canal.maxAverageFrequencyPowerValue}</td>
-                                        <td>${promedio_canales[i].substring(0,7)}</td>
+                                        <td>
+                                        <%
+                                            try{ %>
+                                                ${promedio_canales[i].substring(0,7)}
+                                            <%} catch(Exception e){%>
+                                                ${promedio_canales[0].substring(0,7)}
+                                            <%}
+                                        %></td>
                                     </tr>
                                 </g:each>
                             </tbody>
@@ -209,7 +216,7 @@ Highcharts.chart('generalChart', {
             },
             yAxis: {
                 title: {
-                    text: 'Hz'
+                    text: 'micro V'
                 },
                 plotLines: [{
                     value: 0,

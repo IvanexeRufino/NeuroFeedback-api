@@ -33,7 +33,8 @@ class MobileController{
 
     def treatments(){
         def userId = params.id
-
+        User usuario = User.findById(userId.toInteger())
+        UserTreatment.executeUpdate("Update UserTreatment u set u.status='Pending' where u.user=:userTId AND u.status = 'Live'", [userTId: usuario])
         def userTreatments = UserTreatment.findAllByUser(User.findById(userId)).stream().filter { userT ->
             userT.status == "Pending"
         }.map {

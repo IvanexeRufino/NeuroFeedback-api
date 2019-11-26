@@ -14,22 +14,14 @@
 		<div class="row">
             <div class="col-md-12 block">
                 <div id="containerMain" style="height: 350px"></div>
-            </div>
-            <div class="col-md-6 block">
-                <div id="container1" style="height: 250px; width: 550px; display: inline-block"></div>
-            </div>
-            <div class="col-md-6 block">
-                <div id="container2" style="height: 250px; width: 550px; display: inline-block"></div>
-            </div>
-            <div class="col-md-6 block">
-                <div id="container3" style="height: 250px; width: 550px; display: inline-block"></div>
-            </div>
-            <div class="col-md-6 block">
-                <div id="container4" style="height: 250px; width: 550px; display: inline-block"></div>
-            </div>
-            <div class="col-md-6 block">
-                <div id="container5" style="height: 250px; width: 550px; display: inline-block"></div>
-            </div>
+            </div> 
+            <g:set var="counter" value="${1}"/>
+            <g:while test="${counter < analyzedDatasCount+1}">
+                <div class="col-md-6 block">
+                    <div id="container${counter}" style="height: 250px; width: 550px; display: inline-block"></div>
+                </div>
+                <g:set var="counter" value="${counter+1}"/>
+            </g:while>
 		</div>
 	</div>
 </div>
@@ -78,7 +70,7 @@
         },
         yAxis: {
             title: {
-                text: 'Volts [V]'
+                text: 'micro Volts [mV]'
             },
             plotLines: [{
                 value: 0,

@@ -109,7 +109,9 @@ class UserTreatmentController {
         List<UserTreatment> tratamientos = UserTreatment.findAllByUserAndTreatmentAndStatus(usuario,treatment.treatment, "Finished")
         List<ChannelConfig> canales = ChannelConfig.findAllByTreatment(treatment.treatment)
 
+
         List<String> promedio_canales= treatment.channel_average.split(',').collect{it as String}
+        //render promedio_canales
         respond new UserTreatment(params), model:[tratamiento: treatment,tratamientos:tratamientos,user:usuario,canales:canales,promedio_canales:promedio_canales]
     }
     def delete(Long id) {
