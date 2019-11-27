@@ -1,137 +1,187 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="layout" content="main"/>
 </head>
 <body>
-    <content tag="nav">
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Application Status <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li><a href="#">Environment: ${grails.util.Environment.current.name}</a></li>
-                <li><a href="#">App profile: ${grailsApplication.config.grails?.profile}</a></li>
-                <li><a href="#">App version:
-                    <g:meta name="info.app.version"/></a>
-                </li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Grails version:
-                    <g:meta name="info.app.grailsVersion"/></a>
-                </li>
-                <li><a href="#">Groovy version: ${GroovySystem.getVersion()}</a></li>
-                <li><a href="#">JVM version: ${System.getProperty('java.version')}</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Reloading active: ${grails.util.Environment.reloadingAgentEnabled}</a></li>
-            </ul>
-        </li>
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Artefacts <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li><a href="#">Controllers: ${grailsApplication.controllerClasses.size()}</a></li>
-                <li><a href="#">Domains: ${grailsApplication.domainClasses.size()}</a></li>
-                <li><a href="#">Services: ${grailsApplication.serviceClasses.size()}</a></li>
-                <li><a href="#">Tag Libraries: ${grailsApplication.tagLibClasses.size()}</a></li>
-            </ul>
-        </li>
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Installed Plugins <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <g:each var="plugin" in="${applicationContext.getBean('pluginManager').allPlugins}">
-                    <li><a href="#">${plugin.name} - ${plugin.version}</a></li>
-                </g:each>
-            </ul>
-        </li>
-    </content>
-
-    <div class="row">
-        <div class="col-md-12">
-            <section class="row">
-                <h1>NeuroCare</h1>
-                <p>
-                    Bienvenido a la plataforma de administración del sistema Neurocare
-                </p>
-            </section>
-            <section class="row">
-                <div id="container" >
+    <div class="content-header content-header-media">
+        <div class="header-section">
+            <div class="row"> 
+                <div class="col-md-4 col-lg-6 hidden-xs hidden-sm">
+                    <h1>Bienvenido <strong>${usuario.firstName} ${usuario.lastName}</strong><br><small>Plataforma de gestión de entrenamiento por neurofeedback</small></h1>
                 </div>
-            </section>
+            </div>
+        </div>
+        <div style="overflow: hidden; justify-content: center; ">
+            <g:img dir="images" file="main-header.jpg" style="position: absolute;top:-300px; ;width: 100%;transform: scaleX(-1);"/>
         </div>
     </div>
-<script src="https://code.highcharts.com/highcharts.js"></script>
+    <div class="row">
+        <sec:ifAllGranted roles="ROLE_ADMIN">
+            <div class="col-sm-6 col-lg-6">
+                <a class="widget widget-hover-effect1" href="user/index">
+                    <div class="widget-simple">
+                        <div class="widget-icon pull-left themed-background animation-fadeIn">
+                            <i class="fa fa-users"></i>
+                        </div>
+                        <h3 class="widget-content text-right animation-pullDown">
+                            <strong>Usuarios </strong> registrados<br>
+                            ${usuarios_registrados}
+                        </h3>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-lg-6">
+                <a class="widget widget-hover-effect1" href="userTreatment/index">
+                    <div class="widget-simple">
+                        <div class="widget-icon pull-left themed-background-success animation-fadeIn">
+                            <i class="fa fa-check"></i>
+                        </div>
+                        <h3 class="widget-content text-right animation-pullDown">
+                            <strong>Tratamientos </strong> Finalizados Hoy<br> por pacientes ${tratamientos_hoy}
+                        </h3>
+                    </div>
+                </a>
+            </div>
+        </sec:ifAllGranted>
+        <sec:ifAllGranted roles="ROLE_PROFESSIONAL">
+            <div class="col-sm-6 col-lg-6">
+                <a class="widget widget-hover-effect1" href="userTreatment/index">
+                    <div class="widget-simple">
+                        <div class="widget-icon pull-left themed-background-success animation-fadeIn">
+                            <i class="fa fa-check"></i>
+                        </div>
+                        <h3 class="widget-content text-right animation-pullDown">
+                            <strong>Trat.</strong> Finalizados Hoy<br> por pacientes ${tratamientos_hoy}
+                        </h3>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-lg-6">
+                <a class="widget widget-hover-effect1" href="user/index">
+                    <div class="widget-simple">
+                        <div class="widget-icon pull-left themed-background animation-fadeIn">
+                            <i class="fa fa-users"></i>
+                        </div>
+                        <h3 class="widget-content text-right animation-pullDown">
+                            <strong>Pacientes </strong> a cargo<br>
+                            ${personas_a_cargo}
+                        </h3>
+                    </div>
+                </a>
+            </div>
 
-<script type="text/javascript">
-    var chart;
-    var i = 0; 
-    
-Highcharts.chart('container', {
-    chart: {
-        backgroundColor: 'transparent',
-        type: 'spline',
-        animation: Highcharts.svg, // don't animate in old IE
-        marginRight: 10,
-        events: {
-            load: function () {
 
-                // set up the updating of the chart each second
-                var series = this.series[0];
-                setInterval(function () {
-                    var x = (new Date()).getTime(), // current time
-                        y = Math.random();
-                    series.addPoint([x, y], true, true);
-                }, 500);
-            }
-        }
-    },
-    title: {
-        text: 'Ondas Cerebrales en vivo'
-    },
-    xAxis: {
-        type: 'datetime',
-        tickPixelInterval: 150
-    },
-    yAxis: {
-        title: {
-            text: 'Value'
-        },
-        plotLines: [{
-            value: 0,
-            width: 1,
-            color: '#808080'
-        }]
-    },
-    tooltip: {
-        formatter: function () {
-            return '<b>' + this.series.name + '</b><br/>' +
-                Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' 
-+
-                Highcharts.numberFormat(this.y, 2);
-        }
-    },
-    legend: {
-        enabled: false
-    },
-    exporting: {
-        enabled: false
-    },
-    series: [{
-        name: 'Datos cerebrales',
-        data: (function () {
-            // generate an array of random data
-            var data = [],
-                time = (new Date()).getTime(),
-                i;
+        </sec:ifAllGranted>
+        <sec:ifAllGranted roles="ROLE_PATIENT">
+            <div class="col-sm-6 col-lg-6">
+                <a class="widget widget-hover-effect1" href="userTreatment/index">
+                    <div class="widget-simple">
+                        <div class="widget-icon pull-left themed-background animation-fadeIn">
+                            <i class="fa fa-plus"></i>
+                        </div>
+                        <h3 class="widget-content text-right animation-pullDown">
+                            Nuevos <strong>tratamientos</strong><br>
+                            <strong>${tratamientos_pendientes}</strong>
+                        </h3>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-lg-6">
+                <a class="widget widget-hover-effect1" href="userTreatment/index">
+                    <div class="widget-simple">
+                        <div class="widget-icon pull-left themed-background-success animation-fadeIn">
+                            <i class="fa fa-check"></i>
+                        </div>
+                        <h3 class="widget-content text-right animation-pullDown">
+                            <strong>Trat.</strong> Finalizados<br>
+                            ${tratamientos_finalizados}
+                        </h3>
+                    </div>
+                </a>
+            </div>
+        </sec:ifAllGranted>
 
-            for (i = -19; i <= 0; i += 1) {
-                data.push({
-                    x: time + i * 1000,
-                    y: Math.random()
-                });
-            }
-            return data;
-        }())
-    }]
-    });
-
-</script>
-
+        <g:each var="usr" in="${usuarios}">
+            <div class="col-md-4">
+                <div class="widget">
+                    <div class="widget-simple">
+                        <div class="">
+                            <g:img class="widget-image img-circle pull-left" dir="images" file="avatar.jpg" height="64" width="64"/>
+                        </div>
+                        <h4 class="widget-content">
+                            <a href="user/show/${usr.id}" class="themed-color">
+                                <strong>${usr.firstName} ${usr.lastName}</strong>
+                            </a>
+                            <small>${usr.email}</small>
+                        </h4>
+                    </div>
+                    <div class="widget-extra">
+                        <div class="row text-center <g:if test="${usr.role.id == 2}">themed-background-dark</g:if>
+                                        <g:elseif test="${usr.role.id == 1}">
+                                            themed-background-dark-autumn</g:elseif><g:else>themed-background-dark-amethyst</g:else>">
+                            <div class="col-xs-4">
+                                <h3 class="widget-content-light">
+                                    <i class="fa fa-id-card"></i><br>
+                                    <small>${usr.docNumber}</small>
+                                </h3>
+                            </div>
+                            <div class="col-xs-4">
+                                <h3 class="widget-content-light">
+                                    <i class="fa fa-user"></i><br>
+                                    <small>${usr.role.beauty}</small>
+                                </h3>
+                            </div>
+                            <div class="col-xs-4">
+                                <h3 class="widget-content-light">
+                                    <i class="fas fa-caret-square-right"></i><br>
+                                    <small>${usr.getTreatments().size}</small>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </g:each>
+        <g:each var="trat" in="${tratamientos}">
+            <div class="col-md-4">
+                <div class="widget">
+                    <div class="widget-simple">
+                        <h4 class="widget-content">
+                            <a href="userTreatment/show/${trat.id}" class="themed-color">
+                                <strong>${trat.treatment.name} ${trat.treatmentDate}</strong>
+                            </a>
+                            <small>${trat.treatment.description}</small>
+                        </h4>
+                    </div>
+                    <div class="widget-extra">
+                        <div class="row text-center <g:if test="${trat.status == 'Pending'}">themed-background-modern</g:if>
+                                        <g:elseif test="${trat.status == 'Finished'}">
+                                            themed-background-dark-autumn</g:elseif>
+                                            <g:else>themed-background-success</g:else>">
+                            <div class="col-xs-4">
+                                <h3 class="widget-content-light">
+                                    <i class="fa fa-info-circle"></i><br>
+                                    <small>${trat.status}</small>
+                                </h3>
+                            </div>
+                            <div class="col-xs-4">
+                                <h3 class="widget-content-light">
+                                    <i class="fa fa-clock"></i><br>
+                                    <small>${trat.duration}</small>
+                                </h3>
+                            </div>
+                            <div class="col-xs-4">
+                                <h3 class="widget-content-light">
+                                    <i class="fas fa-percent"></i><br>
+                                    <small>${trat.effectiveness}</small>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </g:each>
+    </div>
 </body>
 </html>

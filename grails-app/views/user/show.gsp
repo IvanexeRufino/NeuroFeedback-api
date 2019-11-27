@@ -12,7 +12,7 @@
                 <li><g:link class="list" action="index"><i class="fa fa-list"></i>Lista de Usuarios</g:link></li>
                 <li><g:link class="create" action="create"><i class="fa fa-plus"></i>Crear Usuario</g:link></li>
                 <li><g:link class="edit" action="edit" resource="${this.user}"><i class="fa fa-edit"></i>Editar Usuario</g:link></li>
-                <li><a href="/userTreatment/user/${user.id}"><i class="fa fa-eye"></i>Historial de Usuario</a></li>
+                <li><a href="/userTreatment/user/${user.id}"><i class="fa fa-eye"></i>Tratamientos de Usuario</a></li>
             </ul>
         </div>
         <div class="block">
@@ -34,7 +34,7 @@
                 <g:else>
                     <li>Sin doctor asignado</li>
                 </g:else>
-                <li>Role: ${this.user.role}</li>
+                <li>Role: ${this.user.role.beauty}</li>
             </ul>
             <g:form resource="${this.user}" method="DELETE">
                 <fieldset class="buttons">

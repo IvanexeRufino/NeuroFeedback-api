@@ -5,21 +5,32 @@
 <html class="no-js"> <!--<![endif]-->
     <head>
         <meta charset="utf-8">
-        <title><g:layoutTitle default="Grails"/></title>
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
-    <asset:stylesheet src="bootstrap.min.css"/>
-    <asset:stylesheet src="plugins.css"/>
-    <asset:stylesheet src="main.css"/>
-    <asset:stylesheet src="style.css"/>
-    <asset:stylesheet src="themes.css"/>
-    <asset:stylesheet src="theme2.css"/>
-    <asset:stylesheet src="custom.css"/>
-    <asset:stylesheet src="datatables.min.css"/>
+        <asset:stylesheet src="bootstrap.min.css"/>
+        <asset:stylesheet src="plugins.css"/>
+        <asset:stylesheet src="main.css"/>
+        <asset:stylesheet src="style.css"/>
+        <asset:stylesheet src="themes.css"/>
+        <asset:stylesheet src="theme2.css"/>
+        <asset:stylesheet src="custom.css"/>
+        <asset:stylesheet src="datatables.min.css"/>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+        <asset:javascript src="jquery-2.2.0.min.js"/>
+        <asset:javascript src="bootstrap.js"/>
+        <asset:javascript src="plugins.js"/>
+        <asset:javascript src="app.js"/>
+        <asset:javascript src="dataTables.min.js"/>
+        <script type="text/javascript">
+            $(function() {
+            $( "a[href='/showTreatment/index'" ).hide();
+});
+        </script>
+        <title>NeuroCare</title>
     </head>
     <body>
     <div id="page-wrapper">
-    <div id="page-container" class="enable-cookies  disable-menu-autoscroll footer-fixed sidebar-no-animations sidebar-partial sidebar-visible-lg">
+    <div id="page-container" class="enable-cookies  disable-menu-autoscroll footer-fixed sidebar-no-animations sidebar-visible-lg">
         <!-- Alternative Sidebar -->
         <div id="sidebar-alt">
             <!-- Wrapper for scrolling functionality -->
@@ -50,7 +61,7 @@
                     <!-- END Brand -->
 
                     <div class="sidebar-section sidebar-user clearfix sidebar-nav-mini-hide">
-                        <div class="sidebar-user-links">
+                        <div class="sidebar-user-links" style="display: none;">
                             <a data-toggle="tooltip" data-placement="bottom" title="Perfil"><i class="gi gi-user"></i></a>
                             <a href="#" data-toggle="tooltip" data-placement="bottom" title="Mensajes"><i class="gi gi-envelope"></i></a>
                             <a href="#" class="enable-tooltip" data-placement="bottom" title="Ajustes" onclick="$('#modal-user-settings').modal('show');"><i class="gi gi-cogwheel"></i></a>
@@ -61,9 +72,7 @@
                                 <g:img dir="images" file="avatar.jpg"/>
                             </div>
                             <div class="sidebar-user-name">
-                                <g:message
-                                message="Bienvenido ${neurofeedback.currentUserProps(username: true)}">
-                                </g:message>
+                                <g:message message="${neurofeedback.currentUserProps(username: true)}"></g:message>
                             </div>
                         </sec:ifLoggedIn>
                     </div>
@@ -204,8 +213,4 @@
     
     </body>
 </html>
-    <asset:javascript src="jquery-2.2.0.min.js"/>
-    <asset:javascript src="bootstrap.js"/>
-    <asset:javascript src="plugins.js"/>
-    <asset:javascript src="app.js"/>
-    <asset:javascript src="dataTables.min.js"/>
+

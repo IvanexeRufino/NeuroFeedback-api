@@ -14,22 +14,14 @@
 		<div class="row">
             <div class="col-md-12 block">
                 <div id="containerMain" style="height: 350px"></div>
-            </div>
-            <div class="col-md-6 block">
-                <div id="container1" style="height: 250px; width: 550px; display: inline-block"></div>
-            </div>
-            <div class="col-md-6 block">
-                <div id="container2" style="height: 250px; width: 550px; display: inline-block"></div>
-            </div>
-            <div class="col-md-6 block">
-                <div id="container3" style="height: 250px; width: 550px; display: inline-block"></div>
-            </div>
-            <div class="col-md-6 block">
-                <div id="container4" style="height: 250px; width: 550px; display: inline-block"></div>
-            </div>
-            <div class="col-md-6 block">
-                <div id="container5" style="height: 250px; width: 550px; display: inline-block"></div>
-            </div>
+            </div> 
+            <g:set var="counter" value="${1}"/>
+            <g:while test="${counter < analyzedDatasCount+1}">
+                <div class="col-md-6 block">
+                    <div id="container${counter}" style="height: 250px; width: 550px; display: inline-block"></div>
+                </div>
+                <g:set var="counter" value="${counter+1}"/>
+            </g:while>
 		</div>
 	</div>
 </div>
@@ -78,13 +70,15 @@
         },
         yAxis: {
             title: {
-                text: 'Volts [V]'
+                text: 'micro Volts [mV]'
             },
             plotLines: [{
                 value: 0,
                 width: 1,
                 color: '#808080'
-            }]
+            }],
+            max: 2000,
+            min: -2000
         },
         tooltip: {
             formatter: function () {
@@ -201,7 +195,9 @@
                     value: 0,
                     width: 1,
                     color: '#808080'
-                }]
+                }],
+                min:0,
+                max:250
             },
             legend: getLegend(0,0,0,0,0),
             series: [{
@@ -225,7 +221,7 @@
                     "                    Delta power:" + ((delta / (totalPower ? totalPower : 1)) * 100).toFixed(2) + "%<br>\n" +
                     "                    Theta power:" + ((theta / (totalPower ? totalPower : 1)) * 100).toFixed(2) + "%<br>\n" +
                     "                    Alpha power:" + ((alpha / (totalPower ? totalPower : 1)) * 100).toFixed(2) + "%<br>\n" +
-                    "                    Beta power:" + ((theta / (totalPower ? totalPower : 1)) * 100).toFixed(2) + "%<br>";
+                    "                    Beta power:" + ((beta / (totalPower ? totalPower : 1)) * 100).toFixed(2) + "%<br>";
             }
         };
     }

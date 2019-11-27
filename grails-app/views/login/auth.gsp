@@ -5,6 +5,7 @@
     <asset:stylesheet src="themes.css"/>
     <asset:stylesheet src="theme2.css"/>
     <asset:stylesheet src="custom.css"/>
+        <title>NeuroCare</title>
 
 <g:img dir="images" file="background.jpg" class="full-bg animation-pulseSlow"/>
 <!-- END Login Full Background -->

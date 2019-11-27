@@ -4,7 +4,7 @@ import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
-@Secured(['ROLE_PROFESSIONAL'])
+@Secured(['ROLE_PROFESSIONAL','ROLE_PATIENT','ROLE_ADMINISTRATOR'])
 class LiveTreatmentController {
 
     static String friendlyName = "Ver tratamientos en vivo"

@@ -315,7 +315,7 @@ header.navbar-inverse.navbar-fixed-bottom {
     padding: 5px 7px;
     line-height: 40px;
     text-align: center;
-    color: #394263;
+    color: #46b7bf !important;
     position: relative;
 }
 
@@ -4213,4 +4213,8 @@ only screen and (min-device-pixel-ratio: 1.5) {
     #main-container {margin: 0 !important;}
     .block, .block.full {border: none !important; padding: 0 !important;}
     .block-title {margin: 0 0 20px !important;}
+}
+
+.hover:hover{
+  cursor: pointer;
 }

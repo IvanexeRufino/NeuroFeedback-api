@@ -7,13 +7,15 @@ class Treatment {
     int id
     String name
     String description
+    String longDescription
     int sessionNumber
     static hasMany = [channelsConfig: ChannelConfig]
 
     static constraints = {
         id (unique: true, maxSize: 11)
         name (unique: true, blank: false, maxSize: 50)
-        description (blank: false, maxSize: 255)
+        description (blank: false, maxSize: 1023)
+        longDescription (blank: false, maxSize: 1023)
         sessionNumber (blank: false)
     }
 
