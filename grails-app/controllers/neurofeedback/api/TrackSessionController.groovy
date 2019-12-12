@@ -163,7 +163,7 @@ class TrackSessionController {
             }
         }
 
-        def random = -5 + (Math.random() * 10)
+        def random = -5 + (Math.random().toDouble() * 10)
 
         calculatedEffectiveness = ((calculatedEffectiveness/(ars.size() * 2 * 2)) * 100 ) + random
 
