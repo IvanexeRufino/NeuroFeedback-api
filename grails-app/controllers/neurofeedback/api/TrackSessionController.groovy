@@ -142,7 +142,7 @@ class TrackSessionController {
         for(ar in ars) {
             switch (ar.frequencyBandContribution) {
                 case "Positive":
-                    calculatedEffectiveness += 4
+                    calculatedEffectiveness += 2
                     break
                 case "Neutral":
                     calculatedEffectiveness += 1
@@ -153,7 +153,7 @@ class TrackSessionController {
 
             switch (ar.averageBandPower) {
                 case "Positive":
-                    calculatedEffectiveness += 4
+                    calculatedEffectiveness += 2
                     break
                 case "Neutral":
                     calculatedEffectiveness += 1
@@ -163,7 +163,7 @@ class TrackSessionController {
             }
         }
 
-        calculatedEffectiveness = ((calculatedEffectiveness/(ars.size() * 2 * 4)) * 100 )
+        calculatedEffectiveness = ((calculatedEffectiveness/(ars.size() * 2 * 2)) * 100 )
 
         UserTreatment.executeUpdate("Update UserTreatment u set u.effectiveness=:calculatedEffectiveness where u.id=:userTId", [calculatedEffectiveness: calculatedEffectiveness, userTId: userT_id.toInteger()])
     }
