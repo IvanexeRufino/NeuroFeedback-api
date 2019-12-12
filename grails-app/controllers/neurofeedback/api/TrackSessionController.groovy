@@ -165,7 +165,7 @@ class TrackSessionController {
 
         def random = (-10 + (Math.random() * 20)).round(2)
 
-        calculatedEffectiveness = ((calculatedEffectiveness/(ars.size() * 2 * 2)) * 100 ) + random
+        calculatedEffectiveness = (((calculatedEffectiveness/(ars.size() * 2 * 2)) * 100 ) + random).round(2)
 
         UserTreatment.executeUpdate("Update UserTreatment u set u.effectiveness=:calculatedEffectiveness where u.id=:userTId", [calculatedEffectiveness: calculatedEffectiveness, userTId: userT_id.toInteger()])
     }
