@@ -167,6 +167,12 @@ class TrackSessionController {
 
         calculatedEffectiveness = (((calculatedEffectiveness/(ars.size() * 2 * 2)) * 100 ) + random).round(2)
 
+        if(calculatedEffectiveness >= 100) {
+            calculatedEffectiveness = 100
+        } else if(calculatedEffectiveness <= 0) {
+            calculatedEffectiveness = 0
+        }
+
         UserTreatment.executeUpdate("Update UserTreatment u set u.effectiveness=:calculatedEffectiveness where u.id=:userTId", [calculatedEffectiveness: calculatedEffectiveness, userTId: userT_id.toInteger()])
     }
     def calculateAverage(String userT_id){
